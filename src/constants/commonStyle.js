@@ -11,11 +11,10 @@ export default {
     shadowRadius: 2.62,
   },
   fontFamily: {
-    light: 'Poppins-Light',
-    regular: 'Poppins-Regular',
-    medium: 'Poppins-Medium',
-    semibold: 'Poppins-SemiBold',
-    bold: 'Poppins-Bold',
+    regular: 'Inter-Regular',
+    medium: 'Inter-Medium',
+    semibold: 'Inter-SemiBold',
+    bold: 'Inter-Bold',
   },
 
 }

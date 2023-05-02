@@ -8,5 +8,7 @@ const images = {
   menu: require('../assets/images/menu.png'),
   vender: require('../assets/images/vender.png'),
   welcome: require('../assets/images/welcome.png'),
+  pureWorkerLogo: require('../assets/images/pureWorkerLogo.png'),
+  heroPix: require('../assets/images/heroPix.png')
 };
 export default images;

@@ -11,6 +11,7 @@ import SplashScreen from 'react-native-splash-screen';
 // onboarding 
 import Login from './src/screens/Login';
 import Welcome from './src/screens/welcome';
+import OnBoarding1 from './src/screens/OnBoarding1';
 
 // home 
 import Home from './src/screens/Home';
@@ -109,11 +110,12 @@ export default () => {
 
   function OnboardingStack() {
     return (
-      <Stack.Navigator initialRouteName="Welcome" >
-        <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
+      <Stack.Navigator initialRouteName="OnBoarding1" >
+        {/* <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false, animationEnabled: false, headerShown: false }}/> */}
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="Signup" component={Signup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="VenderSignup" component={VenderSignup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
+        <Stack.Screen name="OnBoarding1" component={OnBoarding1} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
       </Stack.Navigator>
     )
   }
