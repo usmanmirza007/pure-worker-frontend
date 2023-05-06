@@ -9,6 +9,8 @@ const images = {
   vender: require('../assets/images/vender.png'),
   welcome: require('../assets/images/welcome.png'),
   pureWorkerLogo: require('../assets/images/pureWorkerLogo.png'),
-  heroPix: require('../assets/images/heroPix.png')
+  heroPix: require('../assets/images/heroPix.png'),
+  heroPix1: require('../assets/images/heroPix1.png'),
+  heroPix2: require('../assets/images/heroPix2.png'),
 };
 export default images;

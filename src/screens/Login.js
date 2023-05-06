@@ -79,7 +79,7 @@ export default function Login() {
 
   }
   return (
-    <ScrollView contentContainerStyle={{ height: height }} style={{ flex: 1, backgroundColor: '#fff' }}>
+    <ScrollView contentContainerStyle={{ height: height }} style={{ flex: 1, backgroundColor: '#000' }}>
 
       <MyStatusBar
         translucent
@@ -88,16 +88,16 @@ export default function Login() {
       />
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
         <View>
-          <View style={{ height: 200, backgroundColor: '#403FFC', }} >
+          <View style={{}} >
             <Text style={{ fontSize: 28, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 140, marginLeft: 25 }}>Login</Text>
           </View>
 
           <View style={{ marginHorizontal: 25 }}>
-            <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#000', marginTop: 40 }}>Email</Text>
+            <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 40 }}>Email</Text>
             <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
-            <Text style={{ fontSize: 16, marginTop: 30, color: '#000', fontFamily: commonStyle.fontFamily.medium }}>Password</Text>
+            <Text style={{ fontSize: 16, marginTop: 30, color: '#fff', fontFamily: commonStyle.fontFamily.medium }}>Password</Text>
             <TextInputs style={{ marginTop: 17 }} labelText={'Enter Password'} state={password} setState={setPassword} secure={true} />
-            <Text style={{ fontSize: 13, marginTop: 50, textAlign: 'center', color: '#000', fontFamily: commonStyle.fontFamily.regular }}>Don’t have a profile?  <Text onPress={() => navigation.navigate('Signup')} style={{ fontSize: 13, textDecorationLine: 'underline', color: '#403FFC', fontFamily: commonStyle.fontFamily.regular }}>Sign Up</Text></Text>
+            <Text style={{ fontSize: 13, marginTop: 50, textAlign: 'center', color: '#fff', fontFamily: commonStyle.fontFamily.regular }}>Don’t have a profile?  <Text onPress={() => navigation.navigate('Signup')} style={{ fontSize: 13, textDecorationLine: 'underline', color: '#403FFC', fontFamily: commonStyle.fontFamily.regular }}>Sign Up</Text></Text>
 
           </View>
         </View>
@@ -111,5 +111,8 @@ export default function Login() {
   );
 }
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
 });
