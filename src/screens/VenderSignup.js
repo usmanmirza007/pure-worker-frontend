@@ -94,7 +94,7 @@ export default function VenderSignup() {
       <MyStatusBar
         translucent
         barStyle="light-content"
-        backgroundColor="#403FFC"
+        backgroundColor="#000"
       />
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
         <View>

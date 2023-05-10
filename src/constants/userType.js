@@ -10,3 +10,6 @@
   export const orderDeliered = "DELIVERED"
   export const orderCompleted = "COMPLETED"
   export const orderDeliveryAcceptByCustomer = "COMPLETED_ORDER"
+
+ export const BUNDLE_ID = 'com.pure_worker';
+ export const BUNDLE_ID_IOS = "com.example";

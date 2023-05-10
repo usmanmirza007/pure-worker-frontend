@@ -14,7 +14,7 @@ const HomeHeader = ({ title, image, navigateText }) => {
       <MyStatusBar
         translucent
         barStyle="light-content"
-        backgroundColor="#403FFC"
+        backgroundColor="#000"
       />
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -46,7 +46,7 @@ const HomeHeader = ({ title, image, navigateText }) => {
             style={{
               width: 25,
               height: 25,
-              tintColor: '#403FFC',
+              tintColor: '#000',
               alignSelf: 'center',
             }}
           />

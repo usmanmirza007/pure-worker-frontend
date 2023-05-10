@@ -55,7 +55,7 @@
 //       <MyStatusBar
 //         translucent
 //         barStyle="light-content"
-//         backgroundColor="#403FFC"
+//         backgroundColor="#000"
 //       />
 //       <ScrollView style={{}}>
 //         <TouchableOpacity onPress={() => navigation.navigate('EditProfile')} style={{ marginLeft: 15, marginTop: 20 }}>

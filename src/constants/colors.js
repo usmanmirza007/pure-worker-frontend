@@ -4,6 +4,6 @@ export default {
   unselect: '#53586E',
   grey: '#777A7A',
   primary:'#FFCD1E',
-  white:'#fff'
-
+  white:'#fff',
+  parpal: '#88087B'
 }

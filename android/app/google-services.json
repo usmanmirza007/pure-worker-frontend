@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "192468335034",
+    "project_id": "pureworker-1ff21",
+    "storage_bucket": "pureworker-1ff21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192468335034:android:8e785714612e0445d24583",
+        "android_client_info": {
+          "package_name": "com.pure_worker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192468335034-6jhq0jct1tkl5bd20d0uij5aodh3i7lf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pure_worker",
+            "certificate_hash": "09b056fffc9476e8ff016a9c7f4e35fbd8fa8661"
+          }
+        },
+        {
+          "client_id": "192468335034-uncateqf5kk91bla4lt524po8h6l2ris.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW05Bxnc80mTnH5XFsxoS6xdxF49RCNTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192468335034-uncateqf5kk91bla4lt524po8h6l2ris.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

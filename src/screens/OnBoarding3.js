@@ -24,7 +24,7 @@ export default function OnBoarding3() {
       <MyStatusBar
         translucent
         barStyle="light-content"
-        backgroundColor="#403FFC"
+        backgroundColor="#000"
       />
       <ScrollView contentContainerStyle={{ flex: 1 }}>
 

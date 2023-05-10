@@ -13,11 +13,11 @@ const Header = ({ title, image }) => {
       marginTop: StatusBar.currentHeight + getStatusBarHeight(true),
       flexDirection: 'row',
       justifyContent: 'center',
-      backgroundColor: '#403FFC',
+      backgroundColor: '#000',
       alignItems: 'center',
       height: 70,
     }}>
-      <StatusBar translucent barStyle={"light-content"} backgroundColor={ '#403FFC'} />
+      <StatusBar translucent barStyle={"light-content"} backgroundColor={ '#000'} />
 
       <TouchableOpacity style={{ position: 'absolute', left: 20 }} onPress={() => navigation.goBack()}>
         <Image

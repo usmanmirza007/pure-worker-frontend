@@ -113,7 +113,7 @@ const PriceModal = forwardRef((props, ref) => {
                   
                     formHorizontal={false}
                     buttonColor='grey'
-                    selectedButtonColor='#403FFC'
+                    selectedButtonColor='#000'
                     buttonOuterSize={30}
                     buttonSize={20}
                     labelStyle={{ fontSize: 16, marginLeft: 20, marginTop: -75, color: '#000', padding: 80, fontFamily: commonStyle.fontFamily.medium, }}
@@ -131,7 +131,7 @@ const PriceModal = forwardRef((props, ref) => {
                     }}
                   /> */}
                 </View>
-                <Text style={{ fontSize: 14, marginLeft: 56, marginTop: -105, width: '80%', alignSelf: 'center', color: '#000', fontFamily: commonStyle.fontFamily.regular }}>Be part of our <Text style={{ fontSize: 14, color: '#403FFC', fontFamily: commonStyle.fontFamily.semibold }}>premier vendor service</Text> where you can list an unlimited amount of products &  services <Text style={{ fontSize: 14, color: '#403FFC', fontFamily: commonStyle.fontFamily.semibold }}>for only R300 p/m</Text></Text>
+                <Text style={{ fontSize: 14, marginLeft: 56, marginTop: -105, width: '80%', alignSelf: 'center', color: '#000', fontFamily: commonStyle.fontFamily.regular }}>Be part of our <Text style={{ fontSize: 14, color: '#000', fontFamily: commonStyle.fontFamily.semibold }}>premier vendor service</Text> where you can list an unlimited amount of products &  services <Text style={{ fontSize: 14, color: '#000', fontFamily: commonStyle.fontFamily.semibold }}>for only R300 p/m</Text></Text>
 
               </View>
 
