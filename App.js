@@ -24,6 +24,8 @@ import VenderSignup from './src/screens/VenderSignup';
 import auth from '@react-native-firebase/auth';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginNumberFunc from './src/screens/LoginNumberFunc';
+import { OtpInput } from './src/screens/OtpInput';
 
 const Stack = createStackNavigator();
 const { width } = Dimensions.get('screen');
@@ -37,6 +39,7 @@ export default () => {
   
   async function onAuthStateChanged(user) {
     setUser(user);
+    console.log('fofof', user);
   }
 
   useEffect(() => {
@@ -45,51 +48,51 @@ export default () => {
   }, []);
 
   
-  useEffect(() => {
-    const handleDynamicLink = async (link) => {
-      // Check and handle if the link is a email login link
-      console.log('link', link);
-      if (auth().isSignInWithEmailLink(link.url)) {
+  // useEffect(() => {
+  //   const handleDynamicLink = async (link) => {
+  //     // Check and handle if the link is a email login link
+  //     console.log('link', link);
+  //     if (auth().isSignInWithEmailLink(link.url)) {
 
-        try {
-          // use the email we saved earlier
-          const email = await AsyncStorage.getItem('emailForSignIn');
-          // store.dispatch(startLoginLoading())
+  //       try {
+  //         // use the email we saved earlier
+  //         const email = await AsyncStorage.getItem('emailForSignIn');
+  //         // store.dispatch(startLoginLoading())
 
-          const checkLink = await auth().signInWithEmailLink(email, link.url);
-          const uid = auth().currentUser?.uid
-          const userEmail = auth().currentUser?.email
-          if (uid && userEmail) {
-            // store.dispatch(createUser())
-            // create user in database sql
-          }
-          // handleState()
+  //         const checkLink = await auth().signInWithEmailLink(email, link.url);
+  //         const uid = auth().currentUser?.uid
+  //         const userEmail = auth().currentUser?.email
+  //         if (uid && userEmail) {
+  //           // store.dispatch(createUser())
+  //           // create user in database sql
+  //         }
+  //         // handleState()
 
-          /* You can now navigate to your initial authenticated screen
-            You can also parse the `link.url` and use the `continueurl` param to go to another screen
-            The `continueurl` would be the `url` passed to the action code settings */
-        }
-        catch (e) {
-          console.log('err', e);
-          Snackbar.show({
-            text: 'Expired link',
-            duration: Snackbar.LENGTH_SHORT,
-          });
-          // store.dispatch(createUserSuccess())
-        }
-      }
-    };
+  //         /* You can now navigate to your initial authenticated screen
+  //           You can also parse the `link.url` and use the `continueurl` param to go to another screen
+  //           The `continueurl` would be the `url` passed to the action code settings */
+  //       }
+  //       catch (e) {
+  //         console.log('err', e);
+  //         Snackbar.show({
+  //           text: 'Expired link',
+  //           duration: Snackbar.LENGTH_SHORT,
+  //         });
+  //         // store.dispatch(createUserSuccess())
+  //       }
+  //     }
+  //   };
 
-    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
+  //   const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
 
-    /* When the app is not running and is launched by a magic link the `onLink`
-       method won't fire, we can handle the app being launched by a magic link like this */
-    dynamicLinks().getInitialLink()
-      .then(link => link && handleDynamicLink(link));
+  //   /* When the app is not running and is launched by a magic link the `onLink`
+  //      method won't fire, we can handle the app being launched by a magic link like this */
+  //   dynamicLinks().getInitialLink()
+  //     .then(link => link && handleDynamicLink(link));
 
-    // When the component is unmounted, remove the listener
-    return () => unsubscribe();
-  }, []);
+  //   // When the component is unmounted, remove the listener
+  //   return () => unsubscribe();
+  // }, []);
 
   // function AppStack() {
   //   return (
@@ -172,14 +175,16 @@ export default () => {
 
   function OnboardingStack() {
     return (
-      <Stack.Navigator initialRouteName="Login" >
+      <Stack.Navigator initialRouteName="LoginNumberFunc" >
         {/* <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false, animationEnabled: false, headerShown: false }}/> */}
+        <Stack.Screen name="LoginNumberFunc" component={LoginNumberFunc} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="Signup" component={Signup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="VenderSignup" component={VenderSignup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="OnBoarding1" component={OnBoarding1} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="OnBoarding2" component={OnBoarding2} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="OnBoarding3" component={OnBoarding3} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
+        <Stack.Screen name="OtpInput" component={OtpInput} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
       </Stack.Navigator>
     )
   }

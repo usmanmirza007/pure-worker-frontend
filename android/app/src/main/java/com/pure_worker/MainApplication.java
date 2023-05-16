@@ -1,4 +1,4 @@
-package com.pure_worker;
+package com.pure_worker_app;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -1,4 +1,4 @@
-package com.pure_worker;
+package com.pure_worker_app;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

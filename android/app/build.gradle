@@ -94,9 +94,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.pure_worker"
+    namespace "com.pure_worker_app"
     defaultConfig {
-        applicationId "com.pure_worker"
+        applicationId "com.pure_worker_app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
