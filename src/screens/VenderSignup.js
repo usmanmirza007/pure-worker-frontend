@@ -45,7 +45,7 @@ export default function VenderSignup() {
         Snackbar.show({
           text: 'Please enter valid email',
           duration: Snackbar.LENGTH_SHORT,
-          backgroundColor: '#24A9DF',
+          backgroundColor: '#88087B',
         });
       } else {
         const signupData = {
@@ -59,7 +59,7 @@ export default function VenderSignup() {
           .then((data) => {
             if (data && data.token) {
               Snackbar.show({
-                text: "Vendor has been signup succssfuly", duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#24A9DF',
+                text: "Vendor has been signup succssfuly", duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
               });
               dispatch(loggedIn({
                 token: data.token,
@@ -74,7 +74,7 @@ export default function VenderSignup() {
           .catch((error) => {
             console.log('err', error);
             Snackbar.show({
-              text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#24A9DF',
+              text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
             });
             console.log(error, 'error');
           });
@@ -83,7 +83,7 @@ export default function VenderSignup() {
       Snackbar.show({
         text: 'Please fill all fields',
         duration: Snackbar.LENGTH_SHORT,
-        backgroundColor: '#24A9DF',
+        backgroundColor: '#88087B',
       });
     }
 

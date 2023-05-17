@@ -7,10 +7,10 @@ export const api = emptySplitApi.injectEndpoints({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
 
-    signupCustomer: builder.mutation({
+    signup: builder.mutation({
       query: (args) => {
         return {
-          url: '/auth/customerSignUp',
+          url: '/auth/',
           method: 'POST',
           body: {
             firstName: args.firstName,
@@ -18,23 +18,12 @@ export const api = emptySplitApi.injectEndpoints({
             email: args.email,
             password: args.password,
             type: args.type,
-          }
-        }
-      },
-      providesTags: ['GetUser']
-    }),
-
-    signupVendor: builder.mutation({
-      query: (args) => {
-        return {
-          url: '/auth/vendorSignUp',
-          method: 'POST',
-          body: {
-            firstName: args.firstName,
-            lastName: args.lastName,
-            email: args.email,
-            password: args.password,
-            type: args.type,
+            phoneNumber: args.phoneNumber, 
+            dob: args.dob,
+            businessName: args.businessName,
+            cacNo: args.cacNo,
+            location: args.location,
+            address: args.address
           }
         }
       },
@@ -55,6 +44,20 @@ export const api = emptySplitApi.injectEndpoints({
       },
     }),
 
+    verifyOtp: builder.mutation({
+      query: (args) => {
+
+        return {
+          url: '/auth/otpVerify',
+          method: 'POST',
+          body: {
+            email: args.email,
+            otp: args.otp
+          }
+        }
+      },
+    }),
+
     getUser: builder.query({
       query: () => {
         return {
@@ -70,7 +73,7 @@ export const api = emptySplitApi.injectEndpoints({
 })
 
 export const {
-  useSignupCustomerMutation,
-  useSignupVendorMutation,
+  useSignupMutation,
   useLoginMutation,
+  useVerifyOtpMutation,
 } = api

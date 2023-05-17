@@ -25,7 +25,7 @@ import auth from '@react-native-firebase/auth';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginNumberFunc from './src/screens/LoginNumberFunc';
-import { OtpInput } from './src/screens/OtpInput';
+import TokenVerification from './src/screens/TokenVerification';
 
 const Stack = createStackNavigator();
 const { width } = Dimensions.get('screen');
@@ -37,15 +37,15 @@ export default () => {
     SplashScreen.hide();
   }, []);
   
-  async function onAuthStateChanged(user) {
-    setUser(user);
-    console.log('fofof', user);
-  }
+  // async function onAuthStateChanged(user) {
+  //   setUser(user);
+  //   console.log('fofof', user);
+  // }
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+  // useEffect(() => {
+  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+  //   return subscriber; // unsubscribe on unmount
+  // }, []);
 
   
   // useEffect(() => {
@@ -165,8 +165,8 @@ export default () => {
 
   function HomeStack() {
     const userType = useSelector(state => state.user.isLoggedIn)
-    
-    if (userType && userType.type == 'CUSTOMER') {
+    console.log('user ', userType);
+    if (userType) {
       return <CustomerStack />
     } else {
       return <VenderStack />
@@ -175,16 +175,16 @@ export default () => {
 
   function OnboardingStack() {
     return (
-      <Stack.Navigator initialRouteName="LoginNumberFunc" >
+      <Stack.Navigator initialRouteName="Login" >
         {/* <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false, animationEnabled: false, headerShown: false }}/> */}
-        <Stack.Screen name="LoginNumberFunc" component={LoginNumberFunc} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
+        {/* <Stack.Screen name="LoginNumberFunc" component={LoginNumberFunc} options={{headerShown: false, animationEnabled: false, headerShown: false }}/> */}
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="Signup" component={Signup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="VenderSignup" component={VenderSignup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="OnBoarding1" component={OnBoarding1} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="OnBoarding2" component={OnBoarding2} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
         <Stack.Screen name="OnBoarding3" component={OnBoarding3} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
-        <Stack.Screen name="OtpInput" component={OtpInput} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
+        <Stack.Screen name="TokenVerification" component={TokenVerification} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
       </Stack.Navigator>
     )
   }

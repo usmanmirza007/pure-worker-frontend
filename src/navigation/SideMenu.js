@@ -31,7 +31,7 @@
 //       .then((data) => {
 //         if (data) {
 //           Snackbar.show({
-//             text: `User account has been switched`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#24A9DF',
+//             text: `User account has been switched`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
 //           });
 //           dispatch(loggedIn({
 //             token: data.token,
@@ -43,7 +43,7 @@
 //       .catch((error) => {
 //         console.log('err', error);
 //         Snackbar.show({
-//           text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#24A9DF',
+//           text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
 //         });
 //         console.log(error, 'error');
 //       });
