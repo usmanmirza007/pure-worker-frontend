@@ -10,7 +10,6 @@ import SplashScreen from 'react-native-splash-screen';
 
 // onboarding 
 import Login from './src/screens/Login';
-import Welcome from './src/screens/welcome';
 import OnBoarding1 from './src/screens/OnBoarding1';
 import OnBoarding2 from './src/screens/OnBoarding2';
 import OnBoarding3 from './src/screens/OnBoarding3';
@@ -19,13 +18,10 @@ import OnBoarding3 from './src/screens/OnBoarding3';
 import Home from './src/screens/Home';
 import { Provider, useSelector } from 'react-redux';
 import { navigationRef } from './RootNavigation';
-import Signup from './src/screens/Signup';
-import VenderSignup from './src/screens/VenderSignup';
-import auth from '@react-native-firebase/auth';
-import dynamicLinks from '@react-native-firebase/dynamic-links';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoginNumberFunc from './src/screens/LoginNumberFunc';
 import TokenVerification from './src/screens/TokenVerification';
+import BusinessSignup from './src/screens/BusinessSignup';
+import CustomerSignup from './src/screens/CustomerSignup';
+import Signup from './src/screens/Signup';
 
 const Stack = createStackNavigator();
 const { width } = Dimensions.get('screen');
@@ -36,7 +32,7 @@ export default () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
-  
+
   // async function onAuthStateChanged(user) {
   //   setUser(user);
   //   console.log('fofof', user);
@@ -47,7 +43,7 @@ export default () => {
   //   return subscriber; // unsubscribe on unmount
   // }, []);
 
-  
+
   // useEffect(() => {
   //   const handleDynamicLink = async (link) => {
   //     // Check and handle if the link is a email login link
@@ -98,13 +94,13 @@ export default () => {
   //   return (
   //     <>
   //       <Drawer.Navigator
-          
+
   //         style={{ flex: 1 }}
   //         drawerContent={(props) => <CustomDrawerContent {...props} />}
   //         drawerStyle={{
   //           backgroundColor: 'white',
   //           width: width * 0.8,
-            
+
   //         }}
   //         screenOptions={{
   //           activeTintcolor: 'white',
@@ -127,7 +123,7 @@ export default () => {
   //           },
   //         }}
   //         initialRouteName="Home"
-          
+
   //       >
   //         <Drawer.Screen name="Home" component={Home}  options={{ headerShown: false }} />
   //         <Drawer.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
@@ -150,7 +146,7 @@ export default () => {
   function CustomerStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Homes" component={Home} options={{headerShown: false, manimationEnabled: false}} />
+        <Stack.Screen name="Homes" component={Home} options={{ headerShown: false, manimationEnabled: false }} />
       </Stack.Navigator>
     )
   }
@@ -158,7 +154,7 @@ export default () => {
   function VenderStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Homes" component={Home} options={{headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="Homes" component={Home} options={{ headerShown: false, animationEnabled: false }} />
       </Stack.Navigator>
     )
   }
@@ -170,21 +166,20 @@ export default () => {
       return <CustomerStack />
     } else {
       return <VenderStack />
-    } 
+    }
   }
 
   function OnboardingStack() {
     return (
-      <Stack.Navigator initialRouteName="Login" >
-        {/* <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false, animationEnabled: false, headerShown: false }}/> */}
-        {/* <Stack.Screen name="LoginNumberFunc" component={LoginNumberFunc} options={{headerShown: false, animationEnabled: false, headerShown: false }}/> */}
-        <Stack.Screen name="Login" component={Login} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
-        <Stack.Screen name="Signup" component={Signup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
-        <Stack.Screen name="VenderSignup" component={VenderSignup} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
-        <Stack.Screen name="OnBoarding1" component={OnBoarding1} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
-        <Stack.Screen name="OnBoarding2" component={OnBoarding2} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
-        <Stack.Screen name="OnBoarding3" component={OnBoarding3} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
-        <Stack.Screen name="TokenVerification" component={TokenVerification} options={{headerShown: false, animationEnabled: false, headerShown: false }}/>
+      <Stack.Navigator initialRouteName="OnBoarding1" >
+        <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="BusinessSignup" component={BusinessSignup} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="CustomerSignup" component={CustomerSignup} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="OnBoarding1" component={OnBoarding1} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="OnBoarding2" component={OnBoarding2} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="OnBoarding3" component={OnBoarding3} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="TokenVerification" component={TokenVerification} options={{ headerShown: false, animationEnabled: false }} />
       </Stack.Navigator>
     )
   }

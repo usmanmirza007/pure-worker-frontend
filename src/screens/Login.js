@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Dimensions,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -99,7 +100,10 @@ export default function Login() {
         barStyle="light-content"
         backgroundColor="#000"
       />
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+
       <Image source={images.cross} style={{ height: 20, width: 20, marginLeft: 25, marginTop: 40, }} resizeMode='contain' />
+      </TouchableOpacity>
 
       <View style={{ flex: 1 }}>
         <View>
