@@ -21,6 +21,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Snackbar from 'react-native-snackbar';
 import { useSignupMutation } from '../store/slice/api';
 import { validateEmail } from '../constants/utils';
+import DateTimesPicker from '../components/DatePicker';
 
 const { width, height } = Dimensions.get('window');
 export default function CustomerSignup() {
@@ -32,6 +33,8 @@ export default function CustomerSignup() {
   const [dob, setDob] = useState('');
   const [userType, setUserType] = useState('CUSTOMER');
   const [signup, { isLoading }] = useSignupMutation();
+  const [date, setDate] = useState(new Date());
+  const setDateTime = (dateTime) => { setDate(dateTime) };
 
   const navigation = useNavigation();
 
@@ -98,14 +101,13 @@ export default function CustomerSignup() {
         backgroundColor="#000"
       />
       <TouchableOpacity onPress={() => navigation.goBack()}>
-
-      <Image source={images.cross} style={{ height: 20, width: 20, marginLeft: 25, marginTop: 40, }} resizeMode='contain' />
+        <Image source={images.cross} style={{ height: 20, width: 20, marginLeft: 25, marginTop: 40, }} resizeMode='contain' />
       </TouchableOpacity>
 
       <View style={{ flex: 1 }}>
-        <View style={{}} >
-          <Text style={{ fontSize: 36, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 75, marginLeft: 25 }}>Create Account</Text>
-          <Text style={{ fontSize: 14, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 5, marginLeft: 25 }}>Create a free account as a Freelancer or Business</Text>
+        <View style={{ marginHorizontal: 50 }} >
+          <Text style={{ fontSize: 36, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 10, marginLeft: 25 }}>Create Account</Text>
+          <Text style={{ fontSize: 14, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 5, marginLeft: 25 }}>Create a free account as a Customer or Service Provider.</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 30, marginHorizontal: 20, marginTop: 45 }}>
           <Button
@@ -132,7 +134,22 @@ export default function CustomerSignup() {
           <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Phone Number</Text>
           <TextInputs style={{ marginTop: 17 }} labelText={'Enter Phone'} state={phoneName} setState={setPhoneName} />
           <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Date of Birth</Text>
-          <TextInputs style={{ marginTop: 17 }} labelText={'Enter Date Of Birth'} state={dob} setState={setDob}  />
+          {/* <TextInputs style={{ marginTop: 17 }} labelText={'Enter Date Of Birth'} state={dob} setState={setDob} /> */}
+          <TouchableOpacity style={{
+            marginTop: 15,
+            color: '#000',
+            fontSize: 14,
+            fontWeight: 'normal',
+            fontFamily: 'Comfortaa-Bold',
+            marginBottom: 10,
+            backgroundColor: '#F7F5F5',
+            borderRadius: 5,
+            height: 50,
+            width: '100%',
+          }}>
+
+            <DateTimesPicker  updateDate={setDateTime}/>
+          </TouchableOpacity>
           <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Email Address</Text>
           <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
           <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Password</Text>

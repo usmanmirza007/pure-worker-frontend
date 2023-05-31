@@ -109,8 +109,8 @@ export default function BusinessSignup() {
       </TouchableOpacity>
 
       <View style={{ flex: 1 }}>
-        <View style={{}} >
-          <Text style={{ fontSize: 36, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 75, marginLeft: 25 }}>Create Account</Text>
+        <View style={{marginHorizontal: 50}}  >
+          <Text style={{ fontSize: 36, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 10, marginLeft: 25 }}>Create Account</Text>
           <Text style={{ fontSize: 14, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 5, marginLeft: 25 }}>Create a free account as a Freelancer or Business</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 30, marginHorizontal: 20, marginTop: 45 }}>

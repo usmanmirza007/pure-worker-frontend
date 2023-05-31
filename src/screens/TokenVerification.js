@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Alert, ScrollView, Text, KeyboardAvoidingView } from "react-native";
 import OtpInputs from "react-native-otp-inputs";
@@ -77,7 +77,7 @@ const TokenVerification = () => {
       />
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: '#000' }}>
         <Text style={{ fontSize: 27, color: '#fff', alignSelf: 'center', marginTop: 50 }}>OTP verification</Text>
-        <Text style={{ color: '#fff', alignSelf: 'center', marginTop: 8 }}>We sent a otp to your email</Text>
+        <Text style={{ color: '#fff', alignSelf: 'center', marginTop: 8 }}>We sent an OTP to your email</Text>
         <Text style={{ color: '#fff', alignSelf: 'center' }}>address! <Text style={{ color: colors.primary, alignSelf: 'center' }}>{route.params?.email}</Text></Text>
         <OtpInputs
           style={{ flexDirection: 'row', marginLeft: 15, marginTop: 80, alignSelf: 'center' }}

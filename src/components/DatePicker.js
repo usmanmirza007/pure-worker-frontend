@@ -35,23 +35,23 @@ const DateTimesPicker = ({ updateDate }) => {
 
   return (
     <View>
-
-      <View style={{ marginHorizontal: 30 }}>
-        <TouchableOpacity
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 15,
+          marginTop: 10,
+        }}
+        hitSlop={{ top: 20, bottom: 20 }}
+        onPress={showDatePicker}>
+        <Text
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-          onPress={showDatePicker}>
-          <Text
-            style={{
-              fontSize: 15,
-              color: '#757575',
-            }}>
-            {moment(date).format('M-YYYY')}
-          </Text>
-        </TouchableOpacity>
-      </View>
+            fontSize: 15,
+            color: '#757575',
+          }}>
+          {moment(date).format('DD-MM-YYYY')}
+        </Text>
+      </TouchableOpacity>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"

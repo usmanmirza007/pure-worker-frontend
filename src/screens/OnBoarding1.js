@@ -26,26 +26,28 @@ export default function OnBoarding1() {
       text: 'Connecting you to trusted and verified service providers',
       signup: 'BusinessSignup',
       login: 'Login',
+      key: 'first'
     },
     {
       image: images.heroPix1,
       text: 'Your one-stop solution for reliable service delivery',
       signup: 'CustomerSignup',
       login: 'Login',
+      key: 'second'
     },
     {
       image: images.heroPix2,
       text: 'Empowering service providers to grow, one job at atime',
       signup: 'CustomerSignup',
       login: 'Login',
+      key: 'third'
     },
   ]
-  const OnboardingView = ({ item }) => {
-
+  const OnboardingView = ({ item, active }) => {
+    
     return (
       <View style={{ width: width, height: height }}>
         <View style={{ alignItems: 'center' }}>
-
           <Image source={images.pureWorkerLogo} style={{ height: 50, width: 200, marginTop: 40, }} resizeMode='contain' />
           <Image source={item.image} style={{ height: 242, width: 275, marginTop: 65 }} resizeMode='contain' />
         </View>
@@ -55,9 +57,9 @@ export default function OnBoarding1() {
           </Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 45 }}>
-          <View style={{ height: 2, width: 65, borderRadius: 2, backgroundColor: 'gray' }}></View>
-          <View style={{ height: 2, width: 65, marginLeft: 32, borderRadius: 2, backgroundColor: 'gray' }}></View>
-          <View style={{ height: 2, width: 65, marginLeft: 32, borderRadius: 2, backgroundColor: 'gray' }}></View>
+          <View style={{ height: 2, width: 65, borderRadius: 2, backgroundColor: item.key == 'first' ? "#fff" : 'gray' }}></View>
+          <View style={{ height: 2, width: 65, marginLeft: 32, borderRadius: 2, backgroundColor: item.key == 'second' ? '#fff' : 'gray' }}></View>
+          <View style={{ height: 2, width: 65, marginLeft: 32, borderRadius: 2, backgroundColor: item.key == 'third' ? "#fff" : 'gray' }}></View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 30, marginHorizontal: 20, marginTop: 45 }}>
           <Button text={'Login'} onClick={() => navigation.navigate(item.login)} textStyle={{ color: '#000', fontSize: 20 }} style={{ flex: 1, borderRadius: 30, height: 45, backgroundColor: colors.primary, }} />
@@ -100,7 +102,7 @@ export default function OnBoarding1() {
           setActiveIndexNumber(slide);
         }}>
         {
-          onboarding?.map((media, index) => <OnboardingView index={index} style={{ width: width, height: heights }} item={media} />)
+          onboarding?.map((media, index) => <OnboardingView index={index} active={activeIndexNumberHorizontal !== index} style={{ width: width, height: heights }} item={media} />)
         }
       </ScrollView>
     </View>
