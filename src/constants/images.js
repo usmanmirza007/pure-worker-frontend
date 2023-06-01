@@ -12,5 +12,6 @@ const images = {
   heroPix: require('../assets/images/heroPix.png'),
   heroPix1: require('../assets/images/heroPix1.png'),
   heroPix2: require('../assets/images/heroPix2.png'),
+  polygon: require('../assets/images/polygon.png'),
 };
 export default images;

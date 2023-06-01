@@ -22,6 +22,8 @@ import TokenVerification from './src/screens/TokenVerification';
 import BusinessSignup from './src/screens/BusinessSignup';
 import CustomerSignup from './src/screens/CustomerSignup';
 import Signup from './src/screens/Signup';
+import TermAndCondition from './src/screens/TermAndCondition';
+import FAQ from './src/screens/FAQ';
 
 const Stack = createStackNavigator();
 const { width } = Dimensions.get('screen');
@@ -180,6 +182,8 @@ export default () => {
         <Stack.Screen name="OnBoarding2" component={OnBoarding2} options={{ headerShown: false, animationEnabled: false }} />
         <Stack.Screen name="OnBoarding3" component={OnBoarding3} options={{ headerShown: false, animationEnabled: false }} />
         <Stack.Screen name="TokenVerification" component={TokenVerification} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="TermAndCondition" component={TermAndCondition} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="FAQ" component={FAQ} options={{ headerShown: false, animationEnabled: false }} />
       </Stack.Navigator>
     )
   }

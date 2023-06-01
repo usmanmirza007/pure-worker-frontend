@@ -102,7 +102,7 @@ export default function Login() {
       />
       <TouchableOpacity onPress={() => navigation.goBack()}>
 
-      <Image source={images.cross} style={{ height: 20, width: 20, marginLeft: 25, marginTop: 40, }} resizeMode='contain' />
+        <Image source={images.cross} style={{ height: 20, width: 20, marginLeft: 25, marginTop: 40, }} resizeMode='contain' />
       </TouchableOpacity>
 
       <View style={{ flex: 1 }}>
@@ -128,6 +128,16 @@ export default function Login() {
         </View>
         {/* : <ActivityIndicator style={{ marginBottom: 30 }} size={'large'} color={'green'} />} */}
         <Text style={{ fontSize: 13, marginTop: 16, textAlign: 'center', color: '#fff', fontFamily: commonStyle.fontFamily.regular }}>Don’t have an account? <Text onPress={() => navigation.navigate('Signup')} style={{ fontSize: 13, textDecorationLine: 'underline', color: colors.primary, fontFamily: commonStyle.fontFamily.regular }}>Register</Text></Text>
+        <Button onClick={() => {
+          navigation.navigate('TermAndCondition')
+        }}
+          style={{marginBottom: 20}}
+          text={`Term And Condition`} />
+        <Button onClick={() => {
+          navigation.navigate('FAQ')
+        }}
+
+          text={`FAQ`} />
       </View>
     </ScrollView >
   );
