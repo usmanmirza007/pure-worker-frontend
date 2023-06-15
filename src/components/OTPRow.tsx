@@ -5,14 +5,14 @@ import OtpBox from './OtpBox';
 
 export default class OTPRow extends React.Component {
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
 
     this.state = {
       otp: [],
     };
 
-    this.a1 = React.createRef();
+    this.a1:  = React.createRef();
     this.a2 = React.createRef();
     this.a3 = React.createRef();
     this.a4 = React.createRef();
@@ -25,7 +25,7 @@ export default class OTPRow extends React.Component {
     this.updateOTP = this.updateOTP.bind(this);
   }
 
-  moveTextInput = (direction, index) => {
+  moveTextInput = (direction: String, index: number) => {
 
     if (index == 0) {
       if (direction === 'left') {
@@ -54,7 +54,7 @@ export default class OTPRow extends React.Component {
     }
   };
 
-  updateOTP(value, index) {
+  updateOTP(value: any, index: number) {
     var otp = this.state.otp;
     otp[index] = value;
     this.setState({otp});

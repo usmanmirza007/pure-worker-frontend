@@ -11,8 +11,6 @@ import SplashScreen from 'react-native-splash-screen';
 // onboarding 
 import Login from './src/screens/Login';
 import OnBoarding1 from './src/screens/OnBoarding1';
-import OnBoarding2 from './src/screens/OnBoarding2';
-import OnBoarding3 from './src/screens/OnBoarding3';
 
 // home 
 import Home from './src/screens/Home';
@@ -148,7 +146,10 @@ export default () => {
   function CustomerStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Homes" component={Home} options={{ headerShown: false, manimationEnabled: false }} />
+        <Stack.Screen name="Homes" component={Home} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="TermAndCondition" component={TermAndCondition} options={{ headerShown: false, animationEnabled: false }} />
+        <Stack.Screen name="FAQ" component={FAQ} options={{ headerShown: false, animationEnabled: false }} />
+
       </Stack.Navigator>
     )
   }
@@ -157,18 +158,19 @@ export default () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Homes" component={Home} options={{ headerShown: false, animationEnabled: false }} />
+        
       </Stack.Navigator>
     )
   }
 
   function HomeStack() {
-    const userType = useSelector(state => state.user.isLoggedIn)
+    const userType = useSelector((state: any) => state.user.isLoggedIn)
     console.log('user ', userType);
-    if (userType) {
+    // if (userType) {
       return <CustomerStack />
-    } else {
-      return <VenderStack />
-    }
+    // } else {
+    //   return <VenderStack />
+    // }
   }
 
   function OnboardingStack() {
@@ -179,18 +181,14 @@ export default () => {
         <Stack.Screen name="BusinessSignup" component={BusinessSignup} options={{ headerShown: false, animationEnabled: false }} />
         <Stack.Screen name="CustomerSignup" component={CustomerSignup} options={{ headerShown: false, animationEnabled: false }} />
         <Stack.Screen name="OnBoarding1" component={OnBoarding1} options={{ headerShown: false, animationEnabled: false }} />
-        <Stack.Screen name="OnBoarding2" component={OnBoarding2} options={{ headerShown: false, animationEnabled: false }} />
-        <Stack.Screen name="OnBoarding3" component={OnBoarding3} options={{ headerShown: false, animationEnabled: false }} />
         <Stack.Screen name="TokenVerification" component={TokenVerification} options={{ headerShown: false, animationEnabled: false }} />
-        <Stack.Screen name="TermAndCondition" component={TermAndCondition} options={{ headerShown: false, animationEnabled: false }} />
-        <Stack.Screen name="FAQ" component={FAQ} options={{ headerShown: false, animationEnabled: false }} />
       </Stack.Navigator>
     )
   }
 
   const MainStack = () => {
 
-    const loggedIn = useSelector(state => state.user.isLoggedIn)
+    const loggedIn = useSelector((state: any) => state.user.isLoggedIn)
 
     if (loggedIn && loggedIn.token) {
       return <HomeStack />

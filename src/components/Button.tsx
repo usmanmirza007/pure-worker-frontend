@@ -1,7 +1,16 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet,  } from 'react-native';
 import commonStyle from '../constants/commonStyle'
-export default function ({ text, onClick, style, disable, textStyle }) {
+
+type ButtonProps = {
+  text: string
+  onClick: () => void
+  style?: any
+  disable?: boolean
+  textStyle?: any
+}
+
+export default function ({ text, onClick, style, disable = false, textStyle }: ButtonProps) {
   return (
     <TouchableOpacity
       disabled={disable}

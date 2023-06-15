@@ -13,11 +13,11 @@ export const emptySplitApi = createApi({
     //prepare headers work need to be done
     prepareHeaders : async (headers, {getState}) => {
       try{
-        const token = store.getState().user.isLoggedIn
-        const isLogin = isJwtExpired(token.token)
+        const user = store.getState().user.isLoggedIn
+        const isLogin = isJwtExpired(user && user?.token)
         // store.dispatch(createApi.util.resetApiState())
         if (!isLogin) {
-          headers.set('authorization', `Bearer ${token.token}`)
+          headers.set('authorization', `Bearer ${user?.token}`)
         } else {
           store.dispatch(logout())
           Snackbar.show({

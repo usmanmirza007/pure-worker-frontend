@@ -3,7 +3,13 @@ import { Image, TouchableOpacity, View } from 'react-native';
 
 import images from '../constants/images';
 
-const Review = ({ editable, value, size }) => {
+type ReviewProps = {
+  size?: boolean
+  editable?: boolean
+  value: number
+}
+
+const Review = ({ editable, value, size }: ReviewProps) => {
   const [selectReview, setReviewSelect] = useState(value ? value : 0);
 
   if (!editable && editable !== false) {

@@ -9,22 +9,24 @@ import {
 
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { AndroidMode, IOSMode } from '../constants/navigation';
 
 
-const DateTimesPicker = ({ updateDate }) => {
+
+const DateTimesPicker = ({ updateDate }: any) => {
 
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState<IOSMode | AndroidMode>('date');
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
+  const onChange = (event: any, selectedDate: any) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
     updateDate(currentDate);
   };
 
-  const showMode = (currentMode) => {
+  const showMode = (currentMode: any) => {
     setShow(true);
     setMode(currentMode);
   };
@@ -57,7 +59,7 @@ const DateTimesPicker = ({ updateDate }) => {
           testID="dateTimePicker"
           value={date}
           mode={mode}
-          is24Hour={false}
+          // is24Hour={false}
           display="default"
           onChange={onChange}
         />

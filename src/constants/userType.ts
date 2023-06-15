@@ -1,7 +1,9 @@
 
   
-  export const customer = "CUSTOMER"
-  export const vender = "VENDER"
+  export const CUSTOMER = "CUSTOMER"
+  export const PROVIDER = "PROVIDER"
+  export const BUSINESS = "BUSINESS"
+  export const FREELANCER = "FREELANCER"
 
   export const orderPending = "PENDING"
   export const orderCaptured = "CAPTUREED"

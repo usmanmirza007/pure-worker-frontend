@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react"; 
+import { Alert, ScrollView, Text, KeyboardAvoidingView, Platform } from "react-native";
+
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Alert, ScrollView, Text, KeyboardAvoidingView } from "react-native";
 import OtpInputs from "react-native-otp-inputs";
 import { useDispatch } from "react-redux";
+import Snackbar from "react-native-snackbar";
+
 import Loading from '../components/SpinnerScreen';
 import Button from "../components/Button";
 import colors from "../constants/colors";
 import MyStatusBar from "../components/MyStatusBar";
 import { useVerifyOtpMutation } from "../store/slice/api";
 import { loggedIn } from "../store/reducer/mainSlice";
-import Snackbar from "react-native-snackbar";
-
+type Route = {
+  key: string
+  name: string
+  params: {
+    email: string
+  }
+}
 const TokenVerification = () => {
 
-  const route = useRoute()
+  const route: Route = useRoute()
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const [verification, { isLoading }] = useVerifyOtpMutation();
 
   const [seconds, setSeconds] = useState(120);
@@ -46,7 +53,7 @@ const TokenVerification = () => {
 
     }
     verification(loginData).unwrap()
-      .then((data) => {
+      .then((data: any) => {
         if (data) {
           Snackbar.show({
             text: `${data.type.toLowerCase()} has been login succssfuly`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
@@ -57,7 +64,7 @@ const TokenVerification = () => {
           }))
         }
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log('err', error);
         Snackbar.show({
           text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
@@ -68,7 +75,7 @@ const TokenVerification = () => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={0}>
       <MyStatusBar
         translucent

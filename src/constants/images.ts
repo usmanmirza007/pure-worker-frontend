@@ -4,7 +4,6 @@ const images = {
   search: require('../assets/images/search.png'),
   cross: require('../assets/images/cross.png'),
   back: require('../assets/images/backArrow.png'),
-  cross: require('../assets/images/cross.png'),
   menu: require('../assets/images/menu.png'),
   vender: require('../assets/images/vender.png'),
   welcome: require('../assets/images/welcome.png'),
@@ -13,5 +12,7 @@ const images = {
   heroPix1: require('../assets/images/heroPix1.png'),
   heroPix2: require('../assets/images/heroPix2.png'),
   polygon: require('../assets/images/polygon.png'),
+  profile: require('../assets/images/profile.png'),
+  question: require('../assets/images/question.png'),
 };
 export default images;

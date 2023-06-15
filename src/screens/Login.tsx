@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
-  ToastAndroid,
-  StatusBar,
   View,
-  ActivityIndicator,
-  ImageBackground,
   Dimensions,
   Image,
   TouchableOpacity,
@@ -22,12 +18,9 @@ import Button from '../components/Button';
 import Snackbar from 'react-native-snackbar';
 import MyStatusBar from '../components/MyStatusBar';
 import { useLoginMutation } from '../store/slice/api';
-import { loggedIn } from '../store/reducer/mainSlice';
 import colors from '../constants/colors';
-import auth from '@react-native-firebase/auth';
-import { BUNDLE_ID, BUNDLE_ID_IOS } from '../constants/userType';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { validateEmail } from '../constants/utils';
+import { StackNavigation } from '../constants/navigation';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -36,7 +29,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [seconds, setSeconds] = useState(120);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch()
 
   const [login, { isLoading }] = useLoginMutation();
@@ -65,18 +58,21 @@ export default function Login() {
           password: password,
         }
         login(loginData).unwrap()
-          .then((data) => {
+          .then((data: any) => {
             if (data && data.token) {
-              Snackbar.show({
-                text: `${data.type.toLowerCase()} has been login succssfuly`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
-              });
-              dispatch(loggedIn({
-                token: data.token,
-                type: data.type
-              }))
+              // Snackbar.show({
+              //   text: `${data.type.toLowerCase()} has been login succssfuly`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+              // });
+              // dispatch(loggedIn({
+              //   token: data.token,
+              //   type: data.type
+              // }))
+              if (data) {
+                navigation.navigate('TokenVerification', {email: email})
+              }
             }
           })
-          .catch((error) => {
+          .catch((error: any) => {
             console.log('err', error);
             Snackbar.show({
               text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
@@ -128,16 +124,7 @@ export default function Login() {
         </View>
         {/* : <ActivityIndicator style={{ marginBottom: 30 }} size={'large'} color={'green'} />} */}
         <Text style={{ fontSize: 13, marginTop: 16, textAlign: 'center', color: '#fff', fontFamily: commonStyle.fontFamily.regular }}>Don’t have an account? <Text onPress={() => navigation.navigate('Signup')} style={{ fontSize: 13, textDecorationLine: 'underline', color: colors.primary, fontFamily: commonStyle.fontFamily.regular }}>Register</Text></Text>
-        <Button onClick={() => {
-          navigation.navigate('TermAndCondition')
-        }}
-          style={{marginBottom: 20}}
-          text={`Term And Condition`} />
-        <Button onClick={() => {
-          navigation.navigate('FAQ')
-        }}
-
-          text={`FAQ`} />
+        
       </View>
     </ScrollView >
   );

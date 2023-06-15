@@ -2,23 +2,30 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 
 import moment from 'moment';
-import commonStyle from './../../constants/commonStyle';
+import commonStyle from '../../constants/commonStyle';
 
-const RecieverMsg = ({ message, index, time }) => {
+
+type SenderMsgProps = {
+    message: string
+    index: number
+    time: string
+}
+const SenderMsg = ({ message, index, time }: SenderMsgProps) => {
 
     return (
         <View
             key={index}
             style={{
-                flexDirection: 'row',
+                flexDirection: 'row-reverse',
                 marginVertical: 8,
-            }}>
+                alignSelf: 'flex-end',
 
+            }}>
             <View
                 style={{
                     borderRadius: 5,
-                    marginRight: 30,
-                    backgroundColor: '#fff',
+                    marginLeft: 30,
+                    backgroundColor: '#E2E2E2',
                     padding: 5,
                     flexDirection: 'column',
                     justifyContent: 'space-between'
@@ -35,9 +42,9 @@ const RecieverMsg = ({ message, index, time }) => {
                     style={{
                         alignSelf: 'flex-end',
                         marginHorizontal: 7,
-                        fontSize: 11,
                         fontFamily: commonStyle.fontFamily.regular,
                         color: '#555555',
+                        fontSize: 11,
                         marginTop: 'auto'
                     }}>
                     {moment(time).format('hh:mm')}
@@ -46,4 +53,4 @@ const RecieverMsg = ({ message, index, time }) => {
         </View>
     );
 };
-export default RecieverMsg;
+export default SenderMsg;

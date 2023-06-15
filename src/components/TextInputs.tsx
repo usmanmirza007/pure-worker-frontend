@@ -1,6 +1,23 @@
 import React, { useState } from 'react';
 import { View, Image, TextInput, TouchableOpacity } from 'react-native';
 
+
+type TextInputsProps = {
+  labelText: string
+  icon?: any
+  style: any
+  state: any
+  setState: (text: any) => void
+  keyBoardType?: any
+  secure?: boolean | undefined
+  image?: any
+  multiline?: boolean
+  nbLines?: number
+  disable?: boolean
+  maxLength?: number
+}
+
+
 const TextInputs = ({
   labelText,
   icon,
@@ -14,7 +31,7 @@ const TextInputs = ({
   nbLines,
   disable,
   maxLength,
-}) => {
+}: TextInputsProps) => {
 
   const [focuse, setFocuse] = useState(false);
   const [secureText, setSecureTextEntry] = useState(true);
@@ -65,9 +82,9 @@ const TextInputs = ({
           onBlur={onBlur}
           keyboardType={keyBoardType}
           selectionColor="#048bf8"
-          secureTextEntry={secure ? secureText : null}
+          secureTextEntry={secure ? secureText : undefined}
           value={state}
-          onChangeText={text => setState(text)}
+          onChangeText={(text: string) => setState(text)}
           multiline={multiline}
           numberOfLines={nbLines}
           editable={disable}
@@ -77,11 +94,12 @@ const TextInputs = ({
           style={{
             // marginTop: multiline ? -10 : -11,
             marginLeft: 15,
-            color: '#000' ,
+            color: '#000',
             fontSize: 14,
             width: '100%',
             fontWeight: 'normal',
             fontFamily: 'Comfortaa-Bold',
+            paddingLeft: image ? 30 : 0,
             lineHeight: multiline ? 24 : 16,
             marginBottom: multiline ? 10 : 0
           }}
@@ -89,7 +107,7 @@ const TextInputs = ({
 
         {image && (
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => { }}
             style={{
               position: 'absolute',
               right: 5,

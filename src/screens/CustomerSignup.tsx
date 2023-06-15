@@ -22,6 +22,7 @@ import Snackbar from 'react-native-snackbar';
 import { useSignupMutation } from '../store/slice/api';
 import { validateEmail } from '../constants/utils';
 import DateTimesPicker from '../components/DatePicker';
+import { StackNavigation } from '../constants/navigation';
 
 const { width, height } = Dimensions.get('window');
 export default function CustomerSignup() {
@@ -34,9 +35,9 @@ export default function CustomerSignup() {
   const [userType, setUserType] = useState('CUSTOMER');
   const [signup, { isLoading }] = useSignupMutation();
   const [date, setDate] = useState(new Date());
-  const setDateTime = (dateTime) => { setDate(dateTime) };
+  const setDateTime = (dateTime: any) => { setDate(dateTime) };
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigation>();
 
   const handleSignup = async () => {
 
@@ -66,17 +67,16 @@ export default function CustomerSignup() {
           cacNo: null,
           location: null,
           dob: dob,
-          password: password,
           userType: userType,
 
         }
         signup(loginData).unwrap()
-          .then((data) => {
+          .then((data: any) => {
             if (data) {
               navigation.navigate('TokenVerification', { email: email })
             }
           })
-          .catch((error) => {
+          .catch((error: any) => {
             console.log('err', error);
             Snackbar.show({
               text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
@@ -134,13 +134,8 @@ export default function CustomerSignup() {
           <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Phone Number</Text>
           <TextInputs style={{ marginTop: 17 }} labelText={'Enter Phone'} state={phoneName} setState={setPhoneName} />
           <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Date of Birth</Text>
-          {/* <TextInputs style={{ marginTop: 17 }} labelText={'Enter Date Of Birth'} state={dob} setState={setDob} /> */}
           <TouchableOpacity style={{
             marginTop: 15,
-            color: '#000',
-            fontSize: 14,
-            fontWeight: 'normal',
-            fontFamily: 'Comfortaa-Bold',
             marginBottom: 10,
             backgroundColor: '#F7F5F5',
             borderRadius: 5,
@@ -148,7 +143,7 @@ export default function CustomerSignup() {
             width: '100%',
           }}>
 
-            <DateTimesPicker  updateDate={setDateTime}/>
+            <DateTimesPicker updateDate={setDateTime} />
           </TouchableOpacity>
           <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Email Address</Text>
           <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />

@@ -12,11 +12,12 @@ import images from '../constants/images';
 import Button from '../components/Button';
 import commonStyle from '../constants/commonStyle';
 import MyStatusBar from '../components/MyStatusBar';
+import { StackNavigation } from '../constants/navigation';
 const { width, height } = Dimensions.get('window');
 
 export default function Signup() {
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigation>();
 
   return (
     <View style={styles.container}>
@@ -31,10 +32,10 @@ export default function Signup() {
       </View>
       <Button onClick={() => {
         navigation.navigate("BusinessSignup")
-      }} text={`Business`} style={{ width: '80%' }} />
+      }} text={`Business / Freelancer`} style={{ width: '80%' }} />
       <Button onClick={() => {
         navigation.navigate("CustomerSignup")
-      }} text={`Customer`} style={{ width: '80%', marginTop: 20 }} />
+      }} text={`Customer / Service Provider`} style={{ width: '80%', marginTop: 20 }} />
 
     </View>
   );

@@ -10,15 +10,14 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import images from '../constants/images';
 import Button from '../components/Button';
-import commonStyle from '../constants/commonStyle';
 import MyStatusBar from '../components/MyStatusBar';
 import colors from '../constants/colors';
-// const { width, height } = Dimensions.get('window');
+import { StackNavigation } from '../constants/navigation';
 const { width, height } = Dimensions.get('screen');
 
 export default function OnBoarding1() {
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigation>();
 
   const onboarding = [
     {
@@ -37,13 +36,13 @@ export default function OnBoarding1() {
     },
     {
       image: images.heroPix2,
-      text: 'Empowering service providers to grow, one job at atime',
+      text: 'Empowering service providers to grow, one job at a time',
       signup: 'CustomerSignup',
       login: 'Login',
       key: 'third'
     },
   ]
-  const OnboardingView = ({ item, active }) => {
+  const OnboardingView = ({ item }: any) => {
     
     return (
       <View style={{ width: width, height: height }}>
@@ -91,7 +90,7 @@ export default function OnBoarding1() {
         showsHorizontalScrollIndicator={false}
         snapToInterval={width}
         snapToAlignment={"start"}
-        viewabilityConfig={0}
+        // viewabilityConfig={0}
         onMomentumScrollEnd={event => {
           const { contentOffset, layoutMeasurement } = event.nativeEvent;
           const index = Math.floor(contentOffset.x / layoutMeasurement.width);

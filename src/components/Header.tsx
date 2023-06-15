@@ -4,13 +4,22 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useNavigation } from '@react-navigation/native';
 import commonStyle from '../constants/commonStyle';
 
-const Header = ({ title, image, style, statusBarStyle, imageStyle, textStyle }) => {
+type HeaderProps = {
+  title: String
+  image: any
+  style?: any
+  statusBarStyle?: any
+  textStyle?: any
+  imageStyle?: any
+}
+
+const Header = ({ title, image, style, statusBarStyle, imageStyle, textStyle }: HeaderProps) => {
   var navigation = useNavigation();
 
   return (
     <View
       style={[{
-        marginTop: StatusBar.currentHeight + getStatusBarHeight(true),
+        marginTop: StatusBar.currentHeight && StatusBar.currentHeight + getStatusBarHeight(true),
         flexDirection: 'row',
         justifyContent: 'center',
         backgroundColor: '#000',
