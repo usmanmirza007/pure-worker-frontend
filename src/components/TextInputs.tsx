@@ -15,6 +15,7 @@ type TextInputsProps = {
   nbLines?: number
   disable?: boolean
   maxLength?: number
+  styleInput?: any
 }
 
 
@@ -31,6 +32,7 @@ const TextInputs = ({
   nbLines,
   disable,
   maxLength,
+  styleInput
 }: TextInputsProps) => {
 
   const [focuse, setFocuse] = useState(false);
@@ -91,18 +93,18 @@ const TextInputs = ({
           placeholder={labelText}
           maxLength={maxLength}
           placeholderTextColor={'#757575'}
-          style={{
+          style={[{
             // marginTop: multiline ? -10 : -11,
             marginLeft: 15,
             color: '#000',
             fontSize: 14,
             width: '100%',
             fontWeight: 'normal',
-            fontFamily: 'Comfortaa-Bold',
+            fontFamily: 'Inter-Medium',
             paddingLeft: image ? 30 : 0,
             lineHeight: multiline ? 24 : 16,
             marginBottom: multiline ? 10 : 0
-          }}
+          }, styleInput]}
         />
 
         {image && (

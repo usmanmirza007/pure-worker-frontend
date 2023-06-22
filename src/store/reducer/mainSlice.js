@@ -12,9 +12,7 @@ const persistConfig = {
 
 const initialState = {
     isLoggedIn: null,
-    editProductImages: [],
-    newProductImages: [],
-    orderId: null
+    category: []
 }
 
 
@@ -22,10 +20,10 @@ export const mainSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loggedIn: (state, data) => {
+        loggedIn: (state, action) => {
             state.isLoggedIn = {
-                token: data.payload.token,
-                userType: data.payload.type
+                token: action.payload.token,
+                userType: action.payload.type
             }
         },
 
@@ -33,48 +31,21 @@ export const mainSlice = createSlice({
             state.isLoggedIn = null
         },
 
-        editProductImages: (state, data) => {
-            let images = []
-            images.push(...state.editProductImages, data.payload)
-            state.editProductImages = [...images]
+        addCategory: (state, action,) => {
+            let text = []
+            text.push(...state.category, action.payload)
+            state.category = [...text]
         },
 
-        removeEditProductImage: (state, data) => {
-            var arr = state.editProductImages.slice();
-            arr.splice(data.payload, 1);
-            state.editProductImages = arr;
+        removeCategory: (state, action) => {
+            // var arr = state.category.filter((text) => text !== action.payload)
+            // state.category = arr;
+            state.category = [];
         },
 
-        newProductImage: (state, data) => {
-            let images = []
-            images.push(...state.newProductImages, data.payload)
-            state.newProductImages = [...images]
-        },
-
-        removeNewProductImage: (state, data) => {
-            var arr = state.newProductImages.slice();
-            arr.splice(data.payload, 1);
-            state.newProductImages = arr;
-        },
-
-        editProductImageEmpty: (state, data) => {
-            state.editProductImages = []
-        },
-
-        newProductImageEmpty: (state, data) => {
-            state.newProductImages = []
-        },
-
-        addOrderId: (state, data) => {
-            state.orderId =  data.payload
-        },
-
-        removeOrderId : (state) => {
-            state.orderId = null
-        },
     },
 })
 
-export const { loggedIn, logout, editProductImages, removeEditProductImage, editProductImageEmpty, newProductImage, removeNewProductImage, newProductImageEmpty, addOrderId, removeOrderId } = mainSlice.actions
+export const { loggedIn, logout, addCategory, removeCategory } = mainSlice.actions
 
 export default mainReducer = persistReducer(persistConfig, mainSlice.reducer)

@@ -14,5 +14,9 @@ const images = {
   polygon: require('../assets/images/polygon.png'),
   profile: require('../assets/images/profile.png'),
   question: require('../assets/images/question.png'),
+  polygonDown: require('../assets/images/polygonDown.png'),
+  polygonForward: require('../assets/images/polygonForward.png'),
+  bin: require('../assets/images/bin.png'),
+  edit: require('../assets/images/edit.png'),
 };
 export default images;

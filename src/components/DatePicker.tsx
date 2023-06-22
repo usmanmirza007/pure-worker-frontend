@@ -10,6 +10,7 @@ import {
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { AndroidMode, IOSMode } from '../constants/navigation';
+import colors from '../constants/colors';
 
 
 
@@ -49,7 +50,7 @@ const DateTimesPicker = ({ updateDate }: any) => {
         <Text
           style={{
             fontSize: 15,
-            color: '#757575',
+            color: colors.black,
           }}>
           {moment(date).format('DD-MM-YYYY')}
         </Text>

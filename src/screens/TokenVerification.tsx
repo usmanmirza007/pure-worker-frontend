@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"; 
-import { Alert, ScrollView, Text, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, ScrollView, Text, ActivityIndicator, View, KeyboardAvoidingView, Platform } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import OtpInputs from "react-native-otp-inputs";
@@ -10,8 +10,9 @@ import Loading from '../components/SpinnerScreen';
 import Button from "../components/Button";
 import colors from "../constants/colors";
 import MyStatusBar from "../components/MyStatusBar";
-import { useVerifyOtpMutation } from "../store/slice/api";
+import { useCreateOtpMutation, useVerifyOtpMutation } from "../store/slice/api";
 import { loggedIn } from "../store/reducer/mainSlice";
+import { TouchableOpacity } from "react-native-gesture-handler";
 type Route = {
   key: string
   name: string
@@ -27,6 +28,7 @@ const TokenVerification = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [verification, { isLoading }] = useVerifyOtpMutation();
+  const [createOtp] = useCreateOtpMutation();
 
   const [seconds, setSeconds] = useState(120);
 
@@ -41,8 +43,24 @@ const TokenVerification = () => {
     return () => clearInterval(timer);
   }, [seconds]);
 
+  const resendOTP = () => {
+    createOtp({ email: route.params?.email }).unwrap()
+      .then((data: any) => {
+        if (data) {
+          Snackbar.show({
+            text: `OTP has been sent`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+          });
+        }
+      })
+      .catch((error: any) => {
+        console.log('err', error);
+        Snackbar.show({
+          text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+        });
+      });
+  }
+
   const veriFyOTP = async () => {
-    console.log('create');
     if (code.length < 6) {
       Alert.alert("Alert!!", "Enter a valid OTP.")
       return;
@@ -55,9 +73,6 @@ const TokenVerification = () => {
     verification(loginData).unwrap()
       .then((data: any) => {
         if (data) {
-          Snackbar.show({
-            text: `${data.type.toLowerCase()} has been login succssfuly`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
-          });
           dispatch(loggedIn({
             token: data.token,
             type: data.type
@@ -96,15 +111,23 @@ const TokenVerification = () => {
           numberOfInputs={6}
           //underlineColorAndroid={PRIMARY_COLOR3}
           selectionColor={'transparent'}
-          importantForAutofill="yes"
+          // importantForAutofill="yes"
           //ref={otpRef}
           autofillFromClipboard={false}
         //focusStyles={{borderBottomWidth:2,borderBottomColor:PRIMARY_COLOR3}}
         />
-        <Text style={{ color: '#fff', alignSelf: 'center', marginTop: 24 }}>Don't receive your code? <Text style={{ color: colors.primary }}>Resend</Text></Text>
-        <Button text={"Submit"} onClick={() => {
-          veriFyOTP()
-        }} textStyle={{ color: '#fff' }} style={{ backgroundColor: colors.parpal, marginHorizontal: 25, marginTop: 312, }} />
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ color: '#fff', alignSelf: 'center', marginTop: 24 }}>Don't receive your code? </Text>
+          <TouchableOpacity style={{ marginTop: 25 }} onPress={() => { resendOTP() }}><Text style={{ color: colors.primary }}>Resend</Text></TouchableOpacity>
+        </View>
+        {!isLoading ?
+          <View style={{}}>
+            <Button onClick={() => {
+              veriFyOTP()
+            }}
+              text={`Submit`} textStyle={{ color: '#fff' }} style={{ backgroundColor: colors.parpal, marginHorizontal: 25, marginTop: 312, }} />
+          </View>
+          : <ActivityIndicator style={{ marginTop: 332 }} size={'large'} color={colors.parpal} />}
       </ScrollView>
       {loading && <Loading />}
     </KeyboardAvoidingView>

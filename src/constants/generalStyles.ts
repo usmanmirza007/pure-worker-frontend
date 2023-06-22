@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 
 export const generalStyles = StyleSheet.create({
@@ -35,3 +35,8 @@ export const generalStyles = StyleSheet.create({
   },
 
 });
+
+export const WIDTH_WINDOW = Dimensions.get('window').width
+export const HEIGHT_WINDOW = Dimensions.get('window').height
+export const WIDTH_SCREEN = Dimensions.get('screen').width
+export const HEIGHT_SCREEN = Dimensions.get('screen').height

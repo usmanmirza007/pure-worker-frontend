@@ -24,7 +24,7 @@ const Home = () => {
       <ScrollView>
         <Header title={'Home'} image={images.back} />
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 20 }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('ProfileStep1')}>
             <Image source={images.profile} style={{ height: 40, width: 40, }} resizeMode='contain' />
           </TouchableOpacity>
           <TextInputs style={{ marginTop: 10, width: '70%' }} labelText={'Enter Email'} state={search} setState={setSearch} />

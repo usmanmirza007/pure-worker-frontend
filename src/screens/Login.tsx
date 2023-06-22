@@ -5,7 +5,9 @@ import {
   View,
   Dimensions,
   Image,
+  ActivityIndicator,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -47,10 +49,10 @@ export default function Login() {
 
   const handleLogin = () => {
 
-    if (email && password) {
+    if (email) {
       if (!validateEmail(email)) {
         Snackbar.show({
-          text: 'Please enter valid email', duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+          text: 'Please enter a valid email', duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
         });
       } else {
         const loginData = {
@@ -59,17 +61,8 @@ export default function Login() {
         }
         login(loginData).unwrap()
           .then((data: any) => {
-            if (data && data.token) {
-              // Snackbar.show({
-              //   text: `${data.type.toLowerCase()} has been login succssfuly`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
-              // });
-              // dispatch(loggedIn({
-              //   token: data.token,
-              //   type: data.type
-              // }))
-              if (data) {
-                navigation.navigate('TokenVerification', {email: email})
-              }
+            if (data) {
+                navigation.navigate('TokenVerification', { email: email })
             }
           })
           .catch((error: any) => {
@@ -89,44 +82,42 @@ export default function Login() {
 
   }
   return (
-    <ScrollView contentContainerStyle={{ height: height }} style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={{ flex: 1, backgroundColor: '#000' }}>
 
-      <MyStatusBar
-        translucent
-        barStyle="light-content"
-        backgroundColor="#000"
-      />
       <TouchableOpacity onPress={() => navigation.goBack()}>
-
-        <Image source={images.cross} style={{ height: 20, width: 20, marginLeft: 25, marginTop: 40, }} resizeMode='contain' />
+        <Image source={images.cross} style={{ height: 20, width: 20, marginLeft: 25, marginBottom: 10, marginTop: StatusBar.currentHeight && StatusBar.currentHeight + 40, }} resizeMode='contain' />
       </TouchableOpacity>
+      <ScrollView>
 
-      <View style={{ flex: 1 }}>
-        <View>
-          <View style={{}} >
-            <Text style={{ fontSize: 36, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 75, marginLeft: 25 }}>Login</Text>
-            <Text style={{ fontSize: 14, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 5, marginLeft: 25 }}>Input your email to log in</Text>
+        <MyStatusBar
+          translucent
+          barStyle="light-content"
+          backgroundColor="#000"
+        />
+        <View style={{ flex: 1 }}>
+          <View>
+            <View style={{}} >
+              <Text style={{ fontSize: 36, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 65, marginLeft: 25 }}>Login</Text>
+              <Text style={{ fontSize: 14, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 5, marginLeft: 25 }}>Input your email to log in</Text>
+            </View>
+            <View style={{ marginHorizontal: 25 }}>
+              <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 60 }}>Email</Text>
+              <TextInputs style={{ marginTop: 10 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
+            </View>
           </View>
-          <View style={{ marginHorizontal: 25 }}>
-            <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 60 }}>Email</Text>
-            <TextInputs style={{ marginTop: 10 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
-            <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Password</Text>
-            <TextInputs style={{ marginTop: 10 }} secure={true} labelText={'Enter Password'} state={password} setState={setPassword} />
-          </View>
-        </View>
-        {/* {!isLoading ?  */}
-        <View style={{ marginHorizontal: 25, marginTop: 75 }}>
-          <Button onClick={() => {
-            handleLogin()
-          }}
+          {!isLoading ?
+            <View style={{ marginHorizontal: 25, marginTop: 75 }}>
+              <Button onClick={() => {
+                handleLogin()
+              }}
+                text={`Login`} />
+            </View> 
+            : <ActivityIndicator style={{ marginTop: 95 }} size={'large'} color={colors.parpal} />}
+          <Text style={{ fontSize: 13, marginTop: 16, textAlign: 'center', color: '#fff', fontFamily: commonStyle.fontFamily.regular }}>Don’t have an account? <Text onPress={() => navigation.navigate('CustomerSignup')} style={{ fontSize: 13, textDecorationLine: 'underline', color: colors.primary, fontFamily: commonStyle.fontFamily.regular }}>Register</Text></Text>
 
-            text={`Login`} />
         </View>
-        {/* : <ActivityIndicator style={{ marginBottom: 30 }} size={'large'} color={'green'} />} */}
-        <Text style={{ fontSize: 13, marginTop: 16, textAlign: 'center', color: '#fff', fontFamily: commonStyle.fontFamily.regular }}>Don’t have an account? <Text onPress={() => navigation.navigate('Signup')} style={{ fontSize: 13, textDecorationLine: 'underline', color: colors.primary, fontFamily: commonStyle.fontFamily.regular }}>Register</Text></Text>
-        
-      </View>
-    </ScrollView >
+      </ScrollView >
+    </View>
   );
 }
 const styles = StyleSheet.create({

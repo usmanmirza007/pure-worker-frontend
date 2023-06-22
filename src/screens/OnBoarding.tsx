@@ -15,7 +15,7 @@ import colors from '../constants/colors';
 import { StackNavigation } from '../constants/navigation';
 const { width, height } = Dimensions.get('screen');
 
-export default function OnBoarding1() {
+export default function OnBoarding() {
 
   const navigation = useNavigation<StackNavigation>();
 
@@ -42,10 +42,10 @@ export default function OnBoarding1() {
       key: 'third'
     },
   ]
-  const OnboardingView = ({ item }: any) => {
+  const OnboardingView = ({ item, index }: any) => {
     
     return (
-      <View style={{ width: width, height: height }}>
+      <View key={index} style={{ width: width, height: height }}>
         <View style={{ alignItems: 'center' }}>
           <Image source={images.pureWorkerLogo} style={{ height: 50, width: 200, marginTop: 40, }} resizeMode='contain' />
           <Image source={item.image} style={{ height: 242, width: 275, marginTop: 65 }} resizeMode='contain' />

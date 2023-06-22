@@ -28,7 +28,6 @@ export default function ({ text, onClick, style, disable = false, textStyle }: B
 const styles = StyleSheet.create({
   start: {
     height: 56,
-    elevation: 3,
     backgroundColor: '#88087B',
     borderRadius: 8,
     justifyContent: 'center',
