@@ -11,7 +11,7 @@ import images from '../../constants/images';
 import Button from '../../components/Button';
 import TextWrapper from '../../components/TextWrapper';
 import commonStyle from '../../constants/commonStyle';
-import { useGetCategoryQuery } from '../../store/slice/api';
+import { useGetCategoryQuery, useLoginMutation } from '../../store/slice/api';
 import colors from '../../constants/colors';
 import { useSelector } from 'react-redux';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
@@ -22,6 +22,7 @@ import {
   CollapseHeader,
   CollapseBody,
 } from 'accordion-collapse-react-native';
+import Snackbar from 'react-native-snackbar';
 const ProfileStep4 = () => {
   const navigation = useNavigation<StackNavigation>();
   const [address, setAddress] = useState('');
@@ -36,6 +37,36 @@ const ProfileStep4 = () => {
     'Voters Card',
     'Others'
   ]);
+
+  const [login] = useLoginMutation();
+
+
+  const handleProfileSetup = () => {
+    if (address) {
+
+      const profileData = {
+        
+      }
+      login(profileData).unwrap()
+        .then((data: any) => {
+          if (data) {
+            navigation.navigate('ProfileStep3')
+          }
+        })
+        .catch((error: any) => {
+          console.log('err', error);
+          Snackbar.show({
+            text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+          });
+        });
+    } else {
+      Snackbar.show({
+        text: 'Please fill all fields',
+        duration: Snackbar.LENGTH_SHORT, textColor: '#fff',
+        backgroundColor: '#88087B',
+      });
+    }
+  }
   return (
     <View style={[{ flex: 1, backgroundColor: colors.greyLight },]}>
       <ScrollView>

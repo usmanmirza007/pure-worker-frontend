@@ -14,6 +14,8 @@ import colors from '../../constants/colors';
 import { generalStyles } from '../../constants/generalStyles';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
+import Snackbar from 'react-native-snackbar';
+import { useLoginMutation } from '../../store/slice/api';
 
 const ProfileStep3 = () => {
   const navigation = useNavigation<StackNavigation>();
@@ -27,6 +29,37 @@ const ProfileStep3 = () => {
   const [email2, setEmail2] = useState('');
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
+  const [address, setAddress] = useState('');
+  const [login] = useLoginMutation();
+
+
+  const handleProfileSetup = () => {
+    if (address) {
+
+      const profileData = {
+        
+      }
+      login(profileData).unwrap()
+        .then((data: any) => {
+          if (data) {
+            navigation.navigate('ProfileStep3')
+          }
+        })
+        .catch((error: any) => {
+          console.log('err', error);
+          Snackbar.show({
+            text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+          });
+        });
+    } else {
+      Snackbar.show({
+        text: 'Please fill all fields',
+        duration: Snackbar.LENGTH_SHORT, textColor: '#fff',
+        backgroundColor: '#88087B',
+      });
+    }
+  }
+
   return (
     <View style={[{ flex: 1, backgroundColor: colors.greyLight },]}>
       <ScrollView>

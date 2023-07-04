@@ -15,11 +15,43 @@ import colors from '../../constants/colors';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import DateTimesPicker from '../../components/DatePicker';
 import { generalStyles } from '../../constants/generalStyles';
+import { useLoginMutation } from '../../store/slice/api';
+import Snackbar from 'react-native-snackbar';
+
 const ProfileStep5 = () => {
   const navigation = useNavigation<StackNavigation>();
   const [date, setDate] = useState(new Date());
   const setDateTime = (dateTime: any) => { setDate(dateTime) };
 
+  const [login] = useLoginMutation();
+
+
+  const handleProfileSetup = () => {
+    if (date) {
+
+      const profileData = {
+        
+      }
+      login(profileData).unwrap()
+        .then((data: any) => {
+          if (data) {
+            navigation.navigate('ProfileStep3')
+          }
+        })
+        .catch((error: any) => {
+          console.log('err', error);
+          Snackbar.show({
+            text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+          });
+        });
+    } else {
+      Snackbar.show({
+        text: 'Please fill all fields',
+        duration: Snackbar.LENGTH_SHORT, textColor: '#fff',
+        backgroundColor: '#88087B',
+      });
+    }
+  }
   return (
     <View style={[{ flex: 1, backgroundColor: colors.greyLight },]}>
       <ScrollView>
