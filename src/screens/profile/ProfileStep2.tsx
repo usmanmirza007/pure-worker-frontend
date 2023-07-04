@@ -12,7 +12,7 @@ import images from '../../constants/images';
 import Button from '../../components/Button';
 import TextWrapper from '../../components/TextWrapper';
 import commonStyle from '../../constants/commonStyle';
-import { useGetCategoryQuery, useLoginMutation } from '../../store/slice/api';
+import { useCreateServiceMutation, useGetCategoryQuery, useLoginMutation } from '../../store/slice/api';
 import colors from '../../constants/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { WIDTH_WINDOW, generalStyles } from '../../constants/generalStyles';
@@ -37,7 +37,7 @@ const PRofileStep2 = () => {
   const category = useSelector((state: any) => state.user.category)
   const [servicesDescription, setServicesDescription] = useState([]); // State to store input values
   const [servicePrice, setServicePrice] = useState([]); // State to store input values
-  const [login] = useLoginMutation();
+  const [createService] = useCreateServiceMutation();
 
   const [nationalityOpen, setNationalityOpen] = useState(false);
   const [nationalityValue, setNationalityValue] = useState(null);
@@ -87,24 +87,27 @@ const PRofileStep2 = () => {
   };
   const { data: getCategoryData, isLoading, isError } = useGetCategoryQuery()
   const getCategory = getCategoryData ?? []
-  console.log('imageUrl', potfolioImageObject, potfolioImageUrl);
 
   const handleProfileSetup = () => {
-    if (ProfilePicture && description && inputValues && servicePrice && nationalityValue) {
+    if (imageObject && description && servicesDescription && servicePrice && nationalityValue) {
 
       const profileData = {
-        ProfilePicture: ProfilePicture,
+        ProfilePicture: imageObject,
         description: description,
-        inputValues: JSON.stringify(inputValues),
+        servicesDescription: JSON.stringify(servicesDescription),
         servicePrice: JSON.stringify(servicePrice),
         city: nationalityValue,
-        PortfolioFirst: PortfolioFirst,
-        PortfolioSecond: PortfolioSecond,
+        PortfolioFirst: PotfolioFirst,
+        PortfolioSecond: PotfolioSecond,
+        serviceImageFirst: potfolioImageObject.length ? potfolioImageObject[0] : '',
+        serviceImageSecond: potfolioImageObject.length > 1 ? potfolioImageObject[1] : '',
+        serviceImageThird: potfolioImageObject.length > 2 ? potfolioImageObject[2] : '',
+        serviceId: null,
       }
-      login(profileData).unwrap()
+      createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            navigation.navigate('ProfileStep3')
+            navigation.navigate('ProfileStep3', {serviceId: data})
           }
         })
         .catch((error: any) => {
@@ -335,7 +338,9 @@ const PRofileStep2 = () => {
                 )
               })}
             </View>
-            <Button onClick={() => { navigation.navigate('ProfileStep3') }}
+            <Button onClick={() => {  
+              handleProfileSetup()
+            }}
               style={{ marginBottom: 20, marginTop: 20, marginHorizontal: 40, backgroundColor: colors.lightBlack }}
               textStyle={{ color: colors.primary }}
               text={`Next`} />

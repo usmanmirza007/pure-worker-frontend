@@ -4,14 +4,14 @@ import {
   Image,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigation } from '../../constants/navigation';
 import Header from '../../components/Header';
 import images from '../../constants/images';
 import Button from '../../components/Button';
 import TextWrapper from '../../components/TextWrapper';
 import commonStyle from '../../constants/commonStyle';
-import { useGetCategoryQuery, useLoginMutation } from '../../store/slice/api';
+import { useCreateServiceMutation, useGetCategoryQuery, useLoginMutation } from '../../store/slice/api';
 import colors from '../../constants/colors';
 import { useSelector } from 'react-redux';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
@@ -23,9 +23,18 @@ import {
   CollapseBody,
 } from 'accordion-collapse-react-native';
 import Snackbar from 'react-native-snackbar';
+type Route = {
+  key: string
+  name: string
+  params: {
+    serviceId: string
+  }
+}
+
 const ProfileStep4 = () => {
   const navigation = useNavigation<StackNavigation>();
-  const [address, setAddress] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const route: Route = useRoute()
 
   const category = useSelector((state: any) => state.user.category)
   const [collapseState, setCollapseState] = useState(false);
@@ -39,18 +48,20 @@ const ProfileStep4 = () => {
   ]);
 
   const [login] = useLoginMutation();
+  const [createService] = useCreateServiceMutation();
 
 
   const handleProfileSetup = () => {
-    if (address) {
+    if (idNumber) {
 
       const profileData = {
-        
+        serviceId: route?.params?.serviceId,
+        idNumber: idNumber
       }
-      login(profileData).unwrap()
+      createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            navigation.navigate('ProfileStep3')
+            navigation.navigate('ProfileStep5', {serviceId: route?.params?.serviceId})
           }
         })
         .catch((error: any) => {
@@ -67,6 +78,7 @@ const ProfileStep4 = () => {
       });
     }
   }
+
   return (
     <View style={[{ flex: 1, backgroundColor: colors.greyLight },]}>
       <ScrollView>
@@ -168,9 +180,9 @@ const ProfileStep4 = () => {
             </CollapseBody>
           </Collapse>
           <TextWrapper children='Enter ID Number' isRequired={true} fontType={'semiBold'} style={{ fontSize: 13, marginTop: 13, color: colors.black }} />
-          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={address} setState={setAddress} />
+          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={idNumber} setState={setIdNumber} />
 
-          <Button onClick={() => { navigation.navigate('ProfileStep5') }}
+          <Button onClick={() => { handleProfileSetup()}}
             style={{ marginHorizontal: 40, marginTop: 140, backgroundColor: colors.lightBlack }}
             textStyle={{ color: colors.primary }}
             text={`Verify`} />

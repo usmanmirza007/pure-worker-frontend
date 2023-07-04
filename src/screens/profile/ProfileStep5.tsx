@@ -4,7 +4,7 @@ import {
   View,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigation } from '../../constants/navigation';
 import Header from '../../components/Header';
 import images from '../../constants/images';
@@ -15,27 +15,42 @@ import colors from '../../constants/colors';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import DateTimesPicker from '../../components/DatePicker';
 import { generalStyles } from '../../constants/generalStyles';
-import { useLoginMutation } from '../../store/slice/api';
+import { useCreateServiceMutation, useLoginMutation } from '../../store/slice/api';
 import Snackbar from 'react-native-snackbar';
 
+type Route = {
+  key: string
+  name: string
+  params: {
+    serviceId: string
+  }
+}
+
 const ProfileStep5 = () => {
+  const route: Route = useRoute()
+
   const navigation = useNavigation<StackNavigation>();
   const [date, setDate] = useState(new Date());
-  const setDateTime = (dateTime: any) => { setDate(dateTime) };
+  const handleDate = (dateTime: any) => { setDate(dateTime) };
+  const [time, setTime] = useState(new Date());
+  const handleTime = (dateTime: any) => { setTime(dateTime) };
 
   const [login] = useLoginMutation();
+  const [createService] = useCreateServiceMutation();
 
 
   const handleProfileSetup = () => {
-    if (date) {
+    if (date && time) {
 
       const profileData = {
-        
+        scheduleDate: date.getTime(),
+        appointmentTime: time.getTime(),
+        serviceId: route?.params?.serviceId,
       }
-      login(profileData).unwrap()
+      createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            navigation.navigate('ProfileStep3')
+            navigation.navigate('Home')
           }
         })
         .catch((error: any) => {
@@ -70,7 +85,7 @@ const ProfileStep5 = () => {
             width: '100%',
           }]}>
             <View style={{ marginTop: -10, width: '60%' }}>
-              <DateTimesPicker updateDate={setDateTime} />
+              <DateTimesPicker updateDate={handleDate} />
             </View>
             <Image
               source={images.calendar}
@@ -88,7 +103,7 @@ const ProfileStep5 = () => {
             width: '100%',
           }]}>
             <View style={{ marginTop: -10, width: '60%' }}>
-              <DateTimesPicker updateDate={setDateTime} type={'time'} />
+              <DateTimesPicker updateDate={handleTime} type={'time'} />
             </View>
             <Image
               source={images.time}
@@ -96,7 +111,7 @@ const ProfileStep5 = () => {
               style={{ width: 15, height: 15, marginRight: 20 }}
             />
           </TouchableOpacity>
-          <Button onClick={() => { navigation.navigate('ProfileStep2') }}
+          <Button onClick={() => { handleProfileSetup() }}
             style={{ marginHorizontal: 40, marginTop: 140, backgroundColor: colors.lightBlack }}
             textStyle={{ color: colors.primary }}
             text={`Schedule`} />

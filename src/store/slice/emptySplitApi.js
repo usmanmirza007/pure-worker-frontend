@@ -17,7 +17,7 @@ export const emptySplitApi = createApi({
         const isLogin = isJwtExpired(user && user?.token)
         // store.dispatch(createApi.util.resetApiState())
         if (!isLogin) {
-          headers.set('authorization', `Bearer ${user?.token}`)
+          headers.set('Authorization', `Bearer ${user?.token}`)
         } else {
           store.dispatch(logout())
           Snackbar.show({

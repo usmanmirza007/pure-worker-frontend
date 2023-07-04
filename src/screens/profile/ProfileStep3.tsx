@@ -3,7 +3,7 @@ import {
   View
 } from 'react-native';
 import { ScrollView, } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigation } from '../../constants/navigation';
 import Header from '../../components/Header';
 import images from '../../constants/images';
@@ -15,8 +15,14 @@ import { generalStyles } from '../../constants/generalStyles';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
 import Snackbar from 'react-native-snackbar';
-import { useLoginMutation } from '../../store/slice/api';
-
+import { useCreateServiceContractMutation, useLoginMutation } from '../../store/slice/api';
+type Route = {
+  key: string
+  name: string
+  params: {
+    serviceId: string
+  }
+}
 const ProfileStep3 = () => {
   const navigation = useNavigation<StackNavigation>();
   const [name1, setName1] = useState('');
@@ -29,20 +35,31 @@ const ProfileStep3 = () => {
   const [email2, setEmail2] = useState('');
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
-  const [address, setAddress] = useState('');
-  const [login] = useLoginMutation();
+  const route: Route = useRoute()
+
+  const [createServiceContract] = useCreateServiceContractMutation();
 
 
   const handleProfileSetup = () => {
-    if (address) {
+    if (route?.params?.serviceId && name1 && name2 && relation1 && relation2 && phoneNumber1 && phoneNumber2 && email1 && email2 && address1 && address2) {
 
       const profileData = {
-        
+        addressFirst: address1,
+        fullNameFirst: name1,
+        relationFirst: relation1,
+        emailFirst: email1,
+        phoneNumberFirst: phoneNumber1,
+        fullNameSecond: name2,
+        relationSecond: relation2,
+        emailSecond: email2,
+        phoneNumberSecond: phoneNumber2,
+        addressSecond: address2,
+        serviceId: route?.params?.serviceId
       }
-      login(profileData).unwrap()
+      createServiceContract(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            navigation.navigate('ProfileStep3')
+            navigation.navigate('ProfileStep4', { serviceId: route?.params?.serviceId })
           }
         })
         .catch((error: any) => {
@@ -128,7 +145,7 @@ const ProfileStep3 = () => {
               style={{ width: 130, backgroundColor: colors.lightBlack }}
               textStyle={{ color: colors.primary }}
               text={`Save`} />
-            <Button onClick={() => { navigation.navigate('ProfileStep4') }}
+            <Button onClick={() => { handleProfileSetup() }}
               style={{ width: 90, backgroundColor: colors.lightBlack }}
               textStyle={{ color: colors.primary }}
 

@@ -18,7 +18,7 @@ export const api = emptySplitApi.injectEndpoints({
             email: args.email,
             password: args.password,
             userType: args.userType,
-            phoneNumber: args.phoneNumber, 
+            phoneNumber: args.phoneNumber,
             dob: args.dob,
             businessName: args.businessName,
             cacNo: args.cacNo,
@@ -91,11 +91,82 @@ export const api = emptySplitApi.injectEndpoints({
       },
     }),
 
-    getSubCategories: builder.query<void, {categoryId: number}>({
+    getSubCategories: builder.query<void, { categoryId: number }>({
       query: (args) => {
         return {
           url: `/users/category/${args.categoryId}`,
           method: 'GET',
+        }
+      },
+    }),
+
+    createService: builder.mutation<any, any>({
+      query: (args) => {
+        const formData = new FormData()
+        formData.append('description', args.description)
+        formData.append('servicesDescription', args.servicesDescription)
+        formData.append('servicePrice', args.servicePrice)
+        formData.append('city', args.city)
+        formData.append('PortfolioFirst', args.PortfolioFirst)
+        formData.append('PortfolioSecond', args.PortfolioSecond)
+        formData.append('idNumber', args.idNumber)
+        formData.append('scheduleDate', args.scheduleDate)
+        formData.append('appointmentTime', args.appointmentTime)
+        formData.append('serviceId', args.serviceId)
+        if (args.ProfilePicture) {
+          formData.append('ProfilePicture', {
+            uri: args.ProfilePicture.uri,
+            name: args.ProfilePicture.filename,
+            type: args.ProfilePicture.type,
+          })
+        }
+        if (args.serviceImageFirst) {
+          formData.append('serviceImageFirst', {
+            uri: args.serviceImageFirst.uri,
+            name: args.serviceImageFirst.filename,
+            type: args.serviceImageFirst.type,
+          })
+        }
+        if (args.serviceImageSecond) {
+          formData.append('serviceImageSecond', {
+            uri: args.serviceImageSecond.uri,
+            name: args.serviceImageSecond.filename,
+            type: args.serviceImageSecond.type,
+          })
+        }
+        if (args.serviceImageThird) {
+          formData.append('serviceImageThird', {
+            uri: args.serviceImageThird.uri,
+            name: args.serviceImageThird.filename,
+            type: args.serviceImageThird.type,
+          })
+        }
+        return {
+          url: '/users/service',
+          method: 'PATCH',
+          body: formData
+        }
+      },
+    }),
+
+    createServiceContract: builder.mutation<any, any>({
+      query: (args) => {
+        return {
+          url: '/auth/',
+          method: 'POST',
+          body: {
+            addressFirst: args.addressFirst,
+            fullNameFirst: args.fullNameFirst,
+            relationFirst: args.relationFirst,
+            emailFirst: args.emailFirst,
+            phoneNumberFirst: args.phoneNumberFirst,
+            fullNameSecond: args.fullNameSecond,
+            relationSecond: args.relationSecond,
+            emailSecond: args.emailSecond,
+            phoneNumberSecond: args.phoneNumberSecond,
+            addressSecond: args.addressSecond,
+            serviceId: args.serviceId,
+          }
         }
       },
     }),
@@ -110,5 +181,7 @@ export const {
   useVerifyOtpMutation,
   useCreateOtpMutation,
   useGetCategoryQuery,
-  useGetSubCategoriesQuery
+  useGetSubCategoriesQuery,
+  useCreateServiceMutation,
+  useCreateServiceContractMutation,
 } = api
