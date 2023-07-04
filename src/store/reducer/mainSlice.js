@@ -38,9 +38,8 @@ export const mainSlice = createSlice({
         },
 
         removeCategory: (state, action) => {
-            // var arr = state.category.filter((text) => text !== action.payload)
-            // state.category = arr;
-            state.category = [];
+            var arr = state.category.filter((text) => text !== action.payload)
+            state.category = arr;
         },
 
     },

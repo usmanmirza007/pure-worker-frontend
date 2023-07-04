@@ -8,17 +8,22 @@ import { WIDTH_WINDOW, generalStyles } from '../constants/generalStyles';
 import TextInputs from './TextInputs';
 import Button from './Button';
 
-const PotfolioWrapper = () => {
+const PotfolioWrapper = ({ setPotfolio }: any) => {
   const [address, setAddress] = useState('');
   const [isAddService, setIsAddService] = useState(false);
 
+  useEffect(() => {
+    setPotfolio(address)
+  }, [address]);
+  
   return (
-    <View style={{marginBottom: 20}}>
+    <View style={{ marginBottom: 20 }}>
       <View style={[generalStyles.rowBetween]}>
-        {isAddService ? <TextInputs styleInput={{ color: colors.white, paddingHorizontal: 18, }} style={{ width: 160, backgroundColor: colors.greyLight1 }}
+        {isAddService ? <TextInputs styleInput={{ color: colors.white, paddingHorizontal: 18, }} style={{ width: 160, backgroundColor: colors.lightBlack }}
           labelText={'Portfolio 1'}
           state={address}
-          setState={setAddress} /> :
+          setState={setAddress} />
+          :
           <View style={{ paddingHorizontal: 10, justifyContent: 'center', backgroundColor: colors.lightBlack, height: 50, width: 160, borderRadius: 5, }}>
             <TextWrapper
               numberOfLines={1}
@@ -27,7 +32,7 @@ const PotfolioWrapper = () => {
                 fontSize: 12,
                 color: '#fff',
               }}>
-              Portfolio 1
+              {address ? address : 'Portfolio 1'}
             </TextWrapper>
           </View>}
         <View style={[generalStyles.rowCenter]}>

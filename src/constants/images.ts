@@ -18,5 +18,7 @@ const images = {
   polygonForward: require('../assets/images/polygonForward.png'),
   bin: require('../assets/images/bin.png'),
   edit: require('../assets/images/edit.png'),
+  time: require('../assets/images/time.png'),
+  calendar: require('../assets/images/calendar.png'),
 };
 export default images;

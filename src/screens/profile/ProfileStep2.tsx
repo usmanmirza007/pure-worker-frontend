@@ -1,8 +1,6 @@
 import React, { useDeferredValue, useEffect, useMemo, useState } from 'react';
 import {
   View,
-  Text,
-  ActivityIndicator,
   Image,
   TextInput
 } from 'react-native';
@@ -22,14 +20,21 @@ import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
 import DropDownPicker from 'react-native-dropdown-picker';
 import PotfolioWrapper from '../../components/PotfolioWrapper';
+import { launchCamera, launchImageLibrary } from '../../constants/utils';
+import * as ImagePicker from 'react-native-image-picker';
 
 const PRofileStep2 = () => {
   const navigation = useNavigation<StackNavigation>();
-  const [address, setAddress] = useState('');
-  const [isAddService, setIsAddService] = useState(false);
+  const [description, setDescription] = useState('');
+  const [PotfolioFirst, setPotfolioFirst] = useState('');
+  const [PotfolioSecond, setPotfolioSecond] = useState('');
+  const [imageObject, setImageObject] = useState({});
+  const [imageUrl, setImageUrl] = useState('');
+  const [potfolioImageObject, setPotfolioImageObject] = useState([]);
+  const [potfolioImageUrl, setPotfolioImageUrl] = useState([]);
 
   const category = useSelector((state: any) => state.user.category)
-  const [inputValues, setInputValues] = useState([]); // State to store input values
+  const [servicesDescription, setServicesDescription] = useState([]); // State to store input values
   const [servicePrice, setServicePrice] = useState([]); // State to store input values
 
   const [nationalityOpen, setNationalityOpen] = useState(false);
@@ -48,7 +53,7 @@ const PRofileStep2 = () => {
         serviceName: service,
         value: ''
       }));
-      setInputValues([...updatedInputValues]);
+      setServicesDescription([...updatedInputValues]);
     }
   }, [category]);
 
@@ -64,9 +69,9 @@ const PRofileStep2 = () => {
   }, [category]);
 
   const handleInputChange = (index: number, value: string) => {
-    const updatedInputValues: any = [...inputValues];
+    const updatedInputValues: any = [...servicesDescription];
     updatedInputValues[index] = { ...updatedInputValues[index], value };
-    setInputValues(updatedInputValues);
+    setServicesDescription(updatedInputValues);
   };
   const handleServicePriceMinChange = (index: number, priceMin: string) => {
     const updatedInputValues: any = [...servicePrice];
@@ -80,6 +85,7 @@ const PRofileStep2 = () => {
   };
   const { data: getCategoryData, isLoading, isError } = useGetCategoryQuery()
   const getCategory = getCategoryData ?? []
+  console.log('imageUrl', potfolioImageObject, potfolioImageUrl);
 
   return (
     <View style={[{ flex: 1, backgroundColor: colors.greyLight },]}>
@@ -93,11 +99,23 @@ const PRofileStep2 = () => {
 
           <View>
             <TouchableOpacity style={[generalStyles.contentCenter, { width: 145, height: 145, borderRadius: 145, alignSelf: 'center', backgroundColor: colors.greyLight1 }]} >
-              <TextWrapper children='Upload Profile Photo' fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 14, color: colors.black }} />
+              {!imageUrl ? <TextWrapper children='Upload Profile Photo' fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 14, color: colors.black }} />
+                : <Image source={{ uri: imageUrl }} style={{ width: 145, height: 145, borderRadius: 145 }} />}
+
             </TouchableOpacity>
             <View style={{ position: 'absolute', right: 40, top: 10, flexDirection: 'row' }}>
-              <Image source={images.edit} resizeMode='contain' style={{ width: 20, height: 20, marginLeft: 20, tintColor: '#000' }} />
-              <Image source={images.bin} resizeMode='contain' style={{ width: 20, height: 20, marginLeft: 20, tintColor: '#000' }} />
+              <TouchableOpacity onPress={async () => {
+                const response = await launchImageLibrary()
+                if (response) {
+                  setImageObject(response)
+                  setImageUrl(response?.uri ? response.uri : '')
+                }
+              }}>
+                <Image source={images.edit} resizeMode='contain' style={{ width: 20, height: 20, marginLeft: 20, tintColor: '#000' }} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setImageUrl('')}>
+                <Image source={images.bin} resizeMode='contain' style={{ width: 20, height: 20, marginLeft: 20, tintColor: '#000' }} />
+              </TouchableOpacity>
             </View>
           </View>
           <TextWrapper children='Description' isRequired={true} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, color: colors.black }} />
@@ -110,14 +128,14 @@ const PRofileStep2 = () => {
           }}>
             <TextInputs styleInput={{ color: colors.white, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
               labelText={'Introduce yourself and enter your profile description.'}
-              state={address}
-              setState={setAddress}
+              state={description}
+              setState={setDescription}
               multiline={true}
               nbLines={5} />
           </View>
           <TextWrapper children='Service Intro' isRequired={true} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, marginBottom: 13, color: colors.black }} />
 
-          {inputValues?.length ? inputValues?.map((item: any, index: any) => {
+          {servicesDescription?.length ? servicesDescription?.map((item: any, index: any) => {
             return (
               <View style={{ flexDirection: 'row', alignItems: 'center', width: WIDTH_WINDOW - 40, justifyContent: 'space-between', marginBottom: 13 }}>
                 <View key={index} style={{ paddingHorizontal: 10, justifyContent: 'center', backgroundColor: colors.lightBlack, height: 50, width: 120, borderRadius: 5, }}>
@@ -212,24 +230,26 @@ const PRofileStep2 = () => {
               labelStyle={{
                 fontFamily: commonStyle.fontFamily.regular,
                 fontSize: 14,
-                color: '#9E9E9E',
+                color: colors.white,
               }}
-              // arrowIconStyle={{
+              arrowIconStyle={{
+                // backgroundColor: 'red'
 
-              // }}
+              }}
               placeholderStyle={{
                 fontFamily: commonStyle.fontFamily.regular,
                 fontSize: 14,
                 color: '#9E9E9E',
               }}
               style={{
-                backgroundColor: "#F7F5F5",
-                borderColor: '#9E9E9E14',
+                backgroundColor: colors.lightBlack,
+                borderColor: colors.primary,
+                borderWidth: 2
               }}
               listMode='FLATLIST'
               showTickIcon={false}
               textStyle={{
-                color: '#9E9E9E'
+                color: colors.white
               }}
               listParentLabelStyle={{
                 color: '#000',
@@ -247,15 +267,41 @@ const PRofileStep2 = () => {
           </View>
           <View style={{ zIndex: nationalityOpen ? 0 : 2, }}>
             <TextWrapper children='Portfolio' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, marginBottom: 13, color: colors.black }} />
-            <PotfolioWrapper />
-            <PotfolioWrapper />
+            <PotfolioWrapper setPotfolio={setPotfolioFirst} />
+            <PotfolioWrapper setPotfolio={setPotfolioSecond} />
             <TextWrapper children='Add a Portfolio' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginBottom: 13, color: colors.black }} />
             <View style={{ backgroundColor: colors.greyLight1, height: 80, borderRadius: 5 }}>
               <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, marginTop: 10, tintColor: '#000' }} />
               <TextWrapper children='Maximum number of portfolios added.' isRequired={false} fontType={'normal'} style={{ textAlign: 'center', fontSize: 12, marginTop: 13, color: colors.black }} />
             </View>
+            {potfolioImageUrl.length < 3 && <TouchableOpacity
+              onPress={async () => {
+                const response = await launchCamera()
+                if (response) {
+                  setPotfolioImageObject([...potfolioImageObject, response])
+                  setPotfolioImageUrl([...potfolioImageUrl, response?.uri ? response.uri : []])
+                }
+              }}
+              style={[generalStyles.contentCenter, { height: 25, width: 120, borderRadius: 5, marginTop: 13, backgroundColor: colors.lightBlack }]}>
+              <TextWrapper children='Upload Images' isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.white }} />
+            </TouchableOpacity>}
+            <View style={[generalStyles.rowCenter, { marginRight: 20, }]}>
+              {potfolioImageUrl.map((item, index) => {
+                return (
+                  <View key={index} style={[[generalStyles.rowCenter, { marginRight: 20 }], { marginTop: 10, }]}>
+                    <TextWrapper children={item?.slice(-8)} isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.black }} />
+                    <TouchableOpacity onPress={() => {
+                      setPotfolioImageObject(potfolioImageObject.filter((text) => text?.uri !== item))
+                      setPotfolioImageUrl(potfolioImageUrl.filter((text) => text !== item))
+                    }}>
+                      <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, tintColor: '#000' }} />
+                    </TouchableOpacity>
+                  </View>
+                )
+              })}
+            </View>
             <Button onClick={() => { navigation.navigate('ProfileStep3') }}
-              style={{ marginBottom: 20, marginTop: 20, backgroundColor: colors.lightBlack }}
+              style={{ marginBottom: 20, marginTop: 20, marginHorizontal: 40, backgroundColor: colors.lightBlack }}
               textStyle={{ color: colors.primary }}
               text={`Next`} />
           </View>

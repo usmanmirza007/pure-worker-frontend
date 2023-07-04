@@ -14,7 +14,7 @@ import colors from '../constants/colors';
 
 
 
-const DateTimesPicker = ({ updateDate }: any) => {
+const DateTimesPicker = ({ updateDate, type = 'date' }: any) => {
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState<IOSMode | AndroidMode>('date');
@@ -33,7 +33,7 @@ const DateTimesPicker = ({ updateDate }: any) => {
   };
 
   const showDatePicker = () => {
-    showMode('date');
+    showMode(type);
   };
 
   return (
@@ -52,7 +52,7 @@ const DateTimesPicker = ({ updateDate }: any) => {
             fontSize: 15,
             color: colors.black,
           }}>
-          {moment(date).format('DD-MM-YYYY')}
+          {type == 'date' ? moment(date).format('DD-MM-YYYY') : moment(date).format('h:MM a')}
         </Text>
       </TouchableOpacity>
       {show && (
