@@ -72,6 +72,19 @@ export const api = emptySplitApi.injectEndpoints({
       },
     }),
 
+    resetOtp: builder.mutation<any, any>({
+      query: (args) => {
+
+        return {
+          url: '/auth/resetOtp',
+          method: 'PATCH',
+          body: {
+            email: args.email,
+          }
+        }
+      },
+    }),
+
     getUser: builder.query<void, any>({
       query: () => {
         return {
@@ -107,37 +120,47 @@ export const api = emptySplitApi.injectEndpoints({
         formData.append('servicesDescription', args.servicesDescription)
         formData.append('servicePrice', args.servicePrice)
         formData.append('city', args.city)
-        formData.append('PortfolioFirst', args.PortfolioFirst)
-        formData.append('PortfolioSecond', args.PortfolioSecond)
+        formData.append('portfolioFirst', args.portfolioFirst)
+        formData.append('portfolioSecond', args.portfolioSecond)
         formData.append('idNumber', args.idNumber)
         formData.append('scheduleDate', args.scheduleDate)
         formData.append('appointmentTime', args.appointmentTime)
+        formData.append('addressFirst', args.addressFirst)
+        formData.append('fullNameFirst', args.fullNameFirst)
+        formData.append('relationFirst', args.relationFirst)
+        formData.append('emailFirst', args.emailFirst)
+        formData.append('phoneNumberFirst', args.phoneNumberFirst)
+        formData.append('fullNameSecond', args.fullNameSecond)
+        formData.append('relationSecond', args.relationSecond)
+        formData.append('emailSecond', args.emailSecond)
+        formData.append('phoneNumberSecond', args.phoneNumberSecond)
+        formData.append('addressSecond', args.addressSecond)
         formData.append('serviceId', args.serviceId)
-        if (args.ProfilePicture) {
-          formData.append('ProfilePicture', {
-            uri: args.ProfilePicture.uri,
-            name: args.ProfilePicture.filename,
-            type: args.ProfilePicture.type,
+        if (args.profilePicture) {
+          formData.append('profilePicture', {
+            uri:  args.profilePicture.uri,
+            name: args.profilePicture.fileName,
+            type: args.profilePicture.type,
           })
         }
         if (args.serviceImageFirst) {
           formData.append('serviceImageFirst', {
             uri: args.serviceImageFirst.uri,
-            name: args.serviceImageFirst.filename,
+            name: args.serviceImageFirst.fileName,
             type: args.serviceImageFirst.type,
           })
         }
         if (args.serviceImageSecond) {
           formData.append('serviceImageSecond', {
             uri: args.serviceImageSecond.uri,
-            name: args.serviceImageSecond.filename,
+            name: args.serviceImageSecond.fileName,
             type: args.serviceImageSecond.type,
           })
         }
         if (args.serviceImageThird) {
           formData.append('serviceImageThird', {
             uri: args.serviceImageThird.uri,
-            name: args.serviceImageThird.filename,
+            name: args.serviceImageThird.fileName,
             type: args.serviceImageThird.type,
           })
         }
@@ -145,28 +168,6 @@ export const api = emptySplitApi.injectEndpoints({
           url: '/users/service',
           method: 'PATCH',
           body: formData
-        }
-      },
-    }),
-
-    createServiceContract: builder.mutation<any, any>({
-      query: (args) => {
-        return {
-          url: '/auth/',
-          method: 'POST',
-          body: {
-            addressFirst: args.addressFirst,
-            fullNameFirst: args.fullNameFirst,
-            relationFirst: args.relationFirst,
-            emailFirst: args.emailFirst,
-            phoneNumberFirst: args.phoneNumberFirst,
-            fullNameSecond: args.fullNameSecond,
-            relationSecond: args.relationSecond,
-            emailSecond: args.emailSecond,
-            phoneNumberSecond: args.phoneNumberSecond,
-            addressSecond: args.addressSecond,
-            serviceId: args.serviceId,
-          }
         }
       },
     }),
@@ -183,5 +184,5 @@ export const {
   useGetCategoryQuery,
   useGetSubCategoriesQuery,
   useCreateServiceMutation,
-  useCreateServiceContractMutation,
+  useResetOtpMutation,
 } = api

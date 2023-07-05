@@ -10,7 +10,7 @@ import Loading from '../components/SpinnerScreen';
 import Button from "../components/Button";
 import colors from "../constants/colors";
 import MyStatusBar from "../components/MyStatusBar";
-import { useCreateOtpMutation, useVerifyOtpMutation } from "../store/slice/api";
+import { useCreateOtpMutation, useResetOtpMutation, useVerifyOtpMutation } from "../store/slice/api";
 import { loggedIn } from "../store/reducer/mainSlice";
 import { TouchableOpacity } from "react-native-gesture-handler";
 type Route = {
@@ -26,27 +26,46 @@ const TokenVerification = () => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const [verification, { isLoading }] = useVerifyOtpMutation();
   const [createOtp] = useCreateOtpMutation();
+  const [resetOtp] = useResetOtpMutation();
 
-  const [seconds, setSeconds] = useState(120);
+  const [seconds, setSeconds] = useState(10);
 
   useEffect(() => {
     const timer = setInterval(() => {
       if (seconds > 0) {
-
         setSeconds(prevSeconds => prevSeconds - 1);
       }
     }, 1000);
-
     return () => clearInterval(timer);
   }, [seconds]);
+
+  useEffect(() => {
+    if (seconds === 0) {
+      resetOTP()
+    }
+  }, [seconds]);
+
+
+  const resetOTP = () => {
+    resetOtp({ email: route.params?.email }).unwrap()
+      .then((data: any) => {
+
+      })
+      .catch((error: any) => {
+        console.log('err', error);
+        Snackbar.show({
+          text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+        });
+      });
+  }
 
   const resendOTP = () => {
     createOtp({ email: route.params?.email }).unwrap()
       .then((data: any) => {
         if (data) {
+          setSeconds(120)
           Snackbar.show({
             text: `OTP has been sent`, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
           });
@@ -86,7 +105,11 @@ const TokenVerification = () => {
         });
       });
   }
-
+  
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secondss = seconds % 60;
+  const condition: number = 10
+  const valueOfMint = secondss < condition ? `0${secondss}` : secondss
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -120,6 +143,7 @@ const TokenVerification = () => {
           <Text style={{ color: '#fff', alignSelf: 'center', marginTop: 24 }}>Don't receive your code? </Text>
           <TouchableOpacity style={{ marginTop: 25 }} onPress={() => { resendOTP() }}><Text style={{ color: colors.primary }}>Resend</Text></TouchableOpacity>
         </View>
+        <Text style={{ color: colors.primary, textAlign: 'center' }}>{"0" + minutes + ':' + valueOfMint}</Text>
         {!isLoading ?
           <View style={{}}>
             <Button onClick={() => {

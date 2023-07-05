@@ -50,7 +50,7 @@ const ProfileStep5 = () => {
       createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            navigation.navigate('Home')
+            navigation.navigate('Homes')
           }
         })
         .catch((error: any) => {

@@ -2,7 +2,8 @@ import React, { useDeferredValue, useEffect, useMemo, useState } from 'react';
 import {
   View,
   Image,
-  TextInput
+  TextInput,
+  Platform
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -92,28 +93,28 @@ const PRofileStep2 = () => {
     if (imageObject && description && servicesDescription && servicePrice && nationalityValue) {
 
       const profileData = {
-        ProfilePicture: imageObject,
+        profilePicture: imageObject,
         description: description,
         servicesDescription: JSON.stringify(servicesDescription),
         servicePrice: JSON.stringify(servicePrice),
         city: nationalityValue,
-        PortfolioFirst: PotfolioFirst,
-        PortfolioSecond: PotfolioSecond,
+        portfolioFirst: PotfolioFirst,
+        portfolioSecond: PotfolioSecond,
         serviceImageFirst: potfolioImageObject.length ? potfolioImageObject[0] : '',
         serviceImageSecond: potfolioImageObject.length > 1 ? potfolioImageObject[1] : '',
         serviceImageThird: potfolioImageObject.length > 2 ? potfolioImageObject[2] : '',
-        serviceId: null,
+        serviceId: '',
       }
       createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            navigation.navigate('ProfileStep3', {serviceId: data})
+            navigation.navigate('ProfileStep3', { serviceId: data.serviceId, })
           }
         })
         .catch((error: any) => {
           console.log('err', error);
           Snackbar.show({
-            text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+            text: JSON.stringify(error), duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
           });
         });
     } else {
@@ -136,11 +137,11 @@ const PRofileStep2 = () => {
           <TextWrapper children='Profile' fontType={'semiBold'} style={{ fontSize: 20, marginTop: 30, color: colors.black }} />
 
           <View>
-            <TouchableOpacity style={[generalStyles.contentCenter, { width: 145, height: 145, borderRadius: 145, alignSelf: 'center', backgroundColor: colors.greyLight1 }]} >
+            <View style={[generalStyles.contentCenter, { width: 145, height: 145, borderRadius: 145, alignSelf: 'center', backgroundColor: colors.greyLight1 }]} >
               {!imageUrl ? <TextWrapper children='Upload Profile Photo' fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 14, color: colors.black }} />
                 : <Image source={{ uri: imageUrl }} style={{ width: 145, height: 145, borderRadius: 145 }} />}
 
-            </TouchableOpacity>
+            </View>
             <View style={{ position: 'absolute', right: 40, top: 10, flexDirection: 'row' }}>
               <TouchableOpacity onPress={async () => {
                 const response = await launchImageLibrary()
@@ -164,13 +165,14 @@ const PRofileStep2 = () => {
             backgroundColor: colors.greyLight1,
             marginTop: 13
           }}>
-            <TextInputs styleInput={{ color: colors.white, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
+            <TextInputs styleInput={{ color: colors.black, paddingHorizontal: 18, fontSize: 12 }} style={{ backgroundColor: colors.greyLight1 }}
               labelText={'Introduce yourself and enter your profile description.'}
               state={description}
               setState={setDescription}
               multiline={true}
               nbLines={5} />
           </View>
+
           <TextWrapper children='Service Intro' isRequired={true} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, marginBottom: 13, color: colors.black }} />
 
           {servicesDescription?.length ? servicesDescription?.map((item: any, index: any) => {
@@ -189,7 +191,7 @@ const PRofileStep2 = () => {
                 </View>
                 <TextInput
                   style={{ width: '60%', paddingHorizontal: 10, backgroundColor: colors.lightBlack, borderRadius: 5, color: '#fff' }}
-                  placeholderTextColor={'#fff'}
+                  placeholderTextColor={colors.grey}
                   placeholder='Type name of service'
                   key={index}
                   value={item.value} // Assign value from state
@@ -219,8 +221,9 @@ const PRofileStep2 = () => {
                 <View style={[generalStyles.rowCenter]}>
                   <TextInput
                     style={{ width: 80, paddingHorizontal: 10, backgroundColor: colors.lightBlack, borderRadius: 5, color: '#fff' }}
-                    placeholderTextColor={'#fff'}
+                    placeholderTextColor={colors.grey}
                     placeholder='N'
+                    keyboardType='number-pad'
                     key={index}
                     value={item.value} // Assign value from state
                     onChangeText={value => handleServicePriceMinChange(index, value)}
@@ -236,8 +239,9 @@ const PRofileStep2 = () => {
                   </TextWrapper>
                   <TextInput
                     style={{ width: 80, paddingHorizontal: 10, backgroundColor: colors.lightBlack, borderRadius: 5, color: '#fff' }}
-                    placeholderTextColor={'#fff'}
+                    placeholderTextColor={colors.grey}
                     placeholder='N'
+                    keyboardType='number-pad'
                     key={index}
                     value={item.value} // Assign value from state
                     onChangeText={value => handleServicePriceMaxChange(index, value)}
@@ -308,16 +312,16 @@ const PRofileStep2 = () => {
             <PotfolioWrapper setPotfolio={setPotfolioFirst} />
             <PotfolioWrapper setPotfolio={setPotfolioSecond} />
             <TextWrapper children='Add a Portfolio' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginBottom: 13, color: colors.black }} />
-            <View style={{ backgroundColor: colors.greyLight1, height: 80, borderRadius: 5 }}>
+            {potfolioImageUrl.length == 3 && <View style={{ backgroundColor: colors.greyLight1, height: 80, borderRadius: 5 }}>
               <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, marginTop: 10, tintColor: '#000' }} />
               <TextWrapper children='Maximum number of portfolios added.' isRequired={false} fontType={'normal'} style={{ textAlign: 'center', fontSize: 12, marginTop: 13, color: colors.black }} />
-            </View>
+            </View>}
             {potfolioImageUrl.length < 3 && <TouchableOpacity
               onPress={async () => {
-                const response = await launchCamera()
+                const response = await launchImageLibrary()
                 if (response) {
                   setPotfolioImageObject([...potfolioImageObject, response])
-                  setPotfolioImageUrl([...potfolioImageUrl, response?.uri ? response.uri : []])
+                  setPotfolioImageUrl([...potfolioImageUrl, response?.uri])
                 }
               }}
               style={[generalStyles.contentCenter, { height: 25, width: 120, borderRadius: 5, marginTop: 13, backgroundColor: colors.lightBlack }]}>
@@ -338,7 +342,7 @@ const PRofileStep2 = () => {
                 )
               })}
             </View>
-            <Button onClick={() => {  
+            <Button onClick={() => {
               handleProfileSetup()
             }}
               style={{ marginBottom: 20, marginTop: 20, marginHorizontal: 40, backgroundColor: colors.lightBlack }}

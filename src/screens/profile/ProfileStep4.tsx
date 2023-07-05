@@ -56,7 +56,9 @@ const ProfileStep4 = () => {
 
       const profileData = {
         serviceId: route?.params?.serviceId,
-        idNumber: idNumber
+        idNumber: idNumber,
+        scheduleDate: null,
+        appointmentTime: null,
       }
       createService(profileData).unwrap()
         .then((data: any) => {

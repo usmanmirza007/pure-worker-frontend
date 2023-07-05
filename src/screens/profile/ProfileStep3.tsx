@@ -15,7 +15,7 @@ import { generalStyles } from '../../constants/generalStyles';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
 import Snackbar from 'react-native-snackbar';
-import { useCreateServiceContractMutation, useLoginMutation } from '../../store/slice/api';
+import { useCreateServiceMutation } from '../../store/slice/api';
 type Route = {
   key: string
   name: string
@@ -37,10 +37,11 @@ const ProfileStep3 = () => {
   const [address2, setAddress2] = useState('');
   const route: Route = useRoute()
 
-  const [createServiceContract] = useCreateServiceContractMutation();
+  const [createService] = useCreateServiceMutation();
 
 
   const handleProfileSetup = () => {
+
     if (route?.params?.serviceId && name1 && name2 && relation1 && relation2 && phoneNumber1 && phoneNumber2 && email1 && email2 && address1 && address2) {
 
       const profileData = {
@@ -54,18 +55,21 @@ const ProfileStep3 = () => {
         emailSecond: email2,
         phoneNumberSecond: phoneNumber2,
         addressSecond: address2,
+        idNumber: null,
+        scheduleDate: null,
+        appointmentTime: null,
         serviceId: route?.params?.serviceId
       }
-      createServiceContract(profileData).unwrap()
+      createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
             navigation.navigate('ProfileStep4', { serviceId: route?.params?.serviceId })
           }
         })
         .catch((error: any) => {
-          console.log('err', error);
+          console.log('error', error);
           Snackbar.show({
-            text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+            text: JSON.stringify(error), duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
           });
         });
     } else {
@@ -93,10 +97,10 @@ const ProfileStep3 = () => {
           <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={relation1} setState={setRelation1} />
 
           <TextWrapper children='Phone Number' isRequired={true} fontType={'semiBold'} style={{ fontSize: 13, marginTop: 13, color: colors.black }} />
-          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={phoneNumber1} setState={setPhoneNumber1} />
+          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} keyBoardType='number-pad' labelText={''} state={phoneNumber1} setState={setPhoneNumber1} />
 
           <TextWrapper children='Email Address' isRequired={true} fontType={'semiBold'} style={{ fontSize: 13, marginTop: 13, color: colors.black }} />
-          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={email1} setState={setEmail1} />
+          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} keyBoardType={'email-address'} state={email1} setState={setEmail1} />
 
           <TextWrapper children='Address' isRequired={true} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, color: colors.black }} />
           <View style={{
@@ -105,7 +109,7 @@ const ProfileStep3 = () => {
             backgroundColor: colors.greyLight1,
             marginTop: 13
           }}>
-            <TextInputs styleInput={{ color: colors.white, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
+            <TextInputs styleInput={{ color: colors.black, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
               labelText={'Introduce yourself and enter your profile description.'}
               state={address1}
               setState={setAddress1}
@@ -120,10 +124,10 @@ const ProfileStep3 = () => {
           <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={relation2} setState={setRelation2} />
 
           <TextWrapper children='Phone Number' isRequired={true} fontType={'semiBold'} style={{ fontSize: 13, marginTop: 13, color: colors.black }} />
-          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={phoneNumber2} setState={setPhoneNumber2} />
+          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} keyBoardType='number-pad' labelText={''} state={phoneNumber2} setState={setPhoneNumber2} />
 
           <TextWrapper children='Email Address' isRequired={true} fontType={'semiBold'} style={{ fontSize: 13, marginTop: 13, color: colors.black }} />
-          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={email2} setState={setEmail2} />
+          <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} keyBoardType='email-address' labelText={''} state={email2} setState={setEmail2} />
 
           <TextWrapper children='Address' isRequired={true} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, color: colors.black }} />
           <View style={{
@@ -132,7 +136,7 @@ const ProfileStep3 = () => {
             backgroundColor: colors.greyLight1,
             marginTop: 13
           }}>
-            <TextInputs styleInput={{ color: colors.white, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
+            <TextInputs styleInput={{ color: colors.black, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
               labelText={'Introduce yourself and enter your profile description.'}
               state={address2}
               setState={setAddress2}
