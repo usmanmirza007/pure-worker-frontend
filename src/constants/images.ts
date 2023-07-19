@@ -20,5 +20,6 @@ const images = {
   edit: require('../assets/images/edit.png'),
   time: require('../assets/images/time.png'),
   calendar: require('../assets/images/calendar.png'),
+  info: require('../assets/images/info.png'),
 };
 export default images;

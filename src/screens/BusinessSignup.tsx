@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   StatusBar,
+  Platform,
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -22,10 +23,12 @@ import TextInputs from '../components/TextInputs';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Snackbar from 'react-native-snackbar';
 import { useSignupMutation } from '../store/slice/api';
-import { validateEmail } from '../constants/utils';
+import { allCountry, validateEmail } from '../constants/utils';
 import { BUSINESS, FREELANCER } from '../constants/userType';
 import DateTimesPicker from '../components/DatePicker';
 import { StackNavigation } from '../constants/navigation';
+import { generalStyles } from '../constants/generalStyles';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 const { width, height } = Dimensions.get('window');
 export default function BusinessSignup() {
@@ -57,14 +60,10 @@ export default function BusinessSignup() {
   ]);
   const [nationalityOpen, setNationalityOpen] = useState(false);
   const [nationalityValue, setNationalityValue] = useState(null);
-  const [nationalityItems, setNationalityItems] = useState([
-    { label: 'Pakistan', value: 'Pakistan' },
-    { label: 'USA', value: 'USA' },
-    { label: 'India', value: 'India' },
-    { label: 'UEA', value: 'UEA' },
-    { label: 'UK', value: 'UK' },
-  ]);
+  const [nationalityItems, setNationalityItems] = useState<any>([]);
   const [signup, { isLoading }] = useSignupMutation();
+  const [toolTipLeftVisible, setToolTipLeftVisible] = useState(false);
+  const [toolTipRightVisible, setToolTipRightVisible] = useState(false);
 
   const navigation = useNavigation<StackNavigation>();
 
@@ -122,6 +121,10 @@ export default function BusinessSignup() {
     }
   };
 
+  useEffect(() => {
+    setNationalityItems([...allCountry])
+  }, [])
+
   return (
     <View style={{ flex: 1, backgroundColor: '#000' }}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -139,7 +142,78 @@ export default function BusinessSignup() {
             <Text style={{ fontSize: 36, fontFamily: commonStyle.fontFamily.bold, color: '#fff', marginTop: 10, marginLeft: 25 }}>Create Account</Text>
             <Text style={{ fontSize: 14, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 5, marginLeft: 25 }}>Create a free account as a Freelancer or Business</Text>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 30, marginHorizontal: 20, marginTop: 45 }}>
+          <View style={[generalStyles.rowBetween, { marginHorizontal: 25, marginTop: 45 }]}>
+            <Tooltip
+              isVisible={toolTipLeftVisible}
+              content={
+                <View style={{ }}>
+                  <Text style={{ color: '#000' }}>Individuals offering services</Text>
+                </View>
+              }
+              contentStyle={{
+                marginLeft: -8,
+                marginTop: 1,
+                width: 200,
+                height: 'auto',
+              }}
+              arrowSize={{
+                height: 30,
+                width: 30
+              }}
+              placement="top"
+              topAdjustment={-33}
+              horizontalAdjustment={0}
+              tooltipStyle={{
+                position: 'absolute',
+                left: 30
+              }}
+              onClose={() => setToolTipLeftVisible(false)}
+              useInteractionManager={true} // need this prop to wait for react navigation
+            // below is for the status bar of react navigation bar
+            // topAdjustment={Platform.OS === 'android' ? StatusBar.currentHeight : 0}
+            >
+              <TouchableOpacity onPress={() => setToolTipLeftVisible(true)}>
+                <Image source={images.info} style={{ width: 15, height: 15 }} />
+              </TouchableOpacity>
+            </Tooltip>
+
+            <Tooltip
+              isVisible={toolTipRightVisible}
+              content={
+                <View style={{  }}>
+                  <Text style={{ color: '#000' }}>Companies or organization providing services</Text>
+                </View>
+              }
+              contentStyle={{
+                marginLeft: 8,
+                marginTop: 1,
+                width: 200,
+                height: 'auto',
+              }}
+              arrowSize={{
+                height: 30,
+                width: 30
+              }}
+              placement="top"
+              topAdjustment={-33}
+              horizontalAdjustment={0}
+              tooltipStyle={{
+                position: 'absolute',
+                right: 30
+              }}
+              onClose={() => setToolTipRightVisible(false)}
+              useInteractionManager={true} // need this prop to wait for react navigation
+            // below is for the status bar of react navigation bar
+            // topAdjustment={Platform.OS === 'android' ? StatusBar.currentHeight : 0}
+            >
+              <TouchableOpacity onPress={() => setToolTipRightVisible(true)}>
+                <Image source={images.info} style={{ width: 15, height: 15 }} />
+              </TouchableOpacity>
+            </Tooltip>
+          </View>
+
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 30, marginHorizontal: 20, marginTop: 10 }}>
             <Button
               text={'Freelancer'}
               onClick={() => {
@@ -177,7 +251,21 @@ export default function BusinessSignup() {
                   setOpen={setLocationOpen}
                   setValue={setLocationValue}
                   setItems={setLocationItems}
-                  showArrowIcon={false}
+                  showArrowIcon={true}
+                  ArrowDownIconComponent={({ style }) => (
+                    <Image
+                      resizeMode='contain'
+                      style={{ width: 15, height: 15, tintColor: '#010B2D' }}
+                      source={!locationOpen && images.polygonForward}
+                    />
+                  )}
+                  ArrowUpIconComponent={({ style }) => (
+                    <Image
+                      resizeMode='contain'
+                      style={{ width: 15, height: 15, tintColor: '#010B2D' }}
+                      source={locationOpen && images.polygonDown}
+                    />
+                  )}
                   zIndex={10}
                   dropDownContainerStyle={{
                     borderWidth: 0,
@@ -223,10 +311,10 @@ export default function BusinessSignup() {
                 <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Address</Text>
                 <TextInputs style={{ marginTop: 17 }} labelText={'Enter Address'} state={address} setState={setAddress} />
                 <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Phone Number</Text>
-                <TextInputs style={{ marginTop: 17 }} labelText={'Enter Phone'} state={phoneName} setState={setPhoneName} />
+                <TextInputs style={{ marginTop: 17 }} labelText={'Enter Phone'} state={phoneName} setState={setPhoneName} keyBoardType={'number-pad'} />
                 <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Business Email</Text>
                 <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
-             </View>
+              </View>
             </View>
             :
             <View style={{ marginHorizontal: 25 }}>
@@ -235,7 +323,7 @@ export default function BusinessSignup() {
               <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Last Name</Text>
               <TextInputs style={{ marginTop: 17 }} labelText={'Enter Last Name'} state={lastName} setState={setLastName} />
               <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Phone Number</Text>
-              <TextInputs style={{ marginTop: 17 }} labelText={'Enter Phone'} state={phoneName} setState={setPhoneName} />
+              <TextInputs style={{ marginTop: 17 }} labelText={'Enter Phone'} state={phoneName} setState={setPhoneName}  keyBoardType={'number-pad'} />
               <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Date of Birth</Text>
               <TouchableOpacity style={{
                 marginTop: 15,
@@ -249,7 +337,7 @@ export default function BusinessSignup() {
               </TouchableOpacity>
               <View style={{
                 zIndex: 1,
-               minHeight: 500,
+                minHeight: 500,
                 marginBottom: -400,
               }}>
 
@@ -261,7 +349,21 @@ export default function BusinessSignup() {
                   setOpen={setGenderOpen}
                   setValue={setGenderValue}
                   setItems={setGenderItems}
-                  showArrowIcon={false}
+                  showArrowIcon={true}
+                  ArrowDownIconComponent={({ style }) => (
+                    <Image
+                      resizeMode='contain'
+                      style={{ width: 15, height: 15, tintColor: '#010B2D' }}
+                      source={!genderOpen && images.polygonForward}
+                    />
+                  )}
+                  ArrowUpIconComponent={({ style }) => (
+                    <Image
+                      resizeMode='contain'
+                      style={{ width: 15, height: 15, tintColor: '#010B2D' }}
+                      source={genderOpen && images.polygonDown}
+                    />
+                  )}
                   zIndex={10}
                   dropDownContainerStyle={{
                     borderWidth: 0,
@@ -318,7 +420,21 @@ export default function BusinessSignup() {
                   setOpen={setNationalityOpen}
                   setValue={setNationalityValue}
                   setItems={setNationalityItems}
-                  showArrowIcon={false}
+                  showArrowIcon={true}
+                  ArrowDownIconComponent={({ style }) => (
+                    <Image
+                      resizeMode='contain'
+                      style={{ width: 15, height: 15, tintColor: '#010B2D' }}
+                      source={!nationalityOpen && images.polygonForward}
+                    />
+                  )}
+                  ArrowUpIconComponent={({ style }) => (
+                    <Image
+                      resizeMode='contain'
+                      style={{ width: 15, height: 15, tintColor: '#010B2D' }}
+                      source={nationalityOpen && images.polygonDown}
+                    />
+                  )}
                   zIndex={10}
                   dropDownContainerStyle={{
                     borderWidth: 0,
@@ -340,7 +456,7 @@ export default function BusinessSignup() {
                     backgroundColor: "#F7F5F5",
                     borderColor: '#9E9E9E14',
                   }}
-                  listMode='FLATLIST'
+                  listMode='MODAL'
                   showTickIcon={false}
                   textStyle={{
                     color: '#9E9E9E'
