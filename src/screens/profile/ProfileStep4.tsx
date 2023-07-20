@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   View,
+  ActivityIndicator,
   Image,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -48,7 +49,7 @@ const ProfileStep4 = () => {
   ]);
 
   const [login] = useLoginMutation();
-  const [createService] = useCreateServiceMutation();
+  const [createService, { isLoading }] = useCreateServiceMutation();
 
 
   const handleProfileSetup = () => {
@@ -63,7 +64,7 @@ const ProfileStep4 = () => {
       createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            navigation.navigate('ProfileStep5', {serviceId: route?.params?.serviceId})
+            navigation.navigate('ProfileStep5', { serviceId: route?.params?.serviceId })
           }
         })
         .catch((error: any) => {
@@ -168,7 +169,7 @@ const ProfileStep4 = () => {
                       <TextWrapper
                         fontType={'semiBold'}
                         style={{
-                          color: category.includes(item) ? colors.primary : colors.white,
+                          color: Array.isArray(category) && category.length && category.includes(item) ? colors.primary : colors.white,
                           marginLeft: 11,
                           marginRight: 8,
                           marginBottom: 8,
@@ -184,10 +185,13 @@ const ProfileStep4 = () => {
           <TextWrapper children='Enter ID Number' isRequired={true} fontType={'semiBold'} style={{ fontSize: 13, marginTop: 13, color: colors.black }} />
           <TextInputs style={{ marginTop: 10, backgroundColor: colors.greyLight1 }} labelText={''} state={idNumber} setState={setIdNumber} />
 
-          <Button onClick={() => { handleProfileSetup()}}
-            style={{ marginHorizontal: 40, marginTop: 140, backgroundColor: colors.lightBlack }}
-            textStyle={{ color: colors.primary }}
-            text={`Verify`} />
+          {!isLoading ?
+            <Button onClick={() => { handleProfileSetup() }}
+              style={{ marginHorizontal: 40, marginTop: 140, backgroundColor: colors.lightBlack }}
+              textStyle={{ color: colors.primary }}
+              text={`Verify`} />
+            : <ActivityIndicator style={{ marginTop: 150, }} size={'large'} color={colors.parpal} />}
+
         </View>
       </ScrollView>
     </View>

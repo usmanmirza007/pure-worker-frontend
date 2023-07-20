@@ -37,6 +37,10 @@ export const mainSlice = createSlice({
             state.category = [...text]
         },
 
+        emptyCategory: (state) => {
+            state.category = []
+        },
+
         removeCategory: (state, action) => {
             var arr = state.category.filter((text) => text !== action.payload)
             state.category = arr;
@@ -45,6 +49,6 @@ export const mainSlice = createSlice({
     },
 })
 
-export const { loggedIn, logout, addCategory, removeCategory } = mainSlice.actions
+export const { loggedIn, logout, addCategory, removeCategory, emptyCategory } = mainSlice.actions
 
 export default mainReducer = persistReducer(persistConfig, mainSlice.reducer)
