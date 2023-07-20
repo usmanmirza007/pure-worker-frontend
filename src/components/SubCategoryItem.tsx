@@ -15,7 +15,7 @@ const SubCategoryItem = ({ style, itemDetail, index }: any) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        if (category.includes(title)) {
+        if (Array.isArray(category) && category.length && category.includes(title)) {
           dispatch(removeCategory(title))
         } else {
           dispatch(addCategory(title))
@@ -25,7 +25,7 @@ const SubCategoryItem = ({ style, itemDetail, index }: any) => {
       <TextWrapper
         fontType={'semiBold'}
         style={{
-          color: category.includes(title) ? colors.primary : colors.white,
+          color: Array.isArray(category) && category.length && category.includes(title) ? colors.primary : colors.white,
           marginLeft: 11,
           marginRight: 8,
           marginBottom: 8,

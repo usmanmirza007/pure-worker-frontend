@@ -1,9 +1,9 @@
-import React, { useDeferredValue, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Image,
+  ActivityIndicator,
   TextInput,
-  Platform
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -13,16 +13,15 @@ import images from '../../constants/images';
 import Button from '../../components/Button';
 import TextWrapper from '../../components/TextWrapper';
 import commonStyle from '../../constants/commonStyle';
-import { useCreateServiceMutation, useGetCategoryQuery, useLoginMutation } from '../../store/slice/api';
+import { useCreateServiceMutation, useGetCategoryQuery } from '../../store/slice/api';
 import colors from '../../constants/colors';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { WIDTH_WINDOW, generalStyles } from '../../constants/generalStyles';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
 import DropDownPicker from 'react-native-dropdown-picker';
 import PotfolioWrapper from '../../components/PotfolioWrapper';
-import { launchCamera, launchImageLibrary } from '../../constants/utils';
-import * as ImagePicker from 'react-native-image-picker';
+import { launchImageLibrary } from '../../constants/utils';
 import Snackbar from 'react-native-snackbar';
 
 const PRofileStep2 = () => {
@@ -38,7 +37,7 @@ const PRofileStep2 = () => {
   const category = useSelector((state: any) => state.user.category)
   const [servicesDescription, setServicesDescription] = useState([]); // State to store input values
   const [servicePrice, setServicePrice] = useState([]); // State to store input values
-  const [createService] = useCreateServiceMutation();
+  const [createService, { isLoading }] = useCreateServiceMutation();
 
   const [nationalityOpen, setNationalityOpen] = useState(false);
   const [nationalityValue, setNationalityValue] = useState(null);
@@ -51,7 +50,7 @@ const PRofileStep2 = () => {
   ]);
 
   useEffect(() => {
-    if (category.length) {
+    if (category?.length) {
       const updatedInputValues = category.map((service: string) => ({
         serviceName: service,
         value: ''
@@ -61,7 +60,7 @@ const PRofileStep2 = () => {
   }, [category]);
 
   useEffect(() => {
-    if (category.length) {
+    if (category?.length) {
       const updatedInputValues = category.map((service: string) => ({
         serviceName: service,
         priceMin: '',
@@ -86,7 +85,7 @@ const PRofileStep2 = () => {
     updatedInputValues[index] = { ...updatedInputValues[index], priceMax };
     setServicePrice(updatedInputValues);
   };
-  const { data: getCategoryData, isLoading, isError } = useGetCategoryQuery()
+  const { data: getCategoryData, isError } = useGetCategoryQuery()
   const getCategory = getCategoryData ?? []
 
   const handleProfileSetup = () => {
@@ -342,12 +341,17 @@ const PRofileStep2 = () => {
                 )
               })}
             </View>
-            <Button onClick={() => {
-              handleProfileSetup()
-            }}
-              style={{ marginBottom: 20, marginTop: 20, marginHorizontal: 40, backgroundColor: colors.lightBlack }}
-              textStyle={{ color: colors.primary }}
-              text={`Next`} />
+
+            {!isLoading ?
+              <View style={{ marginHorizontal: 25, marginTop: 75 }}>
+                <Button onClick={() => {
+                  handleProfileSetup()
+                }}
+                  style={{ marginBottom: 20, marginTop: 20, marginHorizontal: 40, backgroundColor: colors.lightBlack }}
+                  textStyle={{ color: colors.primary }}
+                  text={`Next`} />
+              </View>
+              : <ActivityIndicator style={{ marginTop: 95, marginBottom: 40 }} size={'large'} color={colors.parpal} />}
           </View>
         </View>
       </ScrollView>
