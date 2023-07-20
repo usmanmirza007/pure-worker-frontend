@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Image,
   View,
+  ActivityIndicator
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -17,6 +18,8 @@ import DateTimesPicker from '../../components/DatePicker';
 import { generalStyles } from '../../constants/generalStyles';
 import { useCreateServiceMutation, useLoginMutation } from '../../store/slice/api';
 import Snackbar from 'react-native-snackbar';
+import { emptyCategory } from '../../store/reducer/mainSlice';
+import { useDispatch } from 'react-redux';
 
 type Route = {
   key: string
@@ -28,6 +31,7 @@ type Route = {
 
 const ProfileStep5 = () => {
   const route: Route = useRoute()
+  const dispatch = useDispatch()
 
   const navigation = useNavigation<StackNavigation>();
   const [date, setDate] = useState(new Date());
@@ -35,8 +39,7 @@ const ProfileStep5 = () => {
   const [time, setTime] = useState(new Date());
   const handleTime = (dateTime: any) => { setTime(dateTime) };
 
-  const [login] = useLoginMutation();
-  const [createService] = useCreateServiceMutation();
+  const [createService, { isLoading }] = useCreateServiceMutation();
 
 
   const handleProfileSetup = () => {
@@ -50,6 +53,7 @@ const ProfileStep5 = () => {
       createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
+            dispatch(emptyCategory())
             navigation.navigate('Homes')
           }
         })
@@ -111,10 +115,15 @@ const ProfileStep5 = () => {
               style={{ width: 15, height: 15, marginRight: 20 }}
             />
           </TouchableOpacity>
-          <Button onClick={() => { handleProfileSetup() }}
-            style={{ marginHorizontal: 40, marginTop: 140, backgroundColor: colors.lightBlack }}
-            textStyle={{ color: colors.primary }}
-            text={`Schedule`} />
+
+
+          {!isLoading ?
+            <Button onClick={() => { handleProfileSetup() }}
+              style={{ marginHorizontal: 40, marginTop: 140, backgroundColor: colors.lightBlack }}
+              textStyle={{ color: colors.primary }}
+              text={`Schedule`} />
+            : <ActivityIndicator style={{ marginTop: 150, }} size={'large'} color={colors.parpal} />}
+
         </View>
       </ScrollView>
     </View>
