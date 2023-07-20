@@ -58,8 +58,10 @@ const PRofileStep1 = () => {
             <TextInputs styleInput={{ color: colors.white, }} style={{ marginTop: 0, backgroundColor: colors.lightBlack, borderWidth: 2, borderColor: colors.primary }} labelText={'Type name of service'} state={addService} setState={setAddService} keyBoardType={'email-address'} />
             <View style={{ marginTop: 10, marginBottom: 30, alignItems: 'flex-end' }}>
               <Button onClick={() => {
-                dispatch(addCategory(addService))
-                setAddService('')
+                if (addService) {
+                  dispatch(addCategory(addService))
+                  setAddService('')
+                }
 
               }}
                 style={{ width: 130, backgroundColor: colors.lightBlack }}
