@@ -30,7 +30,7 @@ const TokenVerification = () => {
   const [createOtp] = useCreateOtpMutation();
   const [resetOtp] = useResetOtpMutation();
 
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(120);
 
   useEffect(() => {
     const timer = setInterval(() => {
