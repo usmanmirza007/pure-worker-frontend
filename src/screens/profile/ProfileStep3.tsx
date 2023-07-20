@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
-  View
+  View,
+  ActivityIndicator
 } from 'react-native';
 import { ScrollView, } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -16,6 +17,7 @@ import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
 import Snackbar from 'react-native-snackbar';
 import { useCreateServiceMutation } from '../../store/slice/api';
+import { validateEmail } from '../../constants/utils';
 type Route = {
   key: string
   name: string
@@ -37,13 +39,24 @@ const ProfileStep3 = () => {
   const [address2, setAddress2] = useState('');
   const route: Route = useRoute()
 
-  const [createService] = useCreateServiceMutation();
+  const [createService, {isLoading}] = useCreateServiceMutation();
 
 
   const handleProfileSetup = () => {
 
     if (route?.params?.serviceId && name1 && name2 && relation1 && relation2 && phoneNumber1 && phoneNumber2 && email1 && email2 && address1 && address2) {
-
+      if (!validateEmail(email1)) {
+        Snackbar.show({
+          text: 'Please enter a valid email', duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+        });
+        return
+      }
+      if (!validateEmail(email2)) {
+        Snackbar.show({
+          text: 'Please enter a valid email', duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+        });
+        return
+      }
       const profileData = {
         addressFirst: address1,
         fullNameFirst: name1,
@@ -149,11 +162,15 @@ const ProfileStep3 = () => {
               style={{ width: 130, backgroundColor: colors.lightBlack }}
               textStyle={{ color: colors.primary }}
               text={`Save`} />
-            <Button onClick={() => { handleProfileSetup() }}
+            
+
+               {!isLoading ?
+                <Button onClick={() => { handleProfileSetup() }}
               style={{ width: 90, backgroundColor: colors.lightBlack }}
               textStyle={{ color: colors.primary }}
 
               text={`Next`} />
+              : <ActivityIndicator style={{  marginRight: 30  }} size={'large'} color={colors.parpal} />}
           </View>
         </View>
       </ScrollView>

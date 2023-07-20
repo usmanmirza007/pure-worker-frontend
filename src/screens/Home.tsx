@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import { useDispatch } from 'react-redux';
-import { logout } from '../store/reducer/mainSlice';
+import { emptyCategory, logout } from '../store/reducer/mainSlice';
 import Button from '../components/Button';
 import images from '../constants/images';
 import TextInputs from '../components/TextInputs';
