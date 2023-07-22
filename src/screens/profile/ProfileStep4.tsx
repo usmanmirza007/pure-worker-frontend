@@ -40,6 +40,7 @@ const ProfileStep4 = () => {
   const category = useSelector((state: any) => state.user.category)
   const [collapseState, setCollapseState] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [selectedVerification, setSelectedVerification] = useState('');
   const [nationalityItems, setNationalityItems] = useState([
     'Int. Passport',
     'Drivers License',
@@ -164,12 +165,13 @@ const ProfileStep4 = () => {
                   return (
                     <TouchableOpacity
                       onPress={() => {
+                        setSelectedVerification(item)
                       }}
                       style={{ marginTop: 8 }}>
                       <TextWrapper
                         fontType={'semiBold'}
                         style={{
-                          color: Array.isArray(category) && category.length && category.includes(item) ? colors.primary : colors.white,
+                          color: selectedVerification.includes(item) ? colors.primary : colors.white,
                           marginLeft: 11,
                           marginRight: 8,
                           marginBottom: 8,

@@ -44,6 +44,8 @@ const Home = () => {
           text={`Term And Condition`} />
         <Button onClick={() => {
           navigation.navigate('FAQ')
+          // navigation.navigate('ProfileStep2', { serviceId: 1 })
+
         }}
 
           text={`FAQ`} />

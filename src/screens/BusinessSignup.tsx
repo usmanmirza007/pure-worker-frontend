@@ -37,7 +37,7 @@ export default function BusinessSignup() {
   const [lastName, setLastName] = useState('');
   const [phoneName, setPhoneName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [cacNo, setCacNo] = useState('');
   const [address, setAddress] = useState('');
@@ -86,7 +86,7 @@ export default function BusinessSignup() {
       } else {
         const loginData = {
           email: email.toLowerCase().trim(),
-          password: password,
+          // password: password,
           firstName: firstName,
           lastName: lastName,
           phoneNumber: phoneName,
@@ -273,7 +273,7 @@ export default function BusinessSignup() {
                   labelStyle={{
                     fontFamily: commonStyle.fontFamily.regular,
                     fontSize: 14,
-                    color: '#9E9E9E',
+                    color: '#000',
                   }}
                   // arrowIconStyle={{
 
@@ -371,7 +371,7 @@ export default function BusinessSignup() {
                   labelStyle={{
                     fontFamily: commonStyle.fontFamily.regular,
                     fontSize: 14,
-                    color: '#9E9E9E',
+                    color: '#000',
                   }}
                   // arrowIconStyle={{
 
@@ -442,7 +442,7 @@ export default function BusinessSignup() {
                   labelStyle={{
                     fontFamily: commonStyle.fontFamily.regular,
                     fontSize: 14,
-                    color: '#9E9E9E',
+                    color: '#000',
                   }}
                   // arrowIconStyle={{
 
@@ -479,6 +479,8 @@ export default function BusinessSignup() {
               <View style={{ zIndex: nationalityOpen ? 0 : 2, }}>
                 <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Email Address</Text>
                 <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
+                <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Address</Text>
+                <TextInputs style={{ marginTop: 17 }} labelText={'Enter Address'} state={address} setState={setAddress} />
               </View>
             </View>}
 

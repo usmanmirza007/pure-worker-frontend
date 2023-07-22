@@ -262,7 +262,7 @@ export default function CustomerSignup() {
                 labelStyle={{
                   fontFamily: commonStyle.fontFamily.regular,
                   fontSize: 14,
-                  color: '#9E9E9E',
+                  color: '#000',
                 }}
                 // arrowIconStyle={{
 
@@ -272,6 +272,7 @@ export default function CustomerSignup() {
                   fontSize: 14,
                   color: '#9E9E9E',
                 }}
+                
                 style={{
                   backgroundColor: "#F7F5F5",
                   borderColor: '#9E9E9E14',
@@ -319,7 +320,7 @@ export default function CustomerSignup() {
                 labelStyle={{
                   fontFamily: commonStyle.fontFamily.regular,
                   fontSize: 14,
-                  color: '#9E9E9E',
+                  color: '#000',
                 }}
                 // arrowIconStyle={{
 
@@ -357,8 +358,8 @@ export default function CustomerSignup() {
               <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={address} setState={setAddress} />
               <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Email Address</Text>
               <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
-              <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Password</Text>
-              <TextInputs style={{ marginTop: 10 }} secure={true} labelText={'Enter Password'} state={password} setState={setPassword} />
+              {/* <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Password</Text>
+              <TextInputs style={{ marginTop: 10 }} secure={true} labelText={'Enter Password'} state={password} setState={setPassword} /> */}
             </View>
           </View>
 

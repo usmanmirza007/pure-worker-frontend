@@ -23,7 +23,7 @@ export default function OnBoarding() {
     {
       image: images.heroPix,
       text: 'Connecting you to trusted and verified service providers',
-      signup: 'BusinessSignup',
+      signup: 'CustomerSignup',
       login: 'Login',
       key: 'first'
     },

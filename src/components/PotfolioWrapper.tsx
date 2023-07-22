@@ -5,46 +5,47 @@ import TextWrapper from './TextWrapper';
 import images from '../constants/images';
 import colors from '../constants/colors';
 import { WIDTH_WINDOW, generalStyles } from '../constants/generalStyles';
-import TextInputs from './TextInputs';
-import Button from './Button';
 
-const PotfolioWrapper = ({ setPotfolio }: any) => {
+const PotfolioWrapper = ({ setPotfolio, item, allPotfolio, setAllPotfolio, setPotfolioImageObject, setShortDescription, setPotfolioImageUrl, setEditKey }: any) => {
   const [address, setAddress] = useState('');
   const [isAddService, setIsAddService] = useState(false);
 
   useEffect(() => {
     setPotfolio(address)
   }, [address]);
-  
+
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={[generalStyles.rowBetween]}>
-        {isAddService ? <TextInputs styleInput={{ color: colors.white, paddingHorizontal: 18, }} style={{ width: 160, backgroundColor: colors.lightBlack }}
-          labelText={'Portfolio 1'}
-          state={address}
-          setState={setAddress} />
-          :
-          <View style={{ paddingHorizontal: 10, justifyContent: 'center', backgroundColor: colors.lightBlack, height: 50, width: 160, borderRadius: 5, }}>
-            <TextWrapper
-              numberOfLines={1}
-              fontType={'semiBold'}
-              style={{
-                fontSize: 12,
-                color: '#fff',
-              }}>
-              {address ? address : 'Portfolio 1'}
-            </TextWrapper>
-          </View>}
+        <View style={{ paddingHorizontal: 10, justifyContent: 'center', backgroundColor: colors.lightBlack, height: 50, width: 160, borderRadius: 5, }}>
+          <TextWrapper
+            fontType={'semiBold'}
+            style={{
+              fontSize: 12,
+              color: '#fff',
+            }}>
+            {item?.shortDescription}
+          </TextWrapper>
+        </View>
         <View style={[generalStyles.rowCenter]}>
-          <TouchableOpacity onPress={() => { setIsAddService(true) }}>
+          <TouchableOpacity onPress={() => {
+            setPotfolioImageObject(item?.potfolioImageObject)
+            setEditKey(item?.key)
+            setShortDescription(item?.shortDescription)
 
+           }}>
             <Image source={images.edit} resizeMode='contain' style={{ width: 20, height: 20, marginLeft: 20, tintColor: '#000' }} />
           </TouchableOpacity>
-          <Image source={images.bin} resizeMode='contain' style={{ width: 20, height: 20, marginHorizontal: 20, tintColor: '#000' }} />
-          <Button onClick={() => { setIsAddService(false) }}
-            style={{ width: 80, backgroundColor: colors.lightBlack }}
-            textStyle={{ color: colors.primary }}
-            text={`Done`} />
+          <TouchableOpacity onPress={() => {
+            let leftPotfolio = allPotfolio.filter((el: any) => el.key !== item?.key);
+            setAllPotfolio(leftPotfolio)
+            setPotfolioImageObject([])
+            setEditKey(null)
+            setShortDescription('')
+          }}>
+
+            <Image source={images.bin} resizeMode='contain' style={{ width: 20, height: 20, marginHorizontal: 20, tintColor: '#000' }} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>

@@ -88,14 +88,14 @@ const ProfileStep5 = () => {
             height: 50,
             width: '100%',
           }]}>
-            <View style={{ marginTop: -10, width: '60%' }}>
-              <DateTimesPicker updateDate={handleDate} />
+            <View style={{ marginTop: -10, width: '100%' }}>
+              <DateTimesPicker updateDate={handleDate} isImage={true} image={images.calendar} />
             </View>
-            <Image
+            {/* <Image
               source={images.calendar}
               resizeMode={'contain'}
               style={{ width: 15, height: 15, marginRight: 20 }}
-            />
+            /> */}
           </TouchableOpacity>
           <TextWrapper children='Select appointment time' isRequired={true} fontType={'semiBold'} style={{ fontSize: 14, marginTop: 13, color: colors.black }} />
           <TouchableOpacity style={[generalStyles.rowBetween, {
@@ -106,14 +106,14 @@ const ProfileStep5 = () => {
             height: 50,
             width: '100%',
           }]}>
-            <View style={{ marginTop: -10, width: '60%' }}>
-              <DateTimesPicker updateDate={handleTime} type={'time'} />
+            <View style={{ marginTop: -10, width: '100%' }}>
+              <DateTimesPicker updateDate={handleTime} type={'time'} isImage={true} image={images.time} />
             </View>
-            <Image
+            {/* <Image
               source={images.time}
               resizeMode={'contain'}
               style={{ width: 15, height: 15, marginRight: 20 }}
-            />
+            /> */}
           </TouchableOpacity>
 
 

@@ -14,7 +14,7 @@ import colors from '../constants/colors';
 
 
 
-const DateTimesPicker = ({ updateDate, type = 'date' }: any) => {
+const DateTimesPicker = ({ updateDate, type = 'date', isImage = false, image }: any) => {
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState<IOSMode | AndroidMode>('date');
@@ -52,8 +52,15 @@ const DateTimesPicker = ({ updateDate, type = 'date' }: any) => {
             fontSize: 15,
             color: colors.black,
           }}>
-          {type == 'date' ? moment(date).format('DD-MM-YYYY') : moment(date).format('h:MM a')}
+          {type == 'date' ? moment(date).format('DD-MM-YYYY') : moment(date).format('hh:mm a')}
         </Text>
+        {isImage && <View style={{ alignItems: 'flex-end', flex: 1 }}>
+          <Image
+            source={image}
+            resizeMode={'contain'}
+            style={{ width: 15, height: 15, marginRight: 20 }}
+          />
+        </View>}
       </TouchableOpacity>
       {show && (
         <DateTimePicker

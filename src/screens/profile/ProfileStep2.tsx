@@ -27,16 +27,21 @@ import Snackbar from 'react-native-snackbar';
 const PRofileStep2 = () => {
   const navigation = useNavigation<StackNavigation>();
   const [description, setDescription] = useState('');
+  const [shortDescription, setShortDescription] = useState('');
   const [PotfolioFirst, setPotfolioFirst] = useState('');
   const [PotfolioSecond, setPotfolioSecond] = useState('');
   const [imageObject, setImageObject] = useState({});
   const [imageUrl, setImageUrl] = useState('');
-  const [potfolioImageObject, setPotfolioImageObject] = useState([]);
-  const [potfolioImageUrl, setPotfolioImageUrl] = useState([]);
+  const [potfolioImageObject, setPotfolioImageObject] = useState<any>([]);
+  const [potfolioImageUrl, setPotfolioImageUrl] = useState<any>([]);
+  const [potfolioEnable, setPotfolioEnable] = useState(false);
+  const [allPotfolio, setAllPotfolio] = useState<any>([]);
+  const [key, setKey] = useState<any>(1);
+  const [editkey, setEditKey] = useState<any>(null);
 
   const category = useSelector((state: any) => state.user.category)
-  const [servicesDescription, setServicesDescription] = useState([]); // State to store input values
-  const [servicePrice, setServicePrice] = useState([]); // State to store input values
+  const [servicesDescription, setServicesDescription] = useState<any>([]); // State to store input values
+  const [servicePrice, setServicePrice] = useState<any>([]); // State to store input values
   const [createService, { isLoading }] = useCreateServiceMutation();
 
   const [nationalityOpen, setNationalityOpen] = useState(false);
@@ -58,6 +63,7 @@ const PRofileStep2 = () => {
       setServicesDescription([...updatedInputValues]);
     }
   }, [category]);
+  console.log('allPotfolio', allPotfolio);
 
   useEffect(() => {
     if (category?.length) {
@@ -124,6 +130,8 @@ const PRofileStep2 = () => {
       });
     }
   }
+  console.log('potfolioImageObject', potfolioImageObject);
+
 
   return (
     <View style={[{ flex: 1, backgroundColor: colors.greyLight },]}>
@@ -191,7 +199,7 @@ const PRofileStep2 = () => {
                 <TextInput
                   style={{ width: '60%', paddingHorizontal: 10, backgroundColor: colors.lightBlack, borderRadius: 5, color: '#fff' }}
                   placeholderTextColor={colors.grey}
-                  placeholder='Type name of service'
+                  placeholder='Enter service description'
                   key={index}
                   value={item.value} // Assign value from state
                   onChangeText={value => handleInputChange(index, value)}
@@ -308,39 +316,87 @@ const PRofileStep2 = () => {
           </View>
           <View style={{ zIndex: nationalityOpen ? 0 : 2, }}>
             <TextWrapper children='Portfolio' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, marginBottom: 13, color: colors.black }} />
-            <PotfolioWrapper setPotfolio={setPotfolioFirst} />
-            <PotfolioWrapper setPotfolio={setPotfolioSecond} />
-            <TextWrapper children='Add a Portfolio' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginBottom: 13, color: colors.black }} />
-            {potfolioImageUrl.length == 3 && <View style={{ backgroundColor: colors.greyLight1, height: 80, borderRadius: 5 }}>
+            {allPotfolio.map((item: any, index: number) => {
+              return (
+                <PotfolioWrapper setPotfolio={setPotfolioFirst} item={item} allPotfolio={allPotfolio} setAllPotfolio={setAllPotfolio} setPotfolioImageObject={setPotfolioImageObject} setShortDescription={setShortDescription} setPotfolioImageUrl={setPotfolioImageUrl} setEditKey={setEditKey} />
+              )
+            })}
+            <TouchableOpacity onPress={() => {
+              if (allPotfolio.length < 3) {
+                setPotfolioEnable(true)
+              }
+            }}>
+              <TextWrapper children='Add a Portfolio' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginBottom: 13, color: colors.black }} />
+            </TouchableOpacity>
+
+            {allPotfolio.length == 3 && <View style={{ backgroundColor: colors.greyLight1, height: 80, borderRadius: 5 }}>
               <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, marginTop: 10, tintColor: '#000' }} />
               <TextWrapper children='Maximum number of portfolios added.' isRequired={false} fontType={'normal'} style={{ textAlign: 'center', fontSize: 12, marginTop: 13, color: colors.black }} />
             </View>}
-            {potfolioImageUrl.length < 3 && <TouchableOpacity
-              onPress={async () => {
-                const response = await launchImageLibrary()
-                if (response) {
-                  setPotfolioImageObject([...potfolioImageObject, response])
-                  setPotfolioImageUrl([...potfolioImageUrl, response?.uri])
-                }
-              }}
-              style={[generalStyles.contentCenter, { height: 25, width: 120, borderRadius: 5, marginTop: 13, backgroundColor: colors.lightBlack }]}>
-              <TextWrapper children='Upload Images' isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.white }} />
-            </TouchableOpacity>}
-            <View style={[generalStyles.rowCenter, { marginRight: 20, }]}>
-              {potfolioImageUrl.map((item, index) => {
-                return (
-                  <View key={index} style={[[generalStyles.rowCenter, { marginRight: 20 }], { marginTop: 10, }]}>
-                    <TextWrapper children={item?.slice(-8)} isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.black }} />
-                    <TouchableOpacity onPress={() => {
-                      setPotfolioImageObject(potfolioImageObject.filter((text) => text?.uri !== item))
-                      setPotfolioImageUrl(potfolioImageUrl.filter((text) => text !== item))
-                    }}>
-                      <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, tintColor: '#000' }} />
-                    </TouchableOpacity>
-                  </View>
-                )
-              })}
-            </View>
+
+            {(potfolioEnable || shortDescription || potfolioImageObject.length) ?
+              <View>
+                <TextWrapper children='Short Description' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 0, color: colors.black }} />
+                <TextInput
+                  style={{ paddingHorizontal: 10, marginTop: 10, height: 70, backgroundColor: colors.greyLight1, borderRadius: 5, color: '#000' }}
+                  placeholderTextColor={colors.grey}
+                  placeholder='Max: 20 words'
+                  value={shortDescription}
+                  onChangeText={setShortDescription}
+                />
+
+                {potfolioImageObject.length < 3 && <TouchableOpacity
+                  onPress={async () => {
+                    const response = await launchImageLibrary()
+                    if (response) {
+                      setPotfolioImageObject([...potfolioImageObject, response])
+                      // setPotfolioImageUrl([...potfolioImageUrl, response?.uri])
+                    }
+                  }}
+                  style={[generalStyles.contentCenter, { height: 25, width: 120, borderRadius: 5, marginTop: 13, backgroundColor: colors.lightBlack }]}>
+                  <TextWrapper children='Upload Images' isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.white }} />
+                </TouchableOpacity>}
+                <View style={[generalStyles.rowCenter, { marginRight: 20, }]}>
+                  {potfolioImageObject.map((item: any, index: number) => {
+                    return (
+                      <View key={index} style={[[generalStyles.rowCenter, { marginRight: 20 }], { marginTop: 10, }]}>
+                        <TextWrapper children={item?.uri?.slice(-8)} isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.black }} />
+                        <TouchableOpacity onPress={() => {
+                          setPotfolioImageObject(potfolioImageObject.filter((text: any) => text?.uri !== item?.uri))
+                          // setPotfolioImageUrl(potfolioImageUrl.filter((text: any) => text !== item))
+                        }}>
+                          <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, tintColor: '#000' }} />
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  })}
+                </View>
+                <Button onClick={() => {
+
+                  const data = {
+                    key: key,
+                    shortDescription: shortDescription,
+                    potfolioImageObject: potfolioImageObject
+                  }
+                  setKey(key + 1)
+                  if (editkey) {
+                    const objIndex = allPotfolio.findIndex(((obj: any) => obj.key == editkey));
+                    allPotfolio[objIndex].potfolioImageObject = potfolioImageObject
+                    allPotfolio[objIndex].shortDescription = shortDescription
+                    setAllPotfolio([...allPotfolio])
+                  } else {
+                    setAllPotfolio([...allPotfolio, data])
+                  }
+                  setEditKey(null)
+                  setShortDescription('')
+                  setPotfolioImageObject([])
+                  setPotfolioImageUrl([])
+                  setPotfolioEnable(false)
+                }}
+                  style={{ width: 80, marginTop: 10, alignSelf: 'flex-end', backgroundColor: colors.lightBlack }}
+                  textStyle={{ color: colors.primary }}
+                  text={`Done`} />
+              </View> : null }
 
             {!isLoading ?
               <View style={{ marginHorizontal: 25, marginTop: 75 }}>

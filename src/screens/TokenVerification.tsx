@@ -125,9 +125,9 @@ const TokenVerification = () => {
         <Text style={{ color: '#fff', alignSelf: 'center', marginTop: 8 }}>We sent an OTP to your email</Text>
         <Text style={{ color: '#fff', alignSelf: 'center' }}>address! <Text style={{ color: colors.primary, alignSelf: 'center' }}>{route.params?.email}</Text></Text>
         <OtpInputs
-          style={{ flexDirection: 'row', marginLeft: 15, marginTop: 80, alignSelf: 'center' }}
+          style={{ flexDirection: 'row',  marginLeft: 15, marginTop: 80, alignSelf: 'center' }}
           inputContainerStyles={{ margin: 5, borderRadius: 8, backgroundColor: '#fff', alignSelf: 'center' }}
-          inputStyles={[{ fontSize: 32, height: 56, width: 51, textAlign: 'center', paddingHorizontal: 15 }]}
+          inputStyles={[{ fontSize: 32, height: 56, width: 51, color: '#000', textAlign: 'center', paddingHorizontal: 15 }]}
           //clearTextOnFocus
           handleChange={setCode}
           keyboardType="phone-pad"
@@ -141,7 +141,7 @@ const TokenVerification = () => {
         />
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <Text style={{ color: '#fff', alignSelf: 'center', marginTop: 24 }}>Don't receive your code? </Text>
-          <TouchableOpacity style={{ marginTop: 25 }} onPress={() => { resendOTP() }}><Text style={{ color: colors.primary }}>Resend</Text></TouchableOpacity>
+          {seconds === 0 && <TouchableOpacity style={{ marginTop: 25 }} onPress={() => { resendOTP() }}><Text style={{ color: colors.primary }}>Resend</Text></TouchableOpacity>}
         </View>
         <Text style={{ color: colors.primary, textAlign: 'center' }}>{"0" + minutes + ':' + valueOfMint}</Text>
         {!isLoading ?

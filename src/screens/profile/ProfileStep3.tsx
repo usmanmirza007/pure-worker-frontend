@@ -123,7 +123,7 @@ const ProfileStep3 = () => {
             marginTop: 13
           }}>
             <TextInputs styleInput={{ color: colors.black, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
-              labelText={'Introduce yourself and enter your profile description.'}
+              labelText={'Enter address'}
               state={address1}
               setState={setAddress1}
               multiline={true}
@@ -150,7 +150,7 @@ const ProfileStep3 = () => {
             marginTop: 13
           }}>
             <TextInputs styleInput={{ color: colors.black, paddingHorizontal: 18, }} style={{ marginTop: 0, backgroundColor: colors.greyLight1 }}
-              labelText={'Introduce yourself and enter your profile description.'}
+              labelText={'Enter address'}
               state={address2}
               setState={setAddress2}
               multiline={true}
