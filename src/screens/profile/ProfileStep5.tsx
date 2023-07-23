@@ -49,6 +49,7 @@ const ProfileStep5 = () => {
         scheduleDate: date.getTime(),
         appointmentTime: time.getTime(),
         serviceId: route?.params?.serviceId,
+        potfolios: [],
       }
       createService(profileData).unwrap()
         .then((data: any) => {

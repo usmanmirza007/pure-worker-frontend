@@ -16,7 +16,6 @@ export const api = emptySplitApi.injectEndpoints({
             firstName: args.firstName,
             lastName: args.lastName,
             email: args.email,
-            password: args.password,
             userType: args.userType,
             phoneNumber: args.phoneNumber,
             dob: args.dob,
@@ -115,59 +114,31 @@ export const api = emptySplitApi.injectEndpoints({
 
     createService: builder.mutation<any, any>({
       query: (args) => {
-        const formData = new FormData()
-        formData.append('description', args.description)
-        formData.append('servicesDescription', args.servicesDescription)
-        formData.append('servicePrice', args.servicePrice)
-        formData.append('city', args.city)
-        formData.append('portfolioFirst', args.portfolioFirst)
-        formData.append('portfolioSecond', args.portfolioSecond)
-        formData.append('idNumber', args.idNumber)
-        formData.append('scheduleDate', args.scheduleDate)
-        formData.append('appointmentTime', args.appointmentTime)
-        formData.append('addressFirst', args.addressFirst)
-        formData.append('fullNameFirst', args.fullNameFirst)
-        formData.append('relationFirst', args.relationFirst)
-        formData.append('emailFirst', args.emailFirst)
-        formData.append('phoneNumberFirst', args.phoneNumberFirst)
-        formData.append('fullNameSecond', args.fullNameSecond)
-        formData.append('relationSecond', args.relationSecond)
-        formData.append('emailSecond', args.emailSecond)
-        formData.append('phoneNumberSecond', args.phoneNumberSecond)
-        formData.append('addressSecond', args.addressSecond)
-        formData.append('serviceId', args.serviceId)
-        if (args.profilePicture) {
-          formData.append('profilePicture', {
-            uri:  args.profilePicture.uri,
-            name: args.profilePicture.fileName,
-            type: args.profilePicture.type,
-          })
-        }
-        if (args.serviceImageFirst) {
-          formData.append('serviceImageFirst', {
-            uri: args.serviceImageFirst.uri,
-            name: args.serviceImageFirst.fileName,
-            type: args.serviceImageFirst.type,
-          })
-        }
-        if (args.serviceImageSecond) {
-          formData.append('serviceImageSecond', {
-            uri: args.serviceImageSecond.uri,
-            name: args.serviceImageSecond.fileName,
-            type: args.serviceImageSecond.type,
-          })
-        }
-        if (args.serviceImageThird) {
-          formData.append('serviceImageThird', {
-            uri: args.serviceImageThird.uri,
-            name: args.serviceImageThird.fileName,
-            type: args.serviceImageThird.type,
-          })
-        }
         return {
           url: '/users/service',
           method: 'PATCH',
-          body: formData
+          body: {
+            description: args.description,
+            servicesDescription: args.servicesDescription,
+            servicePrice: args.servicePrice,
+            city: args.city,
+            idNumber: args.idNumber,
+            scheduleDate: args.scheduleDate,
+            appointmentTime: args.appointmentTime,
+            addressFirst: args.addressFirst,
+            fullNameFirst: args.fullNameFirst,
+            relationFirst: args.relationFirst,
+            emailFirst: args.emailFirst,
+            phoneNumberFirst: args.phoneNumberFirst,
+            fullNameSecond: args.fullNameSecond,
+            relationSecond: args.relationSecond,
+            emailSecond: args.emailSecond,
+            phoneNumberSecond: args.phoneNumberSecond,
+            addressSecond: args.addressSecond,
+            potfolios: args.potfolios,
+            profilePicture: args.profilePicture,
+            serviceId: args.serviceId,
+          }
         }
       },
     }),

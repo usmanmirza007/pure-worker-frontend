@@ -1698,6 +1698,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-17.4.3.tgz#27600bad8a694b4359690efbd54852914940ec7c"
   integrity sha512-3deWVktkB3lzdxxvVJ8bG+r4LNPtRX0RwDzAZLE0VvcMxl2WQssJZv5GqsUAFDenw+qwaCG2BULteGyCvy8Pgg==
 
+"@react-native-firebase/storage@^18.3.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-18.3.0.tgz#d30624d45779ef57985dad8755e5ba67b257a13a"
+  integrity sha512-4tMxu1364yH+hPSObEs18cMPGg7h0y7QynVfArvuK8lRNkpafeVAgYa8x0xp80LXUjMWXiN4OmmGpyy/CYH2lg==
+
 "@react-native-picker/picker@^2.4.10":
   version "2.4.10"
   resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.4.10.tgz"

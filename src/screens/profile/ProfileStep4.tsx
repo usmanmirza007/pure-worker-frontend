@@ -59,6 +59,7 @@ const ProfileStep4 = () => {
       const profileData = {
         serviceId: route?.params?.serviceId,
         idNumber: idNumber,
+        potfolios: [],
         scheduleDate: null,
         appointmentTime: null,
       }

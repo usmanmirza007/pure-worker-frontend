@@ -37,7 +37,6 @@ export default function BusinessSignup() {
   const [lastName, setLastName] = useState('');
   const [phoneName, setPhoneName] = useState('');
   const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [cacNo, setCacNo] = useState('');
   const [address, setAddress] = useState('');

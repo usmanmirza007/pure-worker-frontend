@@ -71,6 +71,7 @@ const ProfileStep3 = () => {
         idNumber: null,
         scheduleDate: null,
         appointmentTime: null,
+        potfolios: [],
         serviceId: route?.params?.serviceId
       }
       createService(profileData).unwrap()

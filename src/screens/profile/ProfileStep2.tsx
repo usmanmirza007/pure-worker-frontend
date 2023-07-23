@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Image,
   ActivityIndicator,
   TextInput,
+  Platform,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -21,18 +22,17 @@ import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
 import DropDownPicker from 'react-native-dropdown-picker';
 import PotfolioWrapper from '../../components/PotfolioWrapper';
-import { launchImageLibrary } from '../../constants/utils';
+import { allCountry, launchImageLibrary } from '../../constants/utils';
 import Snackbar from 'react-native-snackbar';
+import storage from '@react-native-firebase/storage';
+
 
 const PRofileStep2 = () => {
   const navigation = useNavigation<StackNavigation>();
   const [description, setDescription] = useState('');
   const [shortDescription, setShortDescription] = useState('');
-  const [PotfolioFirst, setPotfolioFirst] = useState('');
-  const [PotfolioSecond, setPotfolioSecond] = useState('');
   const [imageObject, setImageObject] = useState({});
   const [imageUrl, setImageUrl] = useState('');
-  const [potfolioImageObject, setPotfolioImageObject] = useState<any>([]);
   const [potfolioImageUrl, setPotfolioImageUrl] = useState<any>([]);
   const [potfolioEnable, setPotfolioEnable] = useState(false);
   const [allPotfolio, setAllPotfolio] = useState<any>([]);
@@ -43,16 +43,18 @@ const PRofileStep2 = () => {
   const [servicesDescription, setServicesDescription] = useState<any>([]); // State to store input values
   const [servicePrice, setServicePrice] = useState<any>([]); // State to store input values
   const [createService, { isLoading }] = useCreateServiceMutation();
+  const [potfolioImageLoading, setPotfolioImageLoading] = useState(false);
+  const [profileImageLoading, setProfileImageLoading] = useState(false);
 
   const [nationalityOpen, setNationalityOpen] = useState(false);
   const [nationalityValue, setNationalityValue] = useState(null);
-  const [nationalityItems, setNationalityItems] = useState([
-    { label: 'New York', value: 'New York' },
-    { label: 'Los Angeles', value: 'Los Angeles' },
-    { label: 'Chicago', value: 'Chicago' },
-    { label: 'Houston', value: 'Houston' },
-    { label: 'Phoenix', value: 'Phoenix' },
-  ]);
+  const [nationalityItems, setNationalityItems] = useState<any>([]);
+  let potfolioPicture = useRef('')
+  let profilePicture = useRef('')
+
+  useEffect(() => {
+    setNationalityItems([...allCountry])
+  }, [])
 
   useEffect(() => {
     if (category?.length) {
@@ -63,7 +65,6 @@ const PRofileStep2 = () => {
       setServicesDescription([...updatedInputValues]);
     }
   }, [category]);
-  console.log('allPotfolio', allPotfolio);
 
   useEffect(() => {
     if (category?.length) {
@@ -95,19 +96,15 @@ const PRofileStep2 = () => {
   const getCategory = getCategoryData ?? []
 
   const handleProfileSetup = () => {
-    if (imageObject && description && servicesDescription && servicePrice && nationalityValue) {
+    if (imageUrl && description && servicesDescription && servicePrice && nationalityValue) {
 
       const profileData = {
-        profilePicture: imageObject,
+        profilePicture: imageUrl,
         description: description,
         servicesDescription: JSON.stringify(servicesDescription),
         servicePrice: JSON.stringify(servicePrice),
         city: nationalityValue,
-        portfolioFirst: PotfolioFirst,
-        portfolioSecond: PotfolioSecond,
-        serviceImageFirst: potfolioImageObject.length ? potfolioImageObject[0] : '',
-        serviceImageSecond: potfolioImageObject.length > 1 ? potfolioImageObject[1] : '',
-        serviceImageThird: potfolioImageObject.length > 2 ? potfolioImageObject[2] : '',
+        potfolios: allPotfolio,
         serviceId: '',
       }
       createService(profileData).unwrap()
@@ -130,7 +127,8 @@ const PRofileStep2 = () => {
       });
     }
   }
-  console.log('potfolioImageObject', potfolioImageObject);
+
+  console.log('fofo', profileImageLoading);
 
 
   return (
@@ -145,16 +143,40 @@ const PRofileStep2 = () => {
 
           <View>
             <View style={[generalStyles.contentCenter, { width: 145, height: 145, borderRadius: 145, alignSelf: 'center', backgroundColor: colors.greyLight1 }]} >
-              {!imageUrl ? <TextWrapper children='Upload Profile Photo' fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 14, color: colors.black }} />
-                : <Image source={{ uri: imageUrl }} style={{ width: 145, height: 145, borderRadius: 145 }} />}
+              {!profileImageLoading ?
+                <>
+                  {!imageUrl ? <TextWrapper children='Upload Profile Photo' fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 14, color: colors.black }} /> :
+                    <Image source={{ uri: imageUrl }} style={{ width: 145, height: 145, borderRadius: 145 }} />}
+                </>
+                : <ActivityIndicator style={{ marginTop: 0 }} size={'large'} color={colors.parpal} />}
 
             </View>
             <View style={{ position: 'absolute', right: 40, top: 10, flexDirection: 'row' }}>
               <TouchableOpacity onPress={async () => {
-                const response = await launchImageLibrary()
-                if (response) {
-                  setImageObject(response)
-                  setImageUrl(response?.uri ? response.uri : '')
+                try {
+                  const response: any = await launchImageLibrary()
+                  setProfileImageLoading(true)
+                  if (response) {
+
+                    const filename = response?.uri.substring(response?.uri.lastIndexOf('/') + 1);
+                    const uploadUri = Platform.OS === 'ios' ? response?.uri.replace('file://', '') : response.uri
+                    const task = await storage().ref(filename).putFile(uploadUri)
+                    if (task.metadata) {
+                      profilePicture.current = task.metadata.fullPath
+                    }
+                    let url = ''
+                    if (profilePicture.current) {
+                      url = await storage().ref(profilePicture.current).getDownloadURL();
+                    }
+                    setImageUrl(url)
+                    profilePicture.current = ''
+                    setProfileImageLoading(false)
+                  } else {
+                    setProfileImageLoading(false)
+                  }
+                } catch (error) {
+                  console.log('error', error);
+                  setProfileImageLoading(false)
                 }
               }}>
                 <Image source={images.edit} resizeMode='contain' style={{ width: 20, height: 20, marginLeft: 20, tintColor: '#000' }} />
@@ -318,7 +340,7 @@ const PRofileStep2 = () => {
             <TextWrapper children='Portfolio' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 20, marginBottom: 13, color: colors.black }} />
             {allPotfolio.map((item: any, index: number) => {
               return (
-                <PotfolioWrapper setPotfolio={setPotfolioFirst} item={item} allPotfolio={allPotfolio} setAllPotfolio={setAllPotfolio} setPotfolioImageObject={setPotfolioImageObject} setShortDescription={setShortDescription} setPotfolioImageUrl={setPotfolioImageUrl} setEditKey={setEditKey} />
+                <PotfolioWrapper index={index} item={item} allPotfolio={allPotfolio} setAllPotfolio={setAllPotfolio} setShortDescription={setShortDescription} setPotfolioImageUrl={setPotfolioImageUrl} setEditKey={setEditKey} />
               )
             })}
             <TouchableOpacity onPress={() => {
@@ -334,7 +356,7 @@ const PRofileStep2 = () => {
               <TextWrapper children='Maximum number of portfolios added.' isRequired={false} fontType={'normal'} style={{ textAlign: 'center', fontSize: 12, marginTop: 13, color: colors.black }} />
             </View>}
 
-            {(potfolioEnable || shortDescription || potfolioImageObject.length) ?
+            {(potfolioEnable || shortDescription || potfolioImageUrl.length) ?
               <View>
                 <TextWrapper children='Short Description' isRequired={false} fontType={'semiBold'} style={{ fontSize: 16, marginTop: 0, color: colors.black }} />
                 <TextInput
@@ -345,58 +367,86 @@ const PRofileStep2 = () => {
                   onChangeText={setShortDescription}
                 />
 
-                {potfolioImageObject.length < 3 && <TouchableOpacity
-                  onPress={async () => {
-                    const response = await launchImageLibrary()
-                    if (response) {
-                      setPotfolioImageObject([...potfolioImageObject, response])
-                      // setPotfolioImageUrl([...potfolioImageUrl, response?.uri])
-                    }
-                  }}
-                  style={[generalStyles.contentCenter, { height: 25, width: 120, borderRadius: 5, marginTop: 13, backgroundColor: colors.lightBlack }]}>
-                  <TextWrapper children='Upload Images' isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.white }} />
-                </TouchableOpacity>}
-                <View style={[generalStyles.rowCenter, { marginRight: 20, }]}>
-                  {potfolioImageObject.map((item: any, index: number) => {
-                    return (
-                      <View key={index} style={[[generalStyles.rowCenter, { marginRight: 20 }], { marginTop: 10, }]}>
-                        <TextWrapper children={item?.uri?.slice(-8)} isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.black }} />
-                        <TouchableOpacity onPress={() => {
-                          setPotfolioImageObject(potfolioImageObject.filter((text: any) => text?.uri !== item?.uri))
-                          // setPotfolioImageUrl(potfolioImageUrl.filter((text: any) => text !== item))
-                        }}>
-                          <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, tintColor: '#000' }} />
-                        </TouchableOpacity>
-                      </View>
-                    )
-                  })}
-                </View>
-                <Button onClick={() => {
+                {!potfolioImageLoading ?
+                  <View>
+                    {potfolioImageUrl.length < 3 && <TouchableOpacity
+                      onPress={async () => {
+                        try {
+                          const response: any = await launchImageLibrary()
+                          setPotfolioImageLoading(true)
+                          if (response) {
+                            const filename = response?.uri.substring(response?.uri.lastIndexOf('/') + 1);
+                            const uploadUri = Platform.OS === 'ios' ? response?.uri.replace('file://', '') : response.uri
+                            const task = await storage().ref(filename).putFile(uploadUri)
+                            if (task.metadata) {
+                              potfolioPicture.current = task.metadata.fullPath
+                            }
+                            let url
+                            if (potfolioPicture.current) {
+                              url = await storage().ref(potfolioPicture.current).getDownloadURL();
+                            }
+                            setPotfolioImageUrl([...potfolioImageUrl, url])
+                            potfolioPicture.current = ''
+                            setPotfolioImageLoading(false)
+                          }else {
+                            setPotfolioImageLoading(false)
+                          }
+                        } catch (error) {
+                          console.log('error', error);
+                          setPotfolioImageLoading(false)
+                        }
+                      }}
+                      style={[generalStyles.contentCenter, { height: 25, width: 120, borderRadius: 5, marginTop: 13, backgroundColor: colors.lightBlack }]}>
+                      <TextWrapper children='Upload Images' isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.white }} />
+                    </TouchableOpacity>}
+                    <View style={[generalStyles.rowCenter, { marginRight: 20, }]}>
+                      {potfolioImageUrl.map((item: any, index: number) => {
+                        return (
+                          <View key={index} style={[[generalStyles.rowCenter, { marginRight: 20 }], { marginTop: 10, }]}>
+                            <TextWrapper children={item?.slice(-8)} isRequired={false} fontType={'semiBold'} style={{ textAlign: 'center', fontSize: 12, color: colors.black }} />
+                            <TouchableOpacity onPress={() => {
+                              setPotfolioImageUrl(potfolioImageUrl.filter((text: any) => text !== item))
+                            }}>
+                              <Image source={images.cross} resizeMode='contain' style={{ width: 10, height: 10, marginLeft: 20, tintColor: '#000' }} />
+                            </TouchableOpacity>
+                          </View>
+                        )
+                      })}
+                    </View>
+                    <Button onClick={() => {
+                      if (!shortDescription) {
+                        Snackbar.show({
+                          text: 'Please enter potfolio description',
+                          duration: Snackbar.LENGTH_SHORT, textColor: '#fff',
+                          backgroundColor: '#88087B',
+                        });
+                        return
+                      }
+                      const data = {
+                        key: key,
+                        shortDescription: shortDescription,
+                        potfolioImages: potfolioImageUrl
+                      }
+                      setKey(key + 1)
+                      if (editkey) {
+                        const objIndex = allPotfolio.findIndex(((obj: any) => obj.key == editkey));
+                        allPotfolio[objIndex].potfolioImages = potfolioImageUrl
+                        allPotfolio[objIndex].shortDescription = shortDescription
+                        setAllPotfolio([...allPotfolio])
+                      } else {
+                        setAllPotfolio([...allPotfolio, data])
+                      }
+                      setEditKey(null)
+                      setShortDescription('')
+                      setPotfolioImageUrl([])
+                      setPotfolioEnable(false)
+                    }}
+                      style={{ width: 80, marginTop: 10, alignSelf: 'flex-end', backgroundColor: colors.lightBlack }}
+                      textStyle={{ color: colors.primary }}
+                      text={`Done`} />
+                  </View> : <ActivityIndicator style={{ marginTop: 50 }} size={'large'} color={colors.parpal} />}
 
-                  const data = {
-                    key: key,
-                    shortDescription: shortDescription,
-                    potfolioImageObject: potfolioImageObject
-                  }
-                  setKey(key + 1)
-                  if (editkey) {
-                    const objIndex = allPotfolio.findIndex(((obj: any) => obj.key == editkey));
-                    allPotfolio[objIndex].potfolioImageObject = potfolioImageObject
-                    allPotfolio[objIndex].shortDescription = shortDescription
-                    setAllPotfolio([...allPotfolio])
-                  } else {
-                    setAllPotfolio([...allPotfolio, data])
-                  }
-                  setEditKey(null)
-                  setShortDescription('')
-                  setPotfolioImageObject([])
-                  setPotfolioImageUrl([])
-                  setPotfolioEnable(false)
-                }}
-                  style={{ width: 80, marginTop: 10, alignSelf: 'flex-end', backgroundColor: colors.lightBlack }}
-                  textStyle={{ color: colors.primary }}
-                  text={`Done`} />
-              </View> : null }
+              </View> : null}
 
             {!isLoading ?
               <View style={{ marginHorizontal: 25, marginTop: 75 }}>
