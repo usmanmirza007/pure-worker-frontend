@@ -23,7 +23,7 @@ export const api = emptySplitApi.injectEndpoints({
             cacNo: args.cacNo,
             location: args.location,
             address: args.address,
-            gender: args.genderValue,
+            gender: args.gender,
             nationality: args.nationalityValue
           }
         }

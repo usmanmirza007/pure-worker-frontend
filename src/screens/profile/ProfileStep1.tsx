@@ -75,6 +75,7 @@ const PRofileStep1 = () => {
           <Button onClick={() => { setIsAddService(!isAddService) }}
             style={{ width: 130, backgroundColor: colors.lightBlack }}
             textStyle={{ color: colors.primary }}
+            disable={true}
             text={`Add another`} />
           <Button onClick={() => { navigation.navigate('ProfileStep2') }}
             style={{ width: 90, backgroundColor: colors.lightBlack }}

@@ -85,7 +85,6 @@ export default function BusinessSignup() {
       } else {
         const loginData = {
           email: email.toLowerCase().trim(),
-          // password: password,
           firstName: firstName,
           lastName: lastName,
           phoneNumber: phoneName,

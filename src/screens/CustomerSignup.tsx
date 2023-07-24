@@ -77,7 +77,6 @@ export default function CustomerSignup() {
       } else {
         const loginData = {
           email: email.toLowerCase().trim(),
-          // password: password,
           firstName: firstName,
           lastName: lastName,
           phoneNumber: phoneName,
@@ -355,9 +354,9 @@ export default function CustomerSignup() {
             </View>
             <View style={{ zIndex: nationalityOpen ? 0 : 2, }}>
               <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Address</Text>
-              <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={address} setState={setAddress} />
+              <TextInputs style={{ marginTop: 17 }} labelText={'Enter address'} state={address} setState={setAddress} />
               <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Email Address</Text>
-              <TextInputs style={{ marginTop: 17 }} labelText={'Enter Email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
+              <TextInputs style={{ marginTop: 17 }} labelText={'Enter email'} state={email} setState={setEmail} keyBoardType={'email-address'} />
               {/* <Text style={{ fontSize: 16, fontFamily: commonStyle.fontFamily.medium, color: '#fff', marginTop: 15 }}>Password</Text>
               <TextInputs style={{ marginTop: 10 }} secure={true} labelText={'Enter Password'} state={password} setState={setPassword} /> */}
             </View>
