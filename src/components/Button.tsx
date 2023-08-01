@@ -1,26 +1,39 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet,  } from 'react-native';
-import commonStyle from '../constants/commonStyle'
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import commonStyle from '../constants/commonStyle';
 
 type ButtonProps = {
-  text: string
-  onClick: () => void
-  style?: any
-  disable?: boolean
-  textStyle?: any
-}
+  text: string;
+  onClick: () => void;
+  style?: any;
+  disable?: boolean;
+  textStyle?: any;
+};
 
-export default function ({ text, onClick, style, disable = false, textStyle }: ButtonProps) {
+export default function ({
+  text,
+  onClick,
+  style,
+  disable = false,
+  textStyle,
+}: ButtonProps) {
   return (
     <TouchableOpacity
       disabled={disable}
       onPress={onClick}
-      style={[
-        styles.start,
-        style,
-        commonStyle.shadow
-      ]}>
-      <Text style={[{ color: 'white', fontSize: 14, textAlign: 'center', fontFamily: commonStyle.fontFamily.medium }, textStyle]}>{ text }</Text>
+      style={[styles.start, style, commonStyle.shadow]}>
+      <Text
+        style={[
+          {
+            color: 'white',
+            fontSize: 14,
+            textAlign: 'center',
+            fontFamily: commonStyle.fontFamily.medium,
+          },
+          textStyle,
+        ]}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 }

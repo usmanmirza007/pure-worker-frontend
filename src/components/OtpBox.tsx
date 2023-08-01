@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
-
+import {StyleSheet, View, TextInput} from 'react-native';
 
 export default React.forwardRef((props, ref) => {
-  const handleKeyPress = ({ nativeEvent: { key: keyValue } }) => {
+  const handleKeyPress = ({nativeEvent: {key: keyValue}}) => {
     if (keyValue === 'Backspace') {
       props.move('left', props.keyRef);
     } else {
@@ -26,7 +25,7 @@ export default React.forwardRef((props, ref) => {
         cursorColor={'#DB5461'}
         ref={ref}
         value={text}
-        onChangeText={(txt) => {
+        onChangeText={txt => {
           setText(txt);
         }}
         onKeyPress={handleKeyPress}
