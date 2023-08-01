@@ -8,5 +8,7 @@ export default {
   parpal: '#88087B',
   black: '#000',
   lightBlack: '#000413CF',
+  darkPurple: '#2D303C',
+  green: '#29D31A',
 
 }

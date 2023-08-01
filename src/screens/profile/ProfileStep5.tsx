@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
-import {
-  Image,
-  View,
-  ActivityIndicator
-} from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { StackNavigation } from '../../constants/navigation';
+import React, {useState} from 'react';
+import {Image, View, ActivityIndicator} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {StackNavigation} from '../../constants/navigation';
 import Header from '../../components/Header';
 import images from '../../constants/images';
 import Button from '../../components/Button';
@@ -15,36 +11,41 @@ import commonStyle from '../../constants/commonStyle';
 import colors from '../../constants/colors';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import DateTimesPicker from '../../components/DatePicker';
-import { generalStyles } from '../../constants/generalStyles';
-import { useCreateServiceMutation, useLoginMutation } from '../../store/slice/api';
+import {generalStyles} from '../../constants/generalStyles';
+import {
+  useCreateServiceMutation,
+  useLoginMutation,
+} from '../../store/slice/api';
 import Snackbar from 'react-native-snackbar';
-import { emptyCategory } from '../../store/reducer/mainSlice';
-import { useDispatch } from 'react-redux';
+import {emptyCategory} from '../../store/reducer/mainSlice';
+import {useDispatch} from 'react-redux';
 
 type Route = {
-  key: string
-  name: string
+  key: string;
+  name: string;
   params: {
-    serviceId: string
-  }
-}
+    serviceId: string;
+  };
+};
 
 const ProfileStep5 = () => {
-  const route: Route = useRoute()
-  const dispatch = useDispatch()
+  const route: Route = useRoute();
+  const dispatch = useDispatch();
 
   const navigation = useNavigation<StackNavigation>();
   const [date, setDate] = useState(new Date());
-  const handleDate = (dateTime: any) => { setDate(dateTime) };
+  const handleDate = (dateTime: any) => {
+    setDate(dateTime);
+  };
   const [time, setTime] = useState(new Date());
-  const handleTime = (dateTime: any) => { setTime(dateTime) };
+  const handleTime = (dateTime: any) => {
+    setTime(dateTime);
+  };
 
-  const [createService, { isLoading }] = useCreateServiceMutation();
-
+  const [createService, {isLoading}] = useCreateServiceMutation();
 
   const handleProfileSetup = () => {
     if (date && time) {
-
       const profileData = {
         scheduleDate: date.getTime(),
         appointmentTime: time.getTime(),
@@ -54,31 +55,48 @@ const ProfileStep5 = () => {
       createService(profileData).unwrap()
         .then((data: any) => {
           if (data) {
-            dispatch(emptyCategory())
-            navigation.navigate('Homes')
+            dispatch(emptyCategory());
+            navigation.navigate('Homes');
           }
         })
         .catch((error: any) => {
           console.log('err', error);
           Snackbar.show({
-            text: error.data.message, duration: Snackbar.LENGTH_SHORT, textColor: '#fff', backgroundColor: '#88087B',
+            text: error.data.message,
+            duration: Snackbar.LENGTH_SHORT,
+            textColor: '#fff',
+            backgroundColor: '#88087B',
           });
         });
     } else {
       Snackbar.show({
         text: 'Please fill all fields',
-        duration: Snackbar.LENGTH_SHORT, textColor: '#fff',
+        duration: Snackbar.LENGTH_SHORT,
+        textColor: '#fff',
         backgroundColor: '#88087B',
       });
     }
-  }
+  };
   return (
-    <View style={[{ flex: 1, backgroundColor: colors.greyLight },]}>
+    <View style={[{flex: 1, backgroundColor: colors.greyLight}]}>
       <ScrollView>
-        <Header style={{ backgroundColor: colors.greyLight }} imageStyle={{ tintColor: colors.black }} textStyle={{ color: colors.black, fontFamily: commonStyle.fontFamily.semibold }} title={'Complete your Registration'} image={images.back} />
+        <Header
+          style={{backgroundColor: colors.greyLight}}
+          imageStyle={{tintColor: colors.black}}
+          textStyle={{
+            color: colors.black,
+            fontFamily: commonStyle.fontFamily.semibold,
+          }}
+          title={'Complete your Registration'}
+          image={images.back}
+        />
         <ProfileStepWrapper active={'five'} />
-        <View style={{ marginHorizontal: 20 }}>
-          <TextWrapper children='Schedule a Face to Face Meeting' fontType={'semiBold'} style={{ fontSize: 20, marginTop: 30, color: colors.black }} />
+        <View style={{marginHorizontal: 20}}>
+          <TextWrapper
+            children="Schedule a Face to Face Meeting"
+            fontType={'semiBold'}
+            style={{fontSize: 20, marginTop: 30, color: colors.black}}
+          />
 
           <TextWrapper children='Select a Date' isRequired={true} fontType={'semiBold'} style={{ fontSize: 14, marginTop: 13, color: colors.black }} />
           <TouchableOpacity style={[generalStyles.rowBetween, {
@@ -117,19 +135,30 @@ const ProfileStep5 = () => {
             /> */}
           </TouchableOpacity>
 
-
-          {!isLoading ?
-            <Button onClick={() => { handleProfileSetup() }}
-              style={{ marginHorizontal: 40, marginTop: 140, backgroundColor: colors.lightBlack }}
-              textStyle={{ color: colors.primary }}
-              text={`Schedule`} />
-            : <ActivityIndicator style={{ marginTop: 150, }} size={'large'} color={colors.parpal} />}
-
+          {!isLoading ? (
+            <Button
+              onClick={() => {
+                handleProfileSetup();
+              }}
+              style={{
+                marginHorizontal: 40,
+                marginTop: 140,
+                backgroundColor: colors.lightBlack,
+              }}
+              textStyle={{color: colors.primary}}
+              text={'Schedule'}
+            />
+          ) : (
+            <ActivityIndicator
+              style={{marginTop: 150}}
+              size={'large'}
+              color={colors.parpal}
+            />
+          )}
         </View>
       </ScrollView>
     </View>
   );
 };
-
 
 export default ProfileStep5;
