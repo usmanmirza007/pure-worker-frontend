@@ -18,6 +18,7 @@ type HeaderProps = {
   statusBarStyle?: any;
   textStyle?: any;
   imageStyle?: any;
+  func?: any
 };
 
 const Header = ({
@@ -27,6 +28,7 @@ const Header = ({
   statusBarStyle,
   imageStyle,
   textStyle,
+  func,
 }: HeaderProps) => {
   var navigation = useNavigation();
 
@@ -57,7 +59,13 @@ const Header = ({
 
       <TouchableOpacity
         style={{position: 'absolute', left: 20}}
-        onPress={() => navigation.goBack()}>
+        onPress={() => {
+          if (func) {
+            func()
+          }else{
+            navigation.goBack()
+          }
+        }}>
         <Image
           source={image}
           resizeMode={'contain'}
