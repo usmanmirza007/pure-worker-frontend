@@ -203,6 +203,41 @@ export default () => {
           component={Home}
           options={{headerShown: false, animationEnabled: false}}
         />
+        <Stack.Screen
+          name="TermAndCondition"
+          component={TermAndCondition}
+          options={{headerShown: false, animationEnabled: false}}
+        />
+        <Stack.Screen
+          name="FAQ"
+          component={FAQ}
+          options={{headerShown: false, animationEnabled: false}}
+        />
+        <Stack.Screen
+          name="ProfileStep1"
+          component={ProfileStep1}
+          options={{headerShown: false, animationEnabled: false}}
+        />
+        <Stack.Screen
+          name="ProfileStep2"
+          component={PRofileStep2}
+          options={{headerShown: false, animationEnabled: false}}
+        />
+        <Stack.Screen
+          name="ProfileStep3"
+          component={ProfileStep3}
+          options={{headerShown: false, animationEnabled: false}}
+        />
+        <Stack.Screen
+          name="ProfileStep4"
+          component={ProfileStep4}
+          options={{headerShown: false, animationEnabled: false}}
+        />
+        <Stack.Screen
+          name="ProfileStep5"
+          component={ProfileStep5}
+          options={{headerShown: false, animationEnabled: false}}
+        />
       </Stack.Navigator>
     );
   }
@@ -220,7 +255,10 @@ export default () => {
     const userType = useSelector((state: any) => state.user.isLoggedIn);
     console.log('user_', userType);
     if (userType.userType === 'CUSTOMER') {
-      return <CustomerNavigation />;
+      return <VenderStack /> ;
+      // <CustomerNavigation />;
+      // <VenderStack /> ;
+     
       // <CustomerStack />;
     } else {
       return <VenderStack />;

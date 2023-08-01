@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <View style={[{ flex: 1, backgroundColor: '#fff' }, ]}>
       <ScrollView>
-        <Header title={'Home'} image={images.back} />
+        <Header title={'Home'} image={images.back} func={()=>{navigation.navigate('ProfileStep1')}} />
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 20 }}>
           <TouchableOpacity onPress={() => navigation.navigate('ProfileStep1')}>
             <Image source={images.profile} style={{ height: 40, width: 40, }} resizeMode='contain' />
