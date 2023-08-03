@@ -4,30 +4,13 @@ import {Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {PersistGate} from 'redux-persist/integration/react';
-import Snackbar from 'react-native-snackbar';
 import {store, persistor} from './src/store/store';
 import SplashScreen from 'react-native-splash-screen';
-
-// onboarding
-import Login from './src/screens/Login';
-import OnBoarding from './src/screens/OnBoarding';
-
-// home
-import Home from './src/screens/Home';
 import {Provider, useSelector} from 'react-redux';
 import {navigationRef} from './RootNavigation';
-import TokenVerification from './src/screens/TokenVerification';
-import BusinessSignup from './src/screens/BusinessSignup';
-import CustomerSignup from './src/screens/CustomerSignup';
-import Signup from './src/screens/Signup';
-import TermAndCondition from './src/screens/TermAndCondition';
-import FAQ from './src/screens/FAQ';
-import ProfileStep1 from './src/screens/profile/ProfileStep1';
-import PRofileStep2 from './src/screens/profile/ProfileStep2';
-import ProfileStep3 from './src/screens/profile/ProfileStep3';
-import ProfileStep4 from './src/screens/profile/ProfileStep4';
-import ProfileStep5 from './src/screens/profile/ProfileStep5';
 import CustomerNavigation from './src/navigation/customerNavigation';
+import VendorNavigation from './src/navigation/vendorNavigation';
+import OnboardingStack from './src/navigation/OnboardStack';
 
 const Stack = createStackNavigator();
 const {width} = Dimensions.get('screen');
@@ -148,159 +131,52 @@ export default () => {
   //   );
   // }
 
-  function CustomerStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Homes"
-          component={Home}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="TermAndCondition"
-          component={TermAndCondition}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="FAQ"
-          component={FAQ}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep1"
-          component={ProfileStep1}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep2"
-          component={PRofileStep2}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep3"
-          component={ProfileStep3}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep4"
-          component={ProfileStep4}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep5"
-          component={ProfileStep5}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-      </Stack.Navigator>
-    );
-  }
-
-  function VenderStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Homes"
-          component={Home}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="TermAndCondition"
-          component={TermAndCondition}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="FAQ"
-          component={FAQ}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep1"
-          component={ProfileStep1}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep2"
-          component={PRofileStep2}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep3"
-          component={ProfileStep3}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep4"
-          component={ProfileStep4}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="ProfileStep5"
-          component={ProfileStep5}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-      </Stack.Navigator>
-    );
-  }
-
-  // function HomeStack() {
-  //   const userType = useSelector((state: any) => state.user.isLoggedIn)
-  //   console.log('user ', userType);
-  //   // if (userType) {
-  //   return <CustomerStack />
-  //   // } else {
-  //   //   return <VenderStack />
-  //   // }
-  // }
   function HomeStack() {
     const userType = useSelector((state: any) => state.user.isLoggedIn);
     console.log('user_', userType);
-    if (userType.userType === 'CUSTOMER') {
-      return <VenderStack /> ;
-      // <CustomerNavigation />;
-      // <VenderStack /> ;
-     
-      // <CustomerStack />;
+    if (!userType.userType === 'CUSTOMER') {
+      return <CustomerNavigation />;
     } else {
-      return <VenderStack />;
+      return <VendorNavigation />;
     }
   }
 
-  function OnboardingStack() {
-    return (
-      <Stack.Navigator initialRouteName="OnBoarding1">
-        <Stack.Screen
-          name="Signup"
-          component={Signup}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="BusinessSignup"
-          component={BusinessSignup}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="CustomerSignup"
-          component={CustomerSignup}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="OnBoarding1"
-          component={OnBoarding}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-        <Stack.Screen
-          name="TokenVerification"
-          component={TokenVerification}
-          options={{headerShown: false, animationEnabled: false}}
-        />
-      </Stack.Navigator>
-    );
-  }
+  // function OnboardingStack() {
+  //   return (
+  //     <Stack.Navigator initialRouteName="OnBoarding1">
+  //       <Stack.Screen
+  //         name="Signup"
+  //         component={Signup}
+  //         options={{headerShown: false, animationEnabled: false}}
+  //       />
+  //       <Stack.Screen
+  //         name="Login"
+  //         component={Login}
+  //         options={{headerShown: false, animationEnabled: false}}
+  //       />
+  //       <Stack.Screen
+  //         name="BusinessSignup"
+  //         component={BusinessSignup}
+  //         options={{headerShown: false, animationEnabled: false}}
+  //       />
+  //       <Stack.Screen
+  //         name="CustomerSignup"
+  //         component={CustomerSignup}
+  //         options={{headerShown: false, animationEnabled: false}}
+  //       />
+  //       <Stack.Screen
+  //         name="OnBoarding1"
+  //         component={OnBoarding}
+  //         options={{headerShown: false, animationEnabled: false}}
+  //       />
+  //       <Stack.Screen
+  //         name="TokenVerification"
+  //         component={TokenVerification}
+  //         options={{headerShown: false, animationEnabled: false}}
+  //       />
+  //     </Stack.Navigator>
+  //   );
+  // }
 
   const MainStack = () => {
     const loggedIn = useSelector((state: any) => state.user.isLoggedIn);
