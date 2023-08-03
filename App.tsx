@@ -28,6 +28,7 @@ import ProfileStep3 from './src/screens/profile/ProfileStep3';
 import ProfileStep4 from './src/screens/profile/ProfileStep4';
 import ProfileStep5 from './src/screens/profile/ProfileStep5';
 import CustomerNavigation from './src/navigation/customerNavigation';
+import VendorNavigation from './src/navigation/vendorNavigation';
 
 const Stack = createStackNavigator();
 const {width} = Dimensions.get('screen');
@@ -255,8 +256,11 @@ export default () => {
     const userType = useSelector((state: any) => state.user.isLoggedIn);
     console.log('user_', userType);
     if (userType.userType === 'CUSTOMER') {
-      return <VenderStack /> ;
-      // <CustomerNavigation />;
+      return  <VendorNavigation/>;
+      <VenderStack /> ;
+      <CustomerNavigation />;
+      // <VenderStack /> ;
+     
       // <VenderStack /> ;
      
       // <CustomerStack />;

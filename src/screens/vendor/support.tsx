@@ -16,7 +16,7 @@ import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-const PrivacyPolicy = () => {
+const Support = () => {
   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   return (
@@ -24,11 +24,11 @@ const PrivacyPolicy = () => {
       <ScrollView>
         <View
           style={{
-            // marginTop:
-            //   Platform.OS === 'ios'
-            //     ? getStatusBarHeight(true)
-            //     : StatusBar.currentHeight &&
-            //       StatusBar.currentHeight + getStatusBarHeight(true),
+            marginTop:
+              Platform.OS === 'ios'
+                ? getStatusBarHeight(true)
+                : StatusBar.currentHeight &&
+                  StatusBar.currentHeight + getStatusBarHeight(true),
           }}
         />
         <View
@@ -38,7 +38,10 @@ const PrivacyPolicy = () => {
             justifyContent: 'space-between',
             marginHorizontal: 20,
           }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}>
             <Image
               source={images.back}
               style={{height: 25, width: 25}}
@@ -47,7 +50,7 @@ const PrivacyPolicy = () => {
           </TouchableOpacity>
           <View style={tw`mx-auto`}>
             <Textcomp
-              text={'Privacy Policy'}
+              text={'FAQ'}
               size={17}
               lineHeight={17}
               color={'#000413'}
@@ -60,4 +63,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default Support;

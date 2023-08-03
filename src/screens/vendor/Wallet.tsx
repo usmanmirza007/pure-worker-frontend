@@ -1,22 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Platform,
-  StatusBar,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Platform, StatusBar} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../../components/Header';
 import {useDispatch} from 'react-redux';
 import {StackNavigation} from '../../constants/navigation';
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-const PrivacyPolicy = () => {
+const Wallet = () => {
   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   return (
@@ -24,11 +18,11 @@ const PrivacyPolicy = () => {
       <ScrollView>
         <View
           style={{
-            // marginTop:
-            //   Platform.OS === 'ios'
-            //     ? getStatusBarHeight(true)
-            //     : StatusBar.currentHeight &&
-            //       StatusBar.currentHeight + getStatusBarHeight(true),
+            marginTop:
+              Platform.OS === 'ios'
+                ? getStatusBarHeight(true)
+                : StatusBar.currentHeight &&
+                  StatusBar.currentHeight + getStatusBarHeight(true),
           }}
         />
         <View
@@ -47,7 +41,7 @@ const PrivacyPolicy = () => {
           </TouchableOpacity>
           <View style={tw`mx-auto`}>
             <Textcomp
-              text={'Privacy Policy'}
+              text={'Wallet'}
               size={17}
               lineHeight={17}
               color={'#000413'}
@@ -60,4 +54,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default Wallet;

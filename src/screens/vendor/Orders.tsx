@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../../components/Header';
 import {useDispatch} from 'react-redux';
 import {StackNavigation} from '../../constants/navigation';
 import images from '../../constants/images';
@@ -16,7 +17,7 @@ import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-const PrivacyPolicy = () => {
+const Orders = () => {
   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   return (
@@ -24,11 +25,11 @@ const PrivacyPolicy = () => {
       <ScrollView>
         <View
           style={{
-            // marginTop:
-            //   Platform.OS === 'ios'
-            //     ? getStatusBarHeight(true)
-            //     : StatusBar.currentHeight &&
-            //       StatusBar.currentHeight + getStatusBarHeight(true),
+            marginTop:
+              Platform.OS === 'ios'
+                ? getStatusBarHeight(true)
+                : StatusBar.currentHeight &&
+                  StatusBar.currentHeight + getStatusBarHeight(true),
           }}
         />
         <View
@@ -47,17 +48,24 @@ const PrivacyPolicy = () => {
           </TouchableOpacity>
           <View style={tw`mx-auto`}>
             <Textcomp
-              text={'Privacy Policy'}
+              text={'Orders'}
               size={17}
               lineHeight={17}
               color={'#000413'}
               fontFamily={'Inter-SemiBold'}
             />
           </View>
+          <TouchableOpacity onPress={() => {}}>
+            <Image
+              source={images.search}
+              style={{height: 25, width: 25}}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
   );
 };
 
-export default PrivacyPolicy;
+export default Orders;

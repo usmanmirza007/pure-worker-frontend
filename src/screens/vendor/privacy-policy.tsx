@@ -24,11 +24,11 @@ const PrivacyPolicy = () => {
       <ScrollView>
         <View
           style={{
-            // marginTop:
-            //   Platform.OS === 'ios'
-            //     ? getStatusBarHeight(true)
-            //     : StatusBar.currentHeight &&
-            //       StatusBar.currentHeight + getStatusBarHeight(true),
+            marginTop:
+              Platform.OS === 'ios'
+                ? getStatusBarHeight(true)
+                : StatusBar.currentHeight &&
+                  StatusBar.currentHeight + getStatusBarHeight(true),
           }}
         />
         <View
