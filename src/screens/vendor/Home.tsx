@@ -39,6 +39,8 @@ const Home = ({navigation}: any) => {
   const {data: getCategoryData, isLoading, isError} = useGetCategoryQuery();
   const getCategory = getCategoryData ?? [];
 
+  console.log(getCategory);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#EBEBEB'}}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
@@ -102,7 +104,7 @@ const Home = ({navigation}: any) => {
               {marginLeft: perWidth(18), marginTop: perHeight(28)},
             ]}>
             <Textcomp
-              text={'Welcome Customer, '}
+              text={'Welcome Vendor,'}
               size={17}
               lineHeight={17}
               color={'#000413'}
@@ -110,119 +112,80 @@ const Home = ({navigation}: any) => {
             />
           </View>
           {/* Popular Section */}
-          <View
-            style={[
-              tw`flex flex-row items-center justify-between`,
-              {marginLeft: perWidth(18), marginTop: perHeight(22)},
-            ]}>
-            <View style={[tw``]}>
-              <Textcomp
-                text={'Popular services'}
-                size={25}
-                lineHeight={28}
-                color={'#000413'}
-                fontFamily={'Inter-Medium'}
-              />
-            </View>
-
-            <TouchableOpacity style={[tw`mr-4`]}>
-              <Textcomp
-                text={'See All'}
-                size={14}
-                lineHeight={16}
-                color={'#000413'}
-                fontFamily={'Inter-Medium'}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* <View
-            style={[
-              tw`ml-4 mt-4 border-[#FFC727]`,
-              {
-                height: perWidth(130),
-                width: perWidth(150),
-                borderWidth: 3,
-                borderRadius: 20,
-              },
-            ]}>
-            <Image
-              resizeMode="cover"
-              style={{
-                width: perWidth(145),
-                height: '65%',
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-              }}
-              source={images.welcome}
-            />
+          <View>
             <View
               style={[
-                tw`bg-[${colors.darkPurple}] flex-1`,
-                {borderBottomLeftRadius: 20, borderBottomRightRadius: 20},
+                tw`flex flex-row items-center justify-between`,
+                {marginLeft: perWidth(18), marginTop: perHeight(22)},
               ]}>
-              <View style={[tw``, {marginLeft: 10, marginTop: perHeight(6)}]}>
+              <View style={[tw``]}>
                 <Textcomp
-                  text={'Plumbing'}
-                  size={12}
-                  lineHeight={14}
-                  color={colors.white}
-                  fontFamily={'Inter-SemiBold'}
+                  text={'Orders in progress'}
+                  size={25}
+                  lineHeight={28}
+                  color={'#000413'}
+                  fontFamily={'Inter-Medium'}
                 />
               </View>
+              <TouchableOpacity style={[tw`mr-4`]}>
+                <Textcomp
+                  text={'See All'}
+                  size={14}
+                  lineHeight={16}
+                  color={'#000413'}
+                  fontFamily={'Inter-Medium'}
+                />
+              </TouchableOpacity>
             </View>
-          </View> */}
-
-          <View style={{flex: 1}}>
-            <FlatList
-              data={data}
-              horizontal={true}
-              renderItem={(item: any) => {
-                return <ServiceCard item={item.item} index={item.index} />;
-              }}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.id}
-            />
-          </View>
-
-          {/*Close to You Section */}
-          <View
-            style={[
-              tw`flex flex-row items-center justify-between`,
-              {marginLeft: perWidth(24), marginTop: perHeight(52)},
-            ]}>
-            <View style={[tw``]}>
-              <Textcomp
-                text={'Close to you'}
-                size={25}
-                lineHeight={28}
-                color={'#000413'}
-                fontFamily={'Inter-Medium'}
+            <View style={{flex: 1}}>
+              <FlatList
+                data={data}
+                horizontal={true}
+                renderItem={(item: any) => {
+                  return <ClosetoYou item={item.item} index={item.index} />;
+                }}
+                keyExtractor={item => item.id}
               />
             </View>
+          </View>
 
-            <TouchableOpacity style={[tw`mr-4`]}>
-              <Textcomp
-                text={'See All'}
-                size={14}
-                lineHeight={16}
-                color={'#000413'}
-                fontFamily={'Inter-Medium'}
+          {/* Pending Orders */}
+          <View>
+            <View
+              style={[
+                tw`flex flex-row items-center justify-between`,
+                {marginLeft: perWidth(18), marginTop: perHeight(22)},
+              ]}>
+              <View style={[tw``]}>
+                <Textcomp
+                  text={'Pending Orders'}
+                  size={25}
+                  lineHeight={28}
+                  color={'#000413'}
+                  fontFamily={'Inter-Medium'}
+                />
+              </View>
+              <TouchableOpacity style={[tw`mr-4`]}>
+                <Textcomp
+                  text={'See All'}
+                  size={14}
+                  lineHeight={16}
+                  color={'#000413'}
+                  fontFamily={'Inter-Medium'}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{flex: 1}}>
+              <FlatList
+                data={data}
+                horizontal={true}
+                renderItem={(item: any) => {
+                  return <ClosetoYou item={item.item} index={item.index} />;
+                }}
+                keyExtractor={item => item.id}
               />
-            </TouchableOpacity>
+            </View>
           </View>
-
-          <View style={{flex: 1}}>
-            <FlatList
-              data={data}
-              horizontal={true}
-              renderItem={(item: any) => {
-                return <ClosetoYou item={item.item} index={item.index} />;
-              }}
-              keyExtractor={item => item.id}
-            />
-          </View>
-
           {/* Service Ctagories */}
           <View>
             <View
