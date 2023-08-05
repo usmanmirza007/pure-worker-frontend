@@ -25,5 +25,16 @@ const images = {
   home: require('../assets/images/home.png'),
   notification: require('../assets/images/notification.png'),
   orders: require('../assets/images/orders.png'),
+
+  deactivte: require('../assets/images/deactivte.png'),
+  exit: require('../assets/images/exit.png'),
+  help: require('../assets/images/help.png'),
+  support: require('../assets/images/support.png'),
+  X: require('../assets/images/X.png'),
+  wallet: require('../assets/images/wallet.png'),
+  save: require('../assets/images/save.png'),
+  saved: require('../assets/images/saved.png'),
+  star2: require('../assets/images/star2.png'),
+  location: require('../assets/images/location1.png'),
 };
 export default images;

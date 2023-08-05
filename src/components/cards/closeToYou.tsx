@@ -4,6 +4,7 @@ import React from 'react';
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../Textcomp';
+import StarRating from 'react-native-star-rating-widget';
 import colors from '../../constants/colors';
 
 const ClosetoYou = ({item, index}: any) => (
@@ -84,7 +85,7 @@ const ClosetoYou = ({item, index}: any) => (
               height: perWidth(26),
               borderRadius: perWidth(25) / 2,
             }}
-            source={images.profile}
+            source={images.location}
           />
         </View>
 
@@ -99,32 +100,18 @@ const ClosetoYou = ({item, index}: any) => (
         </View>
       </View>
 
-      <View style={[tw``, {width: perWidth(80), marginTop: perWidth(1)}]}>
-        <Textcomp
-          text={'$20/hr'}
-          size={12}
-          lineHeight={14}
-          color={colors.white}
-          fontFamily={'Inter-SemiBold'}
+      <View
+        style={[tw`ml-auto`, {width: perWidth(40), marginTop: perWidth(1)}]}>
+        <StarRating
+          style={{width: perWidth(40)}}
+          starStyle={{marginHorizontal: 0}}
+          maxStars={5}
+          starSize={10}
+          rating={4}
+          onChange={() => {}}
         />
       </View>
     </View>
-
-    {/* <View
-      style={[
-        tw` flex-1`,
-        {borderBottomLeftRadius: 20, borderBottomRightRadius: 20},
-      ]}>
-      <View style={[tw``, {marginLeft: 10, marginTop: perHeight(6)}]}>
-        <Textcomp
-          text={'Plumbing'}
-          size={12}
-          lineHeight={14}
-          color={colors.white}
-          fontFamily={'Inter-SemiBold'}
-        />
-      </View>
-    </View> */}
   </View>
 );
 export default ClosetoYou;
