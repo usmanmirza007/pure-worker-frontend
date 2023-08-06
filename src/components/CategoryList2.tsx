@@ -87,7 +87,7 @@ const CategoryList = ({categoryName, catId}: SubCategoryListPRops) => {
               position: 'absolute',
               right: -25,
             }}>
-            {'*'}
+            {/* {'*'} */}
           </TextWrapper>
         </CollapseHeader>
         <CollapseBody>

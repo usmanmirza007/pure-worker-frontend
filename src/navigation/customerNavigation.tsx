@@ -10,6 +10,9 @@ import ProfileStep3 from '../screens/profile/ProfileStep3';
 import ProfileStep4 from '../screens/profile/ProfileStep4';
 import ProfileStep5 from '../screens/profile/ProfileStep5';
 import DrawerMenu from './drawerMenu';
+import Services from '../screens/user/services';
+import _Services from '../screens/user/_services';
+import CloseToYou from '../screens/user/closeToYou';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +32,21 @@ export default function CustomerNavigation() {
       <Stack.Screen
         name="FAQ"
         component={FAQ}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="ListServices"
+        component={Services}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="CloseToYou"
+        component={CloseToYou}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="_Services"
+        component={_Services}
         options={{headerShown: false, animationEnabled: false}}
       />
       <Stack.Screen

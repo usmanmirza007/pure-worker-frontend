@@ -38,8 +38,7 @@ const Home = ({navigation}: any) => {
   ];
   const {data: getCategoryData, isLoading, isError} = useGetCategoryQuery();
   const getCategory = getCategoryData ?? [];
-
-
+  console.log(getCategory);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#EBEBEB'}}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />

@@ -15,7 +15,9 @@ import images from '../../constants/images';
 import TextInputs from '../../components/TextInput2';
 import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
-import { perHeight, perWidth } from '../../utils/position/sizes';
+
+import {SIZES, perHeight, perWidth} from '../../utils/position/sizes';
+
 import colors from '../../constants/colors';
 import ServiceCard from '../../components/cards/serviceCard';
 import ClosetoYou from '../../components/cards/closeToYou';
@@ -23,7 +25,9 @@ import CategoryList2 from '../../components/CategoryList2';
 import commonStyle from '../../constants/commonStyle';
 import { useGetAllServiceProviderPotfolioQuery, useGetAllServiceProviderProfileQuery, useGetCategoryQuery } from '../../store/slice/api';
 
-const Home = ({ navigation }: any) => {
+import Modal from 'react-native-modal';
+const Home = ({navigation}: any) => {
+
   //   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
@@ -45,10 +49,13 @@ const Home = ({ navigation }: any) => {
   const getCategory = getCategoryData ?? [];
 // console.log('fofof');
 
+  const [InfoModal, setInfoModal] = useState(false);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#EBEBEB' }}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
       <View style={[{ flex: 1, backgroundColor: '#EBEBEB' }]}>
+
         <ScrollView>
           <View
             style={[
@@ -86,6 +93,9 @@ const Home = ({ navigation }: any) => {
               }
             />
             <TouchableOpacity
+              onPress={() => {
+                setInfoModal(true);
+              }}
               style={{
                 backgroundColor: '#000',
                 width: 40,
@@ -120,6 +130,7 @@ const Home = ({ navigation }: any) => {
             style={[
               tw`flex flex-row items-center justify-between`,
               { marginLeft: perWidth(18), marginTop: perHeight(22) },
+
             ]}>
             <View style={[tw``]}>
               <Textcomp
@@ -131,7 +142,11 @@ const Home = ({ navigation }: any) => {
               />
             </View>
 
-            <TouchableOpacity style={[tw`mr-4`]}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ListServices');
+              }}
+              style={[tw`mr-4`]}>
               <Textcomp
                 text={'See All'}
                 size={14}
@@ -187,6 +202,7 @@ const Home = ({ navigation }: any) => {
               renderItem={(item: any) => {
                 return <ServiceCard item={item.item} index={item.index} />;
               }}
+              showsHorizontalScrollIndicator={false}
               keyExtractor={item => item.id}
             />
           </View>
@@ -207,7 +223,11 @@ const Home = ({ navigation }: any) => {
               />
             </View>
 
-            <TouchableOpacity style={[tw`mr-4`]}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('CloseToYou');
+              }}
+              style={[tw`mr-4`]}>
               <Textcomp
                 text={'See All'}
                 size={14}
@@ -239,7 +259,7 @@ const Home = ({ navigation }: any) => {
               ]}>
               <View style={[tw``]}>
                 <Textcomp
-                  text={'Service Category'}
+                  text={'Service Categories'}
                   size={25}
                   lineHeight={28}
                   color={'#000413'}
@@ -300,6 +320,83 @@ const Home = ({ navigation }: any) => {
           <View style={tw`h-20`} />
         </ScrollView>
       </View>
+      <Modal
+        isVisible={InfoModal}
+        onModalHide={() => {
+          setInfoModal(false);
+        }}
+        style={{width: SIZES.width, marginHorizontal: 0}}
+        deviceWidth={SIZES.width}>
+        <View style={tw` h-full w-full bg-black bg-opacity-5`}>
+          <TouchableOpacity
+            onPress={() => setInfoModal(false)}
+            style={tw`flex-1`}
+          />
+          <View style={tw`h-[20%]  items-center mt-auto bg-[#D9D9D9]`}>
+            {/* <View
+              style={[
+                tw`items-center justify-center`,
+                {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginHorizontal: 20,
+                },
+              ]}>
+              <TouchableOpacity onPress={() => setInfoModal(false)}>
+                <Image
+                  source={images.search}
+                  style={{height: 20, width: 20}}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            </View> */}
+            <TouchableOpacity
+              onPress={() => {
+                setInfoModal(false);
+              }}
+              style={tw`w-15 h-1 rounded-full  bg-[${colors.darkPurple}]`}
+            />
+            <TouchableOpacity
+              style={{
+                width: perWidth(316),
+                height: perHeight(40),
+                borderRadius: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: colors.darkPurple,
+                marginTop: 18,
+              }}>
+              <Textcomp
+                text={'FAQ'}
+                size={14}
+                lineHeight={17}
+                color={'#FFC727'}
+                fontFamily={'Inter-SemiBold'}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                width: perWidth(316),
+                height: perHeight(40),
+                borderRadius: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: colors.darkPurple,
+                marginTop: 10,
+              }}>
+              <Textcomp
+                text={'Connect to an Agent'}
+                size={14}
+                lineHeight={17}
+                color={'#FFC727'}
+                fontFamily={'Inter-SemiBold'}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };

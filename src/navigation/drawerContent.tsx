@@ -11,14 +11,14 @@ import { logout } from '../store/reducer/mainSlice';
 
 const DrawerContent = ({navigation}) => {
   const navLinks = [
-    {label: 'Wallet', route: 'Wallet', icon: ''},
-    {label: 'Support', route: 'Support', icon: ''},
-    {label: 'Account Info', route: 'Account', icon: ''},
+    {label: 'Wallet', route: 'Wallet', icon: images.wallet},
+    {label: 'Support', route: 'Support', icon: images.help},
+    {label: 'Account Info', route: 'Account', icon: images.info},
   ];
   const navLinks2 = [
-    {label: 'Log out', route: 'Logout', icon: ''},
-    {label: 'Deactivate Account', route: 'DeactivateAccount', icon: ''},
-    {label: 'Privacy Policy', route: 'PrivacyPolicy', icon: ''},
+    {label: 'Log out', route: 'Logout', icon: images.wallet},
+    {label: 'Deactivate Account', route: 'DeactivateAccount', icon: images.deactivte},
+    {label: 'Privacy Policy', route: 'PrivacyPolicy', icon:images.support},
   ];
   const dispatch = useDispatch();
 
@@ -105,7 +105,7 @@ const DrawerContent = ({navigation}) => {
                 <Image
                   resizeMode="contain"
                   style={{width: 20, height: 20}}
-                  source={images.info}
+                  source={link.icon}
                 />
               }
               <Textcomp
@@ -137,7 +137,8 @@ const DrawerContent = ({navigation}) => {
                 <Image
                   resizeMode="contain"
                   style={{width: 20, height: 20}}
-                  source={images.info}
+                  // source={images.info}
+                  source={link.icon}
                 />
               }
               <Textcomp

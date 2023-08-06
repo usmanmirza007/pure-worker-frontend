@@ -4,6 +4,7 @@ import React from 'react';
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../Textcomp';
+import StarRating from 'react-native-star-rating-widget';
 import colors from '../../constants/colors';
 import Review from '../Review';
 
@@ -34,7 +35,9 @@ const ClosetoYou = ({ item, index }: any) => {
               height: perWidth(50),
               borderRadius: perWidth(50) / 2,
             }}
+
             source={{ uri: item?.profilePicture }}
+
           />
           <View
             style={[
@@ -107,8 +110,15 @@ const ClosetoYou = ({ item, index }: any) => {
         <View style={[tw``, { width: perWidth(80), marginTop: perWidth(1) }]}>
           <Review value={0} />
         </View>
+              {/*  <StarRating
+          style={{width: perWidth(40)}}
+          starStyle={{marginHorizontal: 0}}
+          maxStars={5}
+          starSize={10}
+          rating={4}
+          onChange={() => {}}
+        /> */}
       </View>
-
       {/* <View
       style={[
         tw` flex-1`,
@@ -127,4 +137,5 @@ const ClosetoYou = ({ item, index }: any) => {
     </View>
   )
 }
+
 export default ClosetoYou;
