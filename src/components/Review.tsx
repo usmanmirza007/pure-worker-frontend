@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 
 import images from '../constants/images';
+import colors from '../constants/colors';
 
 type ReviewProps = {
   size?: boolean
@@ -28,7 +29,7 @@ const Review = ({ editable, value, size }: ReviewProps) => {
               <Image
                 source={size ? images.star_2 : images.star}
                 style={{
-                  tintColor: 'yellow',
+                  tintColor: '#FFC727',
                   height: size ? 34 : 12,
                   width: size ? 34 : 12,
                 }}
@@ -37,7 +38,7 @@ const Review = ({ editable, value, size }: ReviewProps) => {
                 <Image
                   source={size ? images.star_2 : images.star}
                   style={{
-                    tintColor: 'red',
+                    tintColor: colors.grey,
                     height: size ? 34 : 12,
                     width: size ? 34 : 12,
                   }}

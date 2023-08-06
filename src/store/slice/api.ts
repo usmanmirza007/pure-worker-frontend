@@ -143,6 +143,24 @@ export const api = emptySplitApi.injectEndpoints({
       },
     }),
 
+    getAllServiceProviderProfile: builder.query<any,  void>({
+      query: (args) => {
+        return {
+          url: `/services/`,
+          method: 'GET',
+        }
+      },
+    }),
+
+    getAllServiceProviderPotfolio: builder.query<any, void>({
+      query: (args) => {
+        return {
+          url: `/services/potfolio`,
+          method: 'GET',
+        }
+      },
+    }),
+
   }),
   overrideExisting: true,
 })
@@ -156,4 +174,6 @@ export const {
   useGetSubCategoriesQuery,
   useCreateServiceMutation,
   useResetOtpMutation,
+  useGetAllServiceProviderPotfolioQuery,
+  useGetAllServiceProviderProfileQuery
 } = api

@@ -25,5 +25,6 @@ const images = {
   home: require('../assets/images/home.png'),
   notification: require('../assets/images/notification.png'),
   orders: require('../assets/images/orders.png'),
+  location: require('../assets/images/location.png'),
 };
 export default images;
