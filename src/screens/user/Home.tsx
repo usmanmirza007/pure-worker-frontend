@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,46 +8,54 @@ import {
   FlatList,
   ActivityIndicator,
   StatusBar,
-  // Modal,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useDispatch} from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
 import images from '../../constants/images';
 import TextInputs from '../../components/TextInput2';
 import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
+
 import {SIZES, perHeight, perWidth} from '../../utils/position/sizes';
+
 import colors from '../../constants/colors';
 import ServiceCard from '../../components/cards/serviceCard';
 import ClosetoYou from '../../components/cards/closeToYou';
 import CategoryList2 from '../../components/CategoryList2';
 import commonStyle from '../../constants/commonStyle';
-import {useGetCategoryQuery} from '../../store/slice/api';
+import { useGetAllServiceProviderPotfolioQuery, useGetAllServiceProviderProfileQuery, useGetCategoryQuery } from '../../store/slice/api';
 
 import Modal from 'react-native-modal';
-
 const Home = ({navigation}: any) => {
+
   //   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const { data: getServiceProviderProfileData, isLoading: isLoadingServiceProviderProfile } = useGetAllServiceProviderProfileQuery();
+  const getServiceProviderProfile = getServiceProviderProfileData ?? [];
+  const { data: getServiceProviderPotfolioData, isLoading: isLoadingServiceProviderPotfolio } = useGetAllServiceProviderPotfolioQuery();
+  const getServiceProviderPotfolio = getServiceProviderPotfolioData ?? [];
+  // console.log('getServiceProviderPotfolio', getServiceProviderPotfolio);
+  
   const data = [
-    {id: '1', title: 'Item 1'},
-    {id: '2', title: 'Item 2'},
-    {id: '3', title: 'Item 3'},
-    {id: '4', title: 'Item 4'},
-    {id: '5', title: 'Item 5'},
+    { id: '1', title: 'Item 1' },
+    { id: '2', title: 'Item 2' },
+    { id: '3', title: 'Item 3' },
+    { id: '4', title: 'Item 4' },
+    { id: '5', title: 'Item 5' },
   ];
-  const {data: getCategoryData, isLoading, isError} = useGetCategoryQuery();
+  const { data: getCategoryData, isLoading, isError } = useGetCategoryQuery();
   const getCategory = getCategoryData ?? [];
+// console.log('fofof');
 
   const [InfoModal, setInfoModal] = useState(false);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#EBEBEB'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#EBEBEB' }}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
-      <View style={[{flex: 1, backgroundColor: '#EBEBEB'}]}>
+      <View style={[{ flex: 1, backgroundColor: '#EBEBEB' }]}>
+
         <ScrollView>
           <View
             style={[
@@ -62,12 +70,12 @@ const Home = ({navigation}: any) => {
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Image
                 source={images.profile}
-                style={{height: 40, width: 40}}
+                style={{ height: 40, width: 40 }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
             <TextInputs
-              style={{marginTop: 10, width: '70%'}}
+              style={{ marginTop: 10, width: '70%' }}
               labelText={'Search'}
               state={search}
               setState={setSearch}
@@ -98,7 +106,7 @@ const Home = ({navigation}: any) => {
               }}>
               <Image
                 source={images.question}
-                style={{height: 20, width: 20}}
+                style={{ height: 20, width: 20 }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -107,7 +115,7 @@ const Home = ({navigation}: any) => {
           <View
             style={[
               tw``,
-              {marginLeft: perWidth(18), marginTop: perHeight(28)},
+              { marginLeft: perWidth(18), marginTop: perHeight(28) },
             ]}>
             <Textcomp
               text={'Welcome Customer, '}
@@ -121,7 +129,8 @@ const Home = ({navigation}: any) => {
           <View
             style={[
               tw`flex flex-row items-center justify-between`,
-              {marginLeft: perWidth(18), marginTop: perHeight(22)},
+              { marginLeft: perWidth(18), marginTop: perHeight(22) },
+
             ]}>
             <View style={[tw``]}>
               <Textcomp
@@ -185,10 +194,11 @@ const Home = ({navigation}: any) => {
             </View>
           </View> */}
 
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <FlatList
-              data={data}
+              data={getServiceProviderPotfolio}
               horizontal={true}
+              showsHorizontalScrollIndicator={false}
               renderItem={(item: any) => {
                 return <ServiceCard item={item.item} index={item.index} />;
               }}
@@ -201,7 +211,7 @@ const Home = ({navigation}: any) => {
           <View
             style={[
               tw`flex flex-row items-center justify-between`,
-              {marginLeft: perWidth(24), marginTop: perHeight(52)},
+              { marginLeft: perWidth(24), marginTop: perHeight(52) },
             ]}>
             <View style={[tw``]}>
               <Textcomp
@@ -228,10 +238,11 @@ const Home = ({navigation}: any) => {
             </TouchableOpacity>
           </View>
 
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <FlatList
-              data={data}
+              data={getServiceProviderProfile}
               horizontal={true}
+              showsHorizontalScrollIndicator={false}
               renderItem={(item: any) => {
                 return <ClosetoYou item={item.item} index={item.index} />;
               }}
@@ -244,7 +255,7 @@ const Home = ({navigation}: any) => {
             <View
               style={[
                 tw`flex flex-row items-center justify-between`,
-                {marginLeft: perWidth(24), marginTop: perHeight(52)},
+                { marginLeft: perWidth(24), marginTop: perHeight(52) },
               ]}>
               <View style={[tw``]}>
                 <Textcomp
@@ -264,7 +275,7 @@ const Home = ({navigation}: any) => {
                 contentContainerStyle={tw`w-[92%] mx-auto`}
                 horizontal>
                 <FlatList
-                  style={{flex: 1}}
+                  style={{ flex: 1 }}
                   data={getCategory}
                   scrollEnabled={false}
                   ListFooterComponent={() => {
@@ -286,7 +297,7 @@ const Home = ({navigation}: any) => {
                     );
                   }}
                   showsVerticalScrollIndicator={false}
-                  renderItem={({item, index}) => (
+                  renderItem={({ item, index }) => (
                     <CategoryList2 categoryName={item.name} catId={item?.id} />
                   )}
                   ListEmptyComponent={() => (
