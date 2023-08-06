@@ -15,7 +15,7 @@ const ClosetoYou = ({ item, index }: any) => {
 
     <View
       style={[
-        tw` mt-4 border-[#FFC727] bg-[${colors.darkPurple}]`,
+        tw` mt-4 border-[#FFC727] justify-between bg-[${colors.darkPurple}]`,
         {
           height: perWidth(130),
           width: perWidth(200),
@@ -108,7 +108,7 @@ const ClosetoYou = ({ item, index }: any) => {
         </View>
 
         <View style={[tw``, { width: perWidth(80), marginTop: perWidth(1) }]}>
-          <Review value={0} />
+          <Review value={2} editable={false} />
         </View>
               {/*  <StarRating
           style={{width: perWidth(40)}}

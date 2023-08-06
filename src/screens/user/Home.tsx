@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -23,12 +23,14 @@ import ServiceCard from '../../components/cards/serviceCard';
 import ClosetoYou from '../../components/cards/closeToYou';
 import CategoryList2 from '../../components/CategoryList2';
 import commonStyle from '../../constants/commonStyle';
-import { useGetAllServiceProviderPotfolioQuery, useGetAllServiceProviderProfileQuery, useGetCategoryQuery } from '../../store/slice/api';
+import { useGetAllServiceProviderPotfolioQuery, useGetAllServiceProviderProfileQuery, useGetCategoryQuery, useGetUserDetailQuery } from '../../store/slice/api';
 
 import Modal from 'react-native-modal';
-const Home = ({navigation}: any) => {
+import { StackNavigation } from '../../constants/navigation';
+import { useNavigation } from '@react-navigation/native';
+const Home = () => {
 
-  //   const navigation = useNavigation<StackNavigation>();
+    const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,20 +38,30 @@ const Home = ({navigation}: any) => {
   const getServiceProviderProfile = getServiceProviderProfileData ?? [];
   const { data: getServiceProviderPotfolioData, isLoading: isLoadingServiceProviderPotfolio } = useGetAllServiceProviderPotfolioQuery();
   const getServiceProviderPotfolio = getServiceProviderPotfolioData ?? [];
-  // console.log('getServiceProviderPotfolio', getServiceProviderPotfolio);
-  
-  const data = [
-    { id: '1', title: 'Item 1' },
-    { id: '2', title: 'Item 2' },
-    { id: '3', title: 'Item 3' },
-    { id: '4', title: 'Item 4' },
-    { id: '5', title: 'Item 5' },
-  ];
+  const { data: getUserData, isLoading: isLoadingUser } = useGetUserDetailQuery();
+  const getUser = getUserData ?? [];
   const { data: getCategoryData, isLoading, isError } = useGetCategoryQuery();
   const getCategory = getCategoryData ?? [];
-// console.log('fofof');
-
+  
   const [InfoModal, setInfoModal] = useState(false);
+
+  const filterBySearchProduct = useMemo(() => {
+    var searchArray = [];
+    if (Array.isArray(getServiceProviderProfile) && getServiceProviderProfile.length) {
+      searchArray = getServiceProviderProfile.filter(txt => {
+        const text = txt?.fullNameFirst ? txt?.fullNameFirst.toUpperCase() : ''.toUpperCase();
+        const textSearch = search.toUpperCase();
+        return text.indexOf(textSearch) > -1;
+      });
+    }
+
+    if (searchArray.length) {
+      return searchArray
+    } else {
+      return []
+    }
+  }, [search, getServiceProviderProfile]);
+  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#EBEBEB' }}>
@@ -118,7 +130,7 @@ const Home = ({navigation}: any) => {
               { marginLeft: perWidth(18), marginTop: perHeight(28) },
             ]}>
             <Textcomp
-              text={'Welcome Customer, '}
+              text={`Welcome ${getUser.firstName},`}
               size={17}
               lineHeight={17}
               color={'#000413'}
@@ -202,7 +214,6 @@ const Home = ({navigation}: any) => {
               renderItem={(item: any) => {
                 return <ServiceCard item={item.item} index={item.index} />;
               }}
-              showsHorizontalScrollIndicator={false}
               keyExtractor={item => item.id}
             />
           </View>
@@ -240,7 +251,7 @@ const Home = ({navigation}: any) => {
 
           <View style={{ flex: 1 }}>
             <FlatList
-              data={getServiceProviderProfile}
+              data={filterBySearchProduct}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               renderItem={(item: any) => {

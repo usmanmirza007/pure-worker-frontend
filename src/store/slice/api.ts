@@ -84,7 +84,7 @@ export const api = emptySplitApi.injectEndpoints({
       },
     }),
 
-    getUser: builder.query<void, any>({
+    getUserDetail: builder.query<void, any>({
       query: () => {
         return {
           url: '/users/',
@@ -172,6 +172,7 @@ export const {
   useCreateOtpMutation,
   useGetCategoryQuery,
   useGetSubCategoriesQuery,
+  useGetUserDetailQuery,
   useCreateServiceMutation,
   useResetOtpMutation,
   useGetAllServiceProviderPotfolioQuery,
