@@ -1,4 +1,4 @@
-import {Image, View, TouchableOpacity} from 'react-native';
+import {Image, View, TouchableOpacity, Platform} from 'react-native';
 import {SIZES, perHeight, perWidth} from '../utils/position/sizes';
 import React, {useState} from 'react';
 import images from '../constants/images';
@@ -181,7 +181,12 @@ const Orderscomponent2 = ({item, index, status}: any) => {
             onPress={() => {}}
             style={[
               tw`bg-[${colors.primary}] items-center justify-center`,
-              {width: perWidth(90), height: perHeight(20), borderRadius: 7},
+              {
+                width: perWidth(90),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
+                borderRadius: 7,
+              },
             ]}>
             <Textcomp
               text={'Accept'}
@@ -196,7 +201,8 @@ const Orderscomponent2 = ({item, index, status}: any) => {
               tw`bg-[${colors.primary}] items-center justify-center`,
               {
                 width: perWidth(90),
-                height: perHeight(20),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
                 borderRadius: 7,
                 marginLeft: perWidth(46),
               },
@@ -217,7 +223,12 @@ const Orderscomponent2 = ({item, index, status}: any) => {
             onPress={() => {}}
             style={[
               tw`bg-[${colors.primary}] items-center justify-center`,
-              {width: perWidth(90), height: perHeight(20), borderRadius: 7},
+              {
+                width: perWidth(90),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
+                borderRadius: 7,
+              },
             ]}>
             <Textcomp
               text={'Start Job '}
@@ -233,7 +244,8 @@ const Orderscomponent2 = ({item, index, status}: any) => {
               tw`bg-[${colors.primary}] items-center justify-center`,
               {
                 width: perWidth(90),
-                height: perHeight(20),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
                 borderRadius: 7,
                 marginLeft: perWidth(46),
               },
@@ -254,7 +266,12 @@ const Orderscomponent2 = ({item, index, status}: any) => {
             onPress={() => {}}
             style={[
               tw`bg-[${colors.primary}] items-center justify-center`,
-              {width: perWidth(90), height: perHeight(20), borderRadius: 7},
+              {
+                width: perWidth(90),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
+                borderRadius: 7,
+              },
             ]}>
             <Textcomp
               text={'Completed '}
@@ -270,7 +287,8 @@ const Orderscomponent2 = ({item, index, status}: any) => {
               tw`bg-[${colors.primary}] items-center justify-center`,
               {
                 width: perWidth(90),
-                height: perHeight(20),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
                 borderRadius: 7,
                 marginLeft: perWidth(46),
               },
@@ -291,7 +309,12 @@ const Orderscomponent2 = ({item, index, status}: any) => {
             onPress={() => {}}
             style={[
               tw`bg-[${colors.primary}] items-center justify-center`,
-              {width: perWidth(190), height: perHeight(20), borderRadius: 7},
+              {
+                width: perWidth(190),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
+                borderRadius: 7,
+              },
             ]}>
             <Textcomp
               text={'Review Customer '}
@@ -309,7 +332,12 @@ const Orderscomponent2 = ({item, index, status}: any) => {
             onPress={() => {}}
             style={[
               tw`bg-[${colors.primary}] items-center justify-center`,
-              {width: perWidth(190), height: perHeight(20), borderRadius: 7},
+              {
+                width: perWidth(190),
+                height:
+                  Platform.OS === 'ios' ? perHeight(22.5) : perHeight(27.5),
+                borderRadius: 7,
+              },
             ]}>
             <Textcomp
               text={'Dispute '}
