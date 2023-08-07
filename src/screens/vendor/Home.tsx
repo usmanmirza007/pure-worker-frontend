@@ -8,8 +8,8 @@ import {
   FlatList,
   ActivityIndicator,
   StatusBar,
+  ScrollView
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
 import images from '../../constants/images';
 import TextInputs from '../../components/TextInput2';

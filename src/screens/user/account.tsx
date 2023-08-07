@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, TouchableOpacity, Platform, StatusBar} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {View, Text, Image, TouchableOpacity, Platform, StatusBar, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {useDispatch} from 'react-redux';
