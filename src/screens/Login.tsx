@@ -8,9 +8,9 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   StatusBar,
+  ScrollView
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
 import images from '../constants/images';
 
 import TextInputs from '../components/TextInputs';

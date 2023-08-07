@@ -6,8 +6,8 @@ import tw from 'twrnc';
 import {perHeight, perWidth} from '../utils/position/sizes';
 import images from '../constants/images';
 import Textcomp from '../components/Textcomp';
-import {useDispatch} from 'react-redux';
-import { logout } from '../store/reducer/mainSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {logout} from '../store/reducer/mainSlice';
 
 const DrawerContent = ({navigation}) => {
   const navLinks = [
@@ -17,8 +17,12 @@ const DrawerContent = ({navigation}) => {
   ];
   const navLinks2 = [
     {label: 'Log out', route: 'Logout', icon: images.wallet},
-    {label: 'Deactivate Account', route: 'DeactivateAccount', icon: images.deactivte},
-    {label: 'Privacy Policy', route: 'PrivacyPolicy', icon:images.support},
+    {
+      label: 'Deactivate Account',
+      route: 'DeactivateAccount',
+      icon: images.deactivte,
+    },
+    {label: 'Privacy Policy', route: 'PrivacyPolicy', icon: images.support},
   ];
   const dispatch = useDispatch();
 
@@ -30,6 +34,9 @@ const DrawerContent = ({navigation}) => {
     }
   };
 
+  const userType = useSelector((state: any) => state.user.isLoggedIn);
+  // console.log('user_', userType);
+  // if (!userType.userType === 'CUSTOMER') {
   return (
     <DrawerContentScrollView
       contentContainerStyle={{
@@ -150,19 +157,22 @@ const DrawerContent = ({navigation}) => {
             </TouchableOpacity>
           ))}
         </View>
-        <TouchableOpacity
-          onPress={() => {}}
-          style={[
-            tw`bg-[#2D303C] px-2 py-4 w-[90%] mx-auto `,
-            {marginTop: perHeight(40), borderRadius: 5},
-          ]}>
-          <Textcomp
-            text={'Become a Service Provider'}
-            size={14}
-            color={'#FFCD1E'}
-            style={[tw`ml-3`, {lineHeight: 14}, {fontWeight: '500'}]}
-          />
-        </TouchableOpacity>
+
+        {userType.userType === 'CUSTOMER' && (
+          <TouchableOpacity
+            onPress={() => {}}
+            style={[
+              tw`bg-[#2D303C] px-2 py-4 w-[90%] mx-auto `,
+              {marginTop: perHeight(40), borderRadius: 5},
+            ]}>
+            <Textcomp
+              text={'Become a Service Provider'}
+              size={14}
+              color={'#FFCD1E'}
+              style={[tw`ml-3`, {lineHeight: 14}, {fontWeight: '500'}]}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </DrawerContentScrollView>
   );

@@ -1,12 +1,11 @@
-import {Image, View} from 'react-native';
+import {Image, View, TouchableOpacity} from 'react-native';
 import {SIZES, perHeight, perWidth} from '../../utils/position/sizes';
 import React, {useState} from 'react';
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../Textcomp';
 import colors from '../../constants/colors';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Rating, AirbnbRating} from 'react-native-ratings';
+import {Rating} from 'react-native-ratings';
 
 const CloseToYouCard2 = ({item, index}: any) => {
   const [saved, setsaved] = useState(false);

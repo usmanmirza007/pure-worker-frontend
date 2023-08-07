@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, ScrollView, Text, ActivityIndicator, View, KeyboardAvoidingView, Platform } from "react-native";
+import { Alert, ScrollView, Text, ActivityIndicator, View, KeyboardAvoidingView, Platform, TouchableOpacity } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import OtpInputs from "react-native-otp-inputs";
@@ -12,7 +12,6 @@ import colors from "../constants/colors";
 import MyStatusBar from "../components/MyStatusBar";
 import { useCreateOtpMutation, useResetOtpMutation, useVerifyOtpMutation } from "../store/slice/api";
 import { loggedIn } from "../store/reducer/mainSlice";
-import { TouchableOpacity } from "react-native-gesture-handler";
 type Route = {
   key: string
   name: string

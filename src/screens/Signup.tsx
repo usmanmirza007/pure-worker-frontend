@@ -1,22 +1,13 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
-import images from '../constants/images';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import commonStyle from '../constants/commonStyle';
 import MyStatusBar from '../components/MyStatusBar';
-import { StackNavigation } from '../constants/navigation';
-const { width, height } = Dimensions.get('window');
+import {StackNavigation} from '../constants/navigation';
+const {width, height} = Dimensions.get('window');
 
 export default function Signup() {
-
   const navigation = useNavigation<StackNavigation>();
 
   return (
@@ -27,16 +18,31 @@ export default function Signup() {
         backgroundColor="#000"
       />
 
-      <View style={{ marginHorizontal: 25 }}>
-        <Text style={{ fontSize: 25, marginBottom: 50, color: '#fff', fontFamily: commonStyle.fontFamily.semibold }}>Select User Register</Text>
+      <View style={{marginHorizontal: 25}}>
+        <Text
+          style={{
+            fontSize: 25,
+            marginBottom: 50,
+            color: '#fff',
+            fontFamily: commonStyle.fontFamily.semibold,
+          }}>
+          Select User Register
+        </Text>
       </View>
-      <Button onClick={() => {
-        navigation.navigate("BusinessSignup")
-      }} text={`Business / Freelancer`} style={{ width: '80%' }} />
-      <Button onClick={() => {
-        navigation.navigate("CustomerSignup")
-      }} text={`Customer / Service Provider`} style={{ width: '80%', marginTop: 20 }} />
-
+      <Button
+        onClick={() => {
+          navigation.navigate('BusinessSignup');
+        }}
+        text={'Business / Freelancer'}
+        style={{width: '80%'}}
+      />
+      <Button
+        onClick={() => {
+          navigation.navigate('CustomerSignup');
+        }}
+        text={'Customer / Service Provider'}
+        style={{width: '80%', marginTop: 20}}
+      />
     </View>
   );
 }
@@ -47,4 +53,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});

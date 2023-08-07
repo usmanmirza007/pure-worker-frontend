@@ -10,7 +10,7 @@ import Review from '../Review';
 
 const ClosetoYou = ({ item, index }: any) => {
 
-  const price = JSON.parse(item?.price)
+  const price = JSON.parse(item?.price);
   return (
 
     <View

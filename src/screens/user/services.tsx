@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,9 +8,7 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
-// import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
-import Header from '../../components/Header';
 import {useDispatch} from 'react-redux';
 import {StackNavigation} from '../../constants/navigation';
 import images from '../../constants/images';
@@ -19,10 +17,13 @@ import Textcomp from '../../components/Textcomp';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {perHeight} from '../../utils/position/sizes';
 import colors from '../../constants/colors';
+import TextInputs from '../../components/TextInput2';
 
 const Services = () => {
   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
+  const [searchModal, setsearchModal] = useState(false);
+  const [searchInput, setsearchInput] = useState('');
 
   const dummyData = [
     'Plumbing',
@@ -48,7 +49,7 @@ const Services = () => {
                   StatusBar.currentHeight + getStatusBarHeight(true),
           }}
         />
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -78,7 +79,84 @@ const Services = () => {
               resizeMode="contain"
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
+
+        {!searchModal ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginHorizontal: 20,
+            }}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image
+                source={images.back}
+                style={{height: 25, width: 25}}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <View style={tw`mx-auto`}>
+              <Textcomp
+                text={'Close to you'}
+                size={17}
+                lineHeight={17}
+                color={'#000413'}
+                fontFamily={'Inter-SemiBold'}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                setsearchModal(true);
+              }}>
+              <Image
+                source={images.search}
+                style={{height: 25, width: 25}}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View
+            style={[
+              tw`items-center justify-center`,
+              {
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginHorizontal: 20,
+              },
+            ]}>
+            <TouchableOpacity onPress={() => setsearchModal(false)}>
+              <Image
+                source={images.cross}
+                style={{height: 20, width: 20, tintColor:  'black'}}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <TextInputs
+              style={{marginTop: 10, width: '70%'}}
+              labelText={'Search for service'}
+              state={searchInput}
+              setState={setsearchInput}
+            />
+            <TouchableOpacity
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={images.search}
+                style={{height: 20, width: 20}}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+
         <View style={tw``}>
           <View style={tw`mt-3 ml-4 mb-3 px-4`}>
             <Textcomp

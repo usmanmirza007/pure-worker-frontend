@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, ActivityIndicator, Image, SafeAreaView} from 'react-native';
+import React, {useState} from 'react';
 import {
-  FlatList,
+  View,
+  Text,
+  ActivityIndicator,
+  Image,
   ScrollView,
+  FlatList,
   TouchableOpacity,
-} from 'react-native-gesture-handler';
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigation} from '../../constants/navigation';
 import Header from '../../components/Header';

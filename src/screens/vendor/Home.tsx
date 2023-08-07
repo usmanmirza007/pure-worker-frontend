@@ -8,26 +8,28 @@ import {
   FlatList,
   ActivityIndicator,
   StatusBar,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import images from '../../constants/images';
 import TextInputs from '../../components/TextInput2';
 import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
-import {perHeight, perWidth} from '../../utils/position/sizes';
+import {SIZES, perHeight, perWidth} from '../../utils/position/sizes';
 import colors from '../../constants/colors';
 import ServiceCard from '../../components/cards/serviceCard';
 import ClosetoYou from '../../components/cards/closeToYou';
 import CategoryList2 from '../../components/CategoryList2';
 import commonStyle from '../../constants/commonStyle';
 import {useGetCategoryQuery} from '../../store/slice/api';
+import Modal from 'react-native-modal/dist/modal';
 
 const Home = ({navigation}: any) => {
   //   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
+  const [InfoModal, setInfoModal] = useState(false);
 
   const data = [
     {id: '1', title: 'Item 1'},
@@ -80,6 +82,9 @@ const Home = ({navigation}: any) => {
               }
             />
             <TouchableOpacity
+              onPress={() => {
+                setInfoModal(true);
+              }}
               style={{
                 backgroundColor: '#000',
                 width: 40,
@@ -108,6 +113,185 @@ const Home = ({navigation}: any) => {
               color={'#000413'}
               fontFamily={'Inter-SemiBold'}
             />
+          </View>
+
+          <View
+            style={[
+              tw`flex flex-row`,
+              {marginHorizontal: perWidth(27), marginTop: perHeight(21)},
+            ]}>
+            <View
+              style={[
+                tw`border-2 border-[${colors.primary}]`,
+                {
+                  width: perWidth(150),
+                  height: perHeight(100),
+                  borderRadius: 20,
+                },
+              ]}>
+              <View
+                style={[
+                  tw`bg-white h-1/2 items-center justify-center flex flex-row`,
+                  {borderTopRightRadius: 20, borderTopLeftRadius: 20},
+                ]}>
+                <Textcomp
+                  text={'8'}
+                  size={36}
+                  lineHeight={36}
+                  color={'#000413'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+                <Image
+                  resizeMode="contain"
+                  source={images.search}
+                  style={{
+                    width: 30,
+                    height: 30,
+                    tintColor: '#000413',
+                    marginLeft: 5,
+                  }}
+                />
+              </View>
+              <View
+                style={[
+                  tw`bg-[${colors.darkPurple}] h-1/2 items-center justify-center flex flex-row`,
+                  {borderBottomRightRadius: 18, borderBottomLeftRadius: 18},
+                ]}>
+                <Textcomp
+                  text={'Orders'}
+                  size={14}
+                  lineHeight={16}
+                  color={'#FFFFFF'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+              </View>
+            </View>
+            <View
+              style={[
+                tw`border-2 border-[${colors.primary}]`,
+                {
+                  width: perWidth(150),
+                  height: perHeight(100),
+                  borderRadius: 20,
+                  marginLeft: perWidth(31),
+                },
+              ]}>
+              <View
+                style={[
+                  tw`bg-white h-1/2 items-center justify-center flex flex-row`,
+                  {borderTopRightRadius: 20, borderTopLeftRadius: 20},
+                ]}>
+                <Textcomp
+                  text={'8'}
+                  size={36}
+                  lineHeight={36}
+                  color={'#000413'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+                <Image
+                  resizeMode="contain"
+                  source={images.search}
+                  style={{
+                    width: 30,
+                    height: 30,
+                    tintColor: '#000413',
+                    marginLeft: 5,
+                  }}
+                />
+              </View>
+              <View
+                style={[
+                  tw`bg-[${colors.darkPurple}] h-1/2 items-center justify-center flex flex-row`,
+                  {borderBottomRightRadius: 18, borderBottomLeftRadius: 18},
+                ]}>
+                <Textcomp
+                  text={'Pending Orders'}
+                  size={14}
+                  lineHeight={16}
+                  color={'#FFFFFF'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            style={[
+              tw`flex flex-row`,
+              {marginHorizontal: perWidth(27), marginTop: perHeight(21)},
+            ]}>
+            <View
+              style={[
+                tw`border-2 border-[${colors.primary}]`,
+                {
+                  width: perWidth(150),
+                  height: perHeight(100),
+                  borderRadius: 20,
+                },
+              ]}>
+              <View
+                style={[
+                  tw`bg-white h-1/2 items-center justify-center flex flex-row`,
+                  {borderTopRightRadius: 20, borderTopLeftRadius: 20},
+                ]}>
+                <Textcomp
+                  text={'NGN249,0000'}
+                  size={20}
+                  lineHeight={20}
+                  color={'#000413'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+              </View>
+              <View
+                style={[
+                  tw`bg-[${colors.darkPurple}] h-1/2 items-center justify-center flex flex-row`,
+                  {borderBottomRightRadius: 18, borderBottomLeftRadius: 18},
+                ]}>
+                <Textcomp
+                  text={'Total Earning'}
+                  size={14}
+                  lineHeight={16}
+                  color={'#FFFFFF'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+              </View>
+            </View>
+            <View
+              style={[
+                tw`border-2 border-[${colors.primary}]`,
+                {
+                  width: perWidth(150),
+                  height: perHeight(100),
+                  borderRadius: 20,
+                  marginLeft: perWidth(31),
+                },
+              ]}>
+              <View
+                style={[
+                  tw`bg-white h-1/2 items-center justify-center flex flex-row`,
+                  {borderTopRightRadius: 20, borderTopLeftRadius: 20},
+                ]}>
+                <Textcomp
+                  text={'NGN249,0000'}
+                  size={20}
+                  lineHeight={20}
+                  color={'#000413'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+              </View>
+              <View
+                style={[
+                  tw`bg-[${colors.darkPurple}] h-1/2 items-center justify-center flex flex-row`,
+                  {borderBottomRightRadius: 18, borderBottomLeftRadius: 18},
+                ]}>
+                <Textcomp
+                  text={'Wallet'}
+                  size={14}
+                  lineHeight={16}
+                  color={'#FFFFFF'}
+                  fontFamily={'Inter-SemiBold'}
+                />
+              </View>
+            </View>
           </View>
           {/* Popular Section */}
           <View>
@@ -140,13 +324,21 @@ const Home = ({navigation}: any) => {
                 data={data}
                 horizontal={true}
                 renderItem={(item: any) => {
-                  return <ClosetoYou item={item.item} index={item.index} />;
+                  return <ClosetoYou item={{price: 0}} index={item.index} />;
                 }}
                 keyExtractor={item => item.id}
               />
             </View>
+            <View style={[tw``, {marginLeft: perWidth(27)}]}>
+              <Textcomp
+                text={'You have no orders in progress'}
+                size={18}
+                lineHeight={18}
+                color={'#88087B'}
+                fontFamily={'Inter-SemiBold'}
+              />
+            </View>
           </View>
-
           {/* Pending Orders */}
           <View>
             <View
@@ -178,82 +370,112 @@ const Home = ({navigation}: any) => {
                 data={data}
                 horizontal={true}
                 renderItem={(item: any) => {
-                  return <ClosetoYou item={item.item} index={item.index} />;
+                  return <ClosetoYou item={{price: 0}} index={item.index} />;
                 }}
                 keyExtractor={item => item.id}
               />
             </View>
-          </View>
-          {/* Service Ctagories */}
-          <View>
-            <View
-              style={[
-                tw`flex flex-row items-center justify-between`,
-                {marginLeft: perWidth(24), marginTop: perHeight(52)},
-              ]}>
-              <View style={[tw``]}>
-                <Textcomp
-                  text={'Service Category'}
-                  size={25}
-                  lineHeight={28}
-                  color={'#000413'}
-                  fontFamily={'Inter-Medium'}
-                />
-              </View>
+            <View style={[tw``, {marginLeft: perWidth(27)}]}>
+              <Textcomp
+                text={'You have no orders in pending'}
+                size={18}
+                lineHeight={18}
+                color={'#88087B'}
+                fontFamily={'Inter-SemiBold'}
+              />
             </View>
+          </View>
 
-            <View style={tw`w-full mt-4`}>
-              <ScrollView
-                scrollEnabled={false}
-                style={tw`w-full `}
-                contentContainerStyle={tw`w-[92%] mx-auto`}
-                horizontal>
-                <FlatList
-                  style={{flex: 1}}
-                  data={getCategory}
-                  scrollEnabled={false}
-                  ListFooterComponent={() => {
-                    return (
-                      <View
-                        style={{
-                          flex: 1,
-                          marginTop: 40,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                        {isLoading && (
-                          <ActivityIndicator
-                            size={'large'}
-                            color={colors.parpal}
-                          />
-                        )}
-                      </View>
-                    );
-                  }}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={({item, index}) => (
-                    <CategoryList2 categoryName={item.name} catId={item?.id} />
-                  )}
-                  ListEmptyComponent={() => (
-                    <Text
-                      style={[
-                        {
-                          color: '#000',
-                          alignSelf: 'center',
-                          marginTop: 100,
-                          fontFamily: commonStyle.fontFamily.regular,
-                        },
-                      ]}>
-                      {!loading ? 'No service found' : ''}
-                    </Text>
-                  )}
-                />
-              </ScrollView>
-            </View>
-          </View>
+          <TouchableOpacity
+            style={[
+              tw`bg-[#2D303C] mx-auto items-center justify-center`,
+              {
+                width: perWidth(309),
+                height: perHeight(30),
+                borderRadius: 7,
+                marginTop: perHeight(43),
+              },
+            ]}>
+            <Textcomp
+              text={'Complete your registration to accept orders'}
+              size={14}
+              lineHeight={16}
+              color={colors.primary}
+              fontFamily={'Inter-Medium'}
+            />
+          </TouchableOpacity>
           <View style={tw`h-20`} />
         </ScrollView>
       </View>
+      <Modal
+        isVisible={InfoModal}
+        onModalHide={() => {
+          setInfoModal(false);
+        }}
+        style={{width: SIZES.width, marginHorizontal: 0}}
+        deviceWidth={SIZES.width}>
+        <View style={tw` h-full w-full bg-black bg-opacity-5`}>
+          <TouchableOpacity
+            onPress={() => setInfoModal(false)}
+            style={tw`flex-1`}
+          />
+          <View style={tw`h-[20%]  items-center mt-auto bg-[#D9D9D9]`}>
+            <TouchableOpacity
+              onPress={() => {
+                setInfoModal(false);
+              }}
+              style={tw`w-15 h-1 rounded-full  bg-[${colors.darkPurple}]`}
+            />
+            <TouchableOpacity
+              style={{
+                width: perWidth(316),
+                height: perHeight(40),
+                borderRadius: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: colors.darkPurple,
+                marginTop: 18,
+              }}>
+              <Textcomp
+                text={'FAQ'}
+                size={14}
+                lineHeight={17}
+                color={'#FFC727'}
+                fontFamily={'Inter-SemiBold'}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                width: perWidth(316),
+                height: perHeight(40),
+                borderRadius: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: colors.darkPurple,
+                marginTop: 10,
+              }}>
+              <Textcomp
+                text={'Connect to an Agent'}
+                size={14}
+                lineHeight={17}
+                color={'#FFC727'}
+                fontFamily={'Inter-SemiBold'}
+              />
+            </TouchableOpacity>
+            {/* when connect to an agent is clicked */}
+            {/* <View style={tw` flex-1 items-center justify-center`}>
+              <Textcomp
+                text={'An Agent will contact you as soon as possible'}
+                size={14}
+                lineHeight={17}
+                color={'black'}
+                fontFamily={'Inter-Bold'}
+              />
+            </View> */}
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
