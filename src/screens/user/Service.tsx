@@ -1,35 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  Text,
   Image,
   TouchableOpacity,
   Platform,
   StatusBar,
-  FlatList,
-  Modal,
-  SafeAreaView,
   ScrollView
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Header from '../../components/Header';
 import {useDispatch} from 'react-redux';
 import {StackNavigation} from '../../constants/navigation';
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {perHeight} from '../../utils/position/sizes';
-import ServiceCard2 from '../../components/cards/serviceCard2';
 import TextInputs from '../../components/TextInput2';
 
 const _Services = ({route}: any) => {
   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   const passedService = route.params.service;
-
-  const dummyData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const [activeSection, setactiveSection] = useState('All');
   const [searchModal, setsearchModal] = useState(false);
   const [searchInput, setsearchInput] = useState('');
   return (

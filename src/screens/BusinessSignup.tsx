@@ -5,14 +5,12 @@ import {
   View,
   Image,
   Dimensions,
-  ImageBackground,
   ActivityIndicator,
   TouchableOpacity,
   StatusBar,
-  Platform,
+  ScrollView
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
 import images from '../constants/images';
 
 import commonStyle from '../constants/commonStyle';
