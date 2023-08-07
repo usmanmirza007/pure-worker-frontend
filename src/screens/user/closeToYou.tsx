@@ -9,8 +9,8 @@ import {
   FlatList,
   Modal,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {useDispatch} from 'react-redux';
@@ -184,7 +184,10 @@ const CloseToYou = () => {
                       scrollEnabled={false}
                       renderItem={(item: any) => {
                         return (
-                          <CloseToYouCard2 item={item.item} index={item.index} />
+                          <CloseToYouCard2
+                            item={item.item}
+                            index={item.index}
+                          />
                         );
                       }}
                       keyExtractor={item => item?.id}
@@ -202,7 +205,10 @@ const CloseToYou = () => {
                       horizontal={false}
                       renderItem={(item: any) => {
                         return (
-                          <CloseToYouCard2 item={item.item} index={item.index} />
+                          <CloseToYouCard2
+                            item={item.item}
+                            index={item.index}
+                          />
                         );
                       }}
                       keyExtractor={item => item?.id}

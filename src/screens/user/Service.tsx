@@ -9,7 +9,7 @@ import {
   FlatList,
   Modal,
   SafeAreaView,
-  ScrollView,
+  ScrollView
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
@@ -121,104 +121,8 @@ const _Services = ({route}: any) => {
           </View>
         )}
         <View style={tw`mt-3 mb-3`}>
-          <View style={tw`flex flex-row`}>
-            <TouchableOpacity
-              onPress={() => {
-                setactiveSection('All');
-              }}
-              style={tw`w-1/2 border-b-2  items-center ${
-                activeSection === 'All'
-                  ? 'border-[#88087B]'
-                  : 'border-[#000000]'
-              }`}>
-              <Textcomp
-                text={'All'}
-                size={14}
-                lineHeight={16}
-                color={activeSection === 'All' ? '#88087B' : '#000413'}
-                fontFamily={'Inter-SemiBold'}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setactiveSection('Saved');
-              }}
-              style={tw`w-1/2 border-b-2 items-center ${
-                activeSection === 'Saved'
-                  ? 'border-[#88087B]'
-                  : 'border-[#000000]'
-              }`}>
-              <Textcomp
-                text={'Saved'}
-                size={14}
-                lineHeight={16}
-                color={activeSection === 'Saved' ? '#88087B' : '#000413'}
-                fontFamily={'Inter-SemiBold'}
-              />
-            </TouchableOpacity>
-          </View>
 
-          {dummyData.length < 1 ? (
-            <View
-              style={[
-                tw`bg-[#D9D9D9] flex flex-col rounded justify-items align-items mt-3 mx-2`,
-                {height: perHeight(80)},
-              ]}>
-              <View style={tw`my-auto pl-8`}>
-                <Textcomp
-                  text={'Service Provider Not Found...'}
-                  size={17}
-                  lineHeight={17}
-                  color={'black'}
-                  fontFamily={'Inter-SemiBold'}
-                />
-              </View>
-            </View>
-          ) : (
-            <>
-              {activeSection === 'All' && (
-                <>
-                <View style={[tw`items-center`, {flex: 1}]}>
-                  <ScrollView scrollEnabled={false}  horizontal>
-                    <FlatList
-                      style={{flex: 1}}
-                      data={dummyData}
-                      scrollEnabled={false}
-                      horizontal={false}
-                      renderItem={(item: any) => {
-                        return (
-                          <ServiceCard2 item={item.item} index={item.index} />
-                        );
-                      }}
-                      keyExtractor={item => item?.id}
-                      ListFooterComponent={() => <View style={tw`h-20`} />}
-                      contentContainerStyle={{paddingBottom: 20}}
-                    />
-                  </ScrollView>
-                </View>
-                </>
-              )}
-              {activeSection === 'Saved' && (
-                <View style={[tw`items-center`, {flex: 1}]}>
-                  <ScrollView scrollEnabled={false} horizontal>
-                    <FlatList
-                      data={dummyData.slice(0, 3)}
-                      horizontal={false}
-                      scrollEnabled={false}
-                      renderItem={(item: any) => {
-                        return (
-                          <ServiceCard2 item={item.item} index={item.index} />
-                        );
-                      }}
-                      keyExtractor={item => item?.id}
-                      ListFooterComponent={() => <View style={tw`h-20`} />}
-                      contentContainerStyle={{paddingBottom: 20}}
-                    />
-                  </ScrollView>
-                </View>
-              )}
-            </>
-          )}
+
         </View>
         <View style={tw`h-20`} />
       </ScrollView>

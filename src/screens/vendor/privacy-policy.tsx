@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   Platform,
   StatusBar,
+  ScrollView
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {StackNavigation} from '../../constants/navigation';
