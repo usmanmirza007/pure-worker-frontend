@@ -84,7 +84,7 @@ export const api = emptySplitApi.injectEndpoints({
       },
     }),
 
-    getUserDetail: builder.query<void, any>({
+    getUserDetail: builder.query<any, void>({
       query: () => {
         return {
           url: '/users/',
@@ -143,13 +143,15 @@ export const api = emptySplitApi.injectEndpoints({
       },
     }),
 
-    getAllServiceProviderProfile: builder.query<any,  void>({
+    getAllServiceProviderProfile: builder.query<any, void>({
       query: (args) => {
         return {
           url: `/services/`,
           method: 'GET',
         }
       },
+      providesTags: ['Favorite']
+
     }),
 
     getAllServiceProviderPotfolio: builder.query<any, void>({
@@ -159,6 +161,31 @@ export const api = emptySplitApi.injectEndpoints({
           method: 'GET',
         }
       },
+    }),
+
+
+    makeFavoriteProduct: builder.mutation<void, { favorite: boolean, serviceId: number }>({
+      query: (args) => {
+        return {
+          url: '/services/favorite',
+          method: 'POST',
+          body: {
+            favorite: args.favorite,
+            serviceId: args.serviceId,
+          }
+        }
+      },
+      invalidatesTags: ['Favorite']
+    }),
+
+    getFavoriteProduct: builder.query<any, void>({
+      query: () => {
+        return {
+          url: `/services/favorite`,
+          method: 'GET',
+        }
+      },
+      providesTags: ['Favorite']
     }),
 
   }),
@@ -176,5 +203,7 @@ export const {
   useCreateServiceMutation,
   useResetOtpMutation,
   useGetAllServiceProviderPotfolioQuery,
-  useGetAllServiceProviderProfileQuery
+  useGetAllServiceProviderProfileQuery,
+  useGetFavoriteProductQuery,
+  useMakeFavoriteProductMutation,
 } = api

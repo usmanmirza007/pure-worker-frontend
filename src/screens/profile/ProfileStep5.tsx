@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {Image, View, ActivityIndicator} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {StackNavigation} from '../../constants/navigation';
+import React, { useState } from 'react';
+import { Image, View, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
+
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigation } from '../../constants/navigation';
 import Header from '../../components/Header';
 import images from '../../constants/images';
 import Button from '../../components/Button';
@@ -11,14 +11,14 @@ import commonStyle from '../../constants/commonStyle';
 import colors from '../../constants/colors';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import DateTimesPicker from '../../components/DatePicker';
-import {generalStyles} from '../../constants/generalStyles';
+import { generalStyles } from '../../constants/generalStyles';
 import {
   useCreateServiceMutation,
   useLoginMutation,
 } from '../../store/slice/api';
 import Snackbar from 'react-native-snackbar';
-import {emptyCategory} from '../../store/reducer/mainSlice';
-import {useDispatch} from 'react-redux';
+import { emptyCategory } from '../../store/reducer/mainSlice';
+import { useDispatch } from 'react-redux';
 
 type Route = {
   key: string;
@@ -42,7 +42,7 @@ const ProfileStep5 = () => {
     setTime(dateTime);
   };
 
-  const [createService, {isLoading}] = useCreateServiceMutation();
+  const [createService, { isLoading }] = useCreateServiceMutation();
 
   const handleProfileSetup = () => {
     if (date && time) {
@@ -78,11 +78,11 @@ const ProfileStep5 = () => {
     }
   };
   return (
-    <View style={[{flex: 1, backgroundColor: colors.greyLight}]}>
+    <View style={[{ flex: 1, backgroundColor: colors.greyLight }]}>
       <ScrollView>
         <Header
-          style={{backgroundColor: colors.greyLight}}
-          imageStyle={{tintColor: colors.black}}
+          style={{ backgroundColor: colors.greyLight }}
+          imageStyle={{ tintColor: colors.black }}
           textStyle={{
             color: colors.black,
             fontFamily: commonStyle.fontFamily.semibold,
@@ -91,11 +91,11 @@ const ProfileStep5 = () => {
           image={images.back}
         />
         <ProfileStepWrapper active={'five'} />
-        <View style={{marginHorizontal: 20}}>
+        <View style={{ marginHorizontal: 20 }}>
           <TextWrapper
             children="Schedule a Face to Face Meeting"
             fontType={'semiBold'}
-            style={{fontSize: 20, marginTop: 30, color: colors.black}}
+            style={{ fontSize: 20, marginTop: 30, color: colors.black }}
           />
 
           <TextWrapper children='Select a Date' isRequired={true} fontType={'semiBold'} style={{ fontSize: 14, marginTop: 13, color: colors.black }} />
@@ -145,12 +145,12 @@ const ProfileStep5 = () => {
                 marginTop: 140,
                 backgroundColor: colors.lightBlack,
               }}
-              textStyle={{color: colors.primary}}
+              textStyle={{ color: colors.primary }}
               text={'Schedule'}
             />
           ) : (
             <ActivityIndicator
-              style={{marginTop: 150}}
+              style={{ marginTop: 150 }}
               size={'large'}
               color={colors.parpal}
             />

@@ -8,16 +8,17 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {StackNavigation} from '../../constants/navigation';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { StackNavigation } from '../../constants/navigation';
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {perHeight} from '../../utils/position/sizes';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { perHeight } from '../../utils/position/sizes';
 import colors from '../../constants/colors';
 import TextInputs from '../../components/TextInput2';
+import { useGetAllServiceProviderPotfolioQuery, useGetFavoriteProductQuery } from '../../store/slice/api';
 
 const Services = () => {
   const navigation = useNavigation<StackNavigation>();
@@ -25,20 +26,11 @@ const Services = () => {
   const [searchModal, setsearchModal] = useState(false);
   const [searchInput, setsearchInput] = useState('');
 
-  const dummyData = [
-    'Plumbing',
-    'Furniture',
-    'Painting',
-    'Baking',
-    'Home  Tutoring',
-    'Plumbing',
-    'Furniture',
-    'Painting',
-    'Baking',
-    'Home  Tutoring',
-  ];
+  const { data: getServiceProviderPotfolioData, isLoading: isLoadingServiceProviderPotfolio } = useGetAllServiceProviderPotfolioQuery();
+  const getServiceProviderPotfolio = getServiceProviderPotfolioData ?? [];
+
   return (
-    <View style={[{flex: 1, backgroundColor: '#EBEBEB'}]}>
+    <View style={[{ flex: 1, backgroundColor: '#EBEBEB' }]}>
       <ScrollView>
         <View
           style={{
@@ -46,7 +38,7 @@ const Services = () => {
               Platform.OS === 'ios'
                 ? getStatusBarHeight(true)
                 : StatusBar.currentHeight &&
-                  StatusBar.currentHeight + getStatusBarHeight(true),
+                StatusBar.currentHeight + getStatusBarHeight(true),
           }}
         />
         {/* <View
@@ -92,7 +84,7 @@ const Services = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={images.back}
-                style={{height: 25, width: 25}}
+                style={{ height: 25, width: 25 }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -111,7 +103,7 @@ const Services = () => {
               }}>
               <Image
                 source={images.search}
-                style={{height: 25, width: 25}}
+                style={{ height: 25, width: 25 }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -130,12 +122,12 @@ const Services = () => {
             <TouchableOpacity onPress={() => setsearchModal(false)}>
               <Image
                 source={images.cross}
-                style={{height: 20, width: 20, tintColor:  'black'}}
+                style={{ height: 20, width: 20, tintColor: 'black' }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
             <TextInputs
-              style={{marginTop: 10, width: '70%'}}
+              style={{ marginTop: 10, width: '70%' }}
               labelText={'Search for service'}
               state={searchInput}
               setState={setsearchInput}
@@ -150,7 +142,7 @@ const Services = () => {
               }}>
               <Image
                 source={images.search}
-                style={{height: 20, width: 20}}
+                style={{ height: 20, width: 20 }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -169,20 +161,20 @@ const Services = () => {
           </View>
 
           <View style={tw`px-4`}>
-            {dummyData.map((item, index) => {
+            {getServiceProviderPotfolio.map((item: any, index: number) => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('_Services', {service: item});
+                    navigation.navigate('_Services', { service: item });
                   }}
                   key={index}
                   style={[
                     tw`bg-[#2D303C] border-2 border-[#FFC727]`,
-                    {marginTop: index === 0 ? 0 : perHeight(15)},
+                    { marginTop: index === 0 ? 0 : perHeight(15) },
                   ]}>
                   <View style={tw`p-1.5`}>
                     <Textcomp
-                      text={item}
+                      text={item?.description}
                       size={14}
                       lineHeight={16}
                       color={'#FFFFFF'}
@@ -192,7 +184,7 @@ const Services = () => {
                 </TouchableOpacity>
               );
             })}
-            <View style={[tw` mt-2 bg-[${colors.darkPurple}]`, {height: 3}]} />
+            <View style={[tw` mt-2 bg-[${colors.darkPurple}]`, { height: 3 }]} />
           </View>
         </View>
         <View style={tw`h-20`} />

@@ -5,8 +5,8 @@ import {
   ActivityIndicator,
   TextInput,
   Platform,
+  ScrollView, TouchableOpacity
 } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigation } from '../../constants/navigation';
 import Header from '../../components/Header';
@@ -52,7 +52,7 @@ const PRofileStep2 = () => {
   let potfolioPicture = useRef('')
   let profilePicture = useRef('')
   console.log('nationalityItems', nationalityItems);
-  
+
   useEffect(() => {
     setNationalityItems([...allCountry])
   }, [])
@@ -388,7 +388,7 @@ const PRofileStep2 = () => {
                             setPotfolioImageUrl([...potfolioImageUrl, url])
                             potfolioPicture.current = ''
                             setPotfolioImageLoading(false)
-                          }else {
+                          } else {
                             setPotfolioImageLoading(false)
                           }
                         } catch (error) {
