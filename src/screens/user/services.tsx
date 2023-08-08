@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -26,9 +26,25 @@ const Services = () => {
   const [searchModal, setsearchModal] = useState(false);
   const [searchInput, setsearchInput] = useState('');
 
-  const { data: getServiceProviderPotfolioData, isLoading: isLoadingServiceProviderPotfolio } = useGetAllServiceProviderPotfolioQuery();
+  const { data: getServiceProviderPotfolioData, isLoading: isLoadingServiceProviderPotfolio, refetch } = useGetAllServiceProviderPotfolioQuery();
   const getServiceProviderPotfolio = getServiceProviderPotfolioData ?? [];
 
+  const filterServiceProviderPotfolio = useMemo(() => {
+    var searchArray = [];
+    if (Array.isArray(getServiceProviderPotfolio) && getServiceProviderPotfolio.length) {
+      searchArray = getServiceProviderPotfolio.filter(txt => {
+        const text = txt?.description ? txt?.description.toUpperCase() : ''.toUpperCase();
+        const textSearch = searchInput.toUpperCase();
+        return text.indexOf(textSearch) > -1;
+      });
+    }
+
+    if (searchArray.length) {
+      return searchArray
+    } else {
+      return []
+    }
+  }, [searchInput, getServiceProviderPotfolio]);
   return (
     <View style={[{ flex: 1, backgroundColor: '#EBEBEB' }]}>
       <ScrollView>
@@ -119,7 +135,9 @@ const Services = () => {
                 marginHorizontal: 20,
               },
             ]}>
-            <TouchableOpacity onPress={() => setsearchModal(false)}>
+            <TouchableOpacity onPress={() => {
+              setsearchModal(false)
+              }}>
               <Image
                 source={images.cross}
                 style={{ height: 20, width: 20, tintColor: 'black' }}
@@ -161,7 +179,7 @@ const Services = () => {
           </View>
 
           <View style={tw`px-4`}>
-            {getServiceProviderPotfolio.map((item: any, index: number) => {
+            {filterServiceProviderPotfolio.map((item: any, index: number) => {
               return (
                 <TouchableOpacity
                   onPress={() => {

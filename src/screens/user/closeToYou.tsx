@@ -23,7 +23,7 @@ import { perHeight } from '../../utils/position/sizes';
 import ServiceCard2 from '../../components/cards/serviceCard2';
 import TextInputs from '../../components/TextInput2';
 import CloseToYouCard2 from '../../components/cards/closeToYou2';
-import { useGetAllServiceProviderProfileQuery, useGetFavoriteProductQuery, useMakeFavoriteProductMutation } from '../../store/slice/api';
+import { useGetAllServiceProviderProfileQuery, useGetFavoriteProductQuery } from '../../store/slice/api';
 
 const CloseToYou = () => {
   const navigation = useNavigation<StackNavigation>();
@@ -32,10 +32,45 @@ const CloseToYou = () => {
   const [activeSection, setactiveSection] = useState('All');
   const [searchModal, setsearchModal] = useState(false);
   const [searchInput, setsearchInput] = useState('');
+
   const { data: getServiceProviderProfileData, isLoading: isLoadingServiceProviderProfile } = useGetAllServiceProviderProfileQuery();
   const getServiceProviderProfile = getServiceProviderProfileData ?? [];
   const { data: getServiceProviderFavoriteData, isLoading: isLoadingFavorite } = useGetFavoriteProductQuery();
   const getServiceProviderFavorite = getServiceProviderFavoriteData ?? [];
+
+  const filterServiceProviderProfile = useMemo(() => {
+    var searchArray = [];
+    if (Array.isArray(getServiceProviderProfile) && getServiceProviderProfile.length) {
+      searchArray = getServiceProviderProfile.filter(txt => {
+        const text = txt?.fullNameFirst ? txt?.fullNameFirst.toUpperCase() : ''.toUpperCase();
+        const textSearch = searchInput.toUpperCase();
+        return text.indexOf(textSearch) > -1;
+      });
+    }
+
+    if (searchArray.length) {
+      return searchArray
+    } else {
+      return []
+    }
+  }, [searchInput, getServiceProviderProfile]);
+
+  const filterServiceProviderFavorite = useMemo(() => {
+    var searchArray = [];
+    if (Array.isArray(getServiceProviderFavorite) && getServiceProviderFavorite.length) {
+      searchArray = getServiceProviderFavorite.filter(txt => {
+        const text = txt?.fullNameFirst ? txt?.fullNameFirst.toUpperCase() : ''.toUpperCase();
+        const textSearch = searchInput.toUpperCase();
+        return text.indexOf(textSearch) > -1;
+      });
+    }
+
+    if (searchArray.length) {
+      return searchArray
+    } else {
+      return []
+    }
+  }, [searchInput, getServiceProviderProfile]);
 
   return (
     <View style={[{ flex: 1, backgroundColor: '#EBEBEB' }]}>
@@ -182,7 +217,7 @@ const CloseToYou = () => {
                 <View style={[tw`items-center`, { flex: 1 }]}>
                   <ScrollView horizontal>
                     <FlatList
-                      data={getServiceProviderProfile}
+                      data={filterServiceProviderProfile}
                       horizontal={false}
                       scrollEnabled={false}
                       renderItem={(item: any) => {
@@ -204,7 +239,7 @@ const CloseToYou = () => {
                   <ScrollView horizontal>
                     <FlatList
                       scrollEnabled={false}
-                      data={getServiceProviderFavorite}
+                      data={filterServiceProviderFavorite}
                       horizontal={false}
                       renderItem={(item: any) => {
                         return (
