@@ -1,13 +1,17 @@
-import {Image, View, TouchableOpacity} from 'react-native';
-import {SIZES, perHeight, perWidth} from '../../utils/position/sizes';
-import React, {useState} from 'react';
+
+import { Image, View, TouchableOpacity } from 'react-native';
+import { SIZES, perHeight, perWidth } from '../../utils/position/sizes';
+import React, { useState } from 'react';
+
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../Textcomp';
 import colors from '../../constants/colors';
-import {Rating, AirbnbRating} from 'react-native-ratings';
 
-const ServiceCard2 = ({item, index}: any) => {
+import { Rating, AirbnbRating } from 'react-native-ratings';
+
+
+const ServiceCard2 = ({ item, index }: any) => {
   const [saved, setsaved] = useState(false);
   return (
     <View
@@ -24,7 +28,7 @@ const ServiceCard2 = ({item, index}: any) => {
         },
       ]}>
       <View style={tw`flex flex-row `}>
-        <View style={[tw``, {width: perWidth(50), height: perWidth(50)}]}>
+        <View style={[tw``, { width: perWidth(50), height: perWidth(50) }]}>
           <Image
             resizeMode="cover"
             style={{
@@ -37,11 +41,11 @@ const ServiceCard2 = ({item, index}: any) => {
           <View
             style={[
               tw`absolute bottom-0 border-2 right-1 rounded-full`,
-              {width: 8, height: 8, backgroundColor: colors.green},
+              { width: 8, height: 8, backgroundColor: colors.green },
             ]}
           />
         </View>
-        <View style={[tw`flex-1`, {marginLeft: perWidth(12)}]}>
+        <View style={[tw`flex-1`, { marginLeft: perWidth(12) }]}>
           <View style={[tw`flex flex-row justify-between`, {}]}>
             <View style={[tw``, {}]}>
               <Textcomp
@@ -66,7 +70,7 @@ const ServiceCard2 = ({item, index}: any) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={[tw``, {width: perWidth(252), marginTop: perHeight(4)}]}>
+          <View style={[tw``, { width: perWidth(252), marginTop: perHeight(4) }]}>
             <Textcomp
               text={
                 'Plumber with many years of experience fixing pipes, washers and all form of...s'
@@ -90,7 +94,7 @@ const ServiceCard2 = ({item, index}: any) => {
         </View>
       </View>
       <View>
-        <View style={[tw``, {width: perWidth(105), marginTop: perWidth(4)}]}>
+        <View style={[tw``, { width: perWidth(105), marginTop: perWidth(4) }]}>
           <Textcomp
             text={'Steven W.s'}
             size={12}
@@ -104,7 +108,7 @@ const ServiceCard2 = ({item, index}: any) => {
       <View
         style={[
           tw`flex flex-row justify-between items-center `,
-          {marginTop: perHeight(3)},
+          { marginTop: perHeight(3) },
         ]}>
         <View style={tw`flex flex-row justify-between items-center`}>
           <View style={[tw``, {}]}>
@@ -120,7 +124,7 @@ const ServiceCard2 = ({item, index}: any) => {
           </View>
 
           <View
-            style={[tw`ml-1`, {width: perWidth(80), marginTop: perWidth(1)}]}>
+            style={[tw`ml-1`, { width: perWidth(80), marginTop: perWidth(1) }]}>
             <Textcomp
               text={'2Km away'}
               size={12}
@@ -134,7 +138,7 @@ const ServiceCard2 = ({item, index}: any) => {
         <View
           style={[
             tw`ml-auto  items-end`,
-            {width: perWidth(80), marginTop: perWidth(1)},
+            { width: perWidth(80), marginTop: perWidth(1) },
           ]}>
           <Rating
             type="custom"
@@ -143,8 +147,8 @@ const ServiceCard2 = ({item, index}: any) => {
             ratingBackgroundColor="transparent"
             ratingCount={5}
             imageSize={10}
-            onFinishRating={() => {}}
-            style={{paddingVertical: 10}}
+            onFinishRating={() => { }}
+            style={{ paddingVertical: 10 }}
             showRating={false}
             readonly={true}
             startingValue={2}

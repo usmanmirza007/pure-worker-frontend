@@ -3,8 +3,8 @@ import {
   View,
   ActivityIndicator,
   Image,
+  ScrollView, TouchableOpacity
 } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigation } from '../../constants/navigation';
 import Header from '../../components/Header';

@@ -8,15 +8,15 @@ import {
   FlatList,
   ActivityIndicator,
   StatusBar,
+  ScrollView
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import images from '../../constants/images';
 import TextInputs from '../../components/TextInput2';
 import tw from 'twrnc';
 import Textcomp from '../../components/Textcomp';
 
-import {SIZES, perHeight, perWidth} from '../../utils/position/sizes';
+import { SIZES, perHeight, perWidth } from '../../utils/position/sizes';
 
 import colors from '../../constants/colors';
 import ServiceCard from '../../components/cards/serviceCard';
@@ -30,7 +30,7 @@ import { StackNavigation } from '../../constants/navigation';
 import { useNavigation } from '@react-navigation/native';
 const Home = () => {
 
-    const navigation = useNavigation<StackNavigation>();
+  const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ const Home = () => {
   const getUser = getUserData ?? [];
   const { data: getCategoryData, isLoading, isError } = useGetCategoryQuery();
   const getCategory = getCategoryData ?? [];
-  
+
   const [InfoModal, setInfoModal] = useState(false);
 
   const filterBySearchProduct = useMemo(() => {
@@ -61,7 +61,6 @@ const Home = () => {
       return []
     }
   }, [search, getServiceProviderProfile]);
-  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#EBEBEB' }}>
@@ -336,7 +335,7 @@ const Home = () => {
         onModalHide={() => {
           setInfoModal(false);
         }}
-        style={{width: SIZES.width, marginHorizontal: 0}}
+        style={{ width: SIZES.width, marginHorizontal: 0 }}
         deviceWidth={SIZES.width}>
         <View style={tw` h-full w-full bg-black bg-opacity-5`}>
           <TouchableOpacity

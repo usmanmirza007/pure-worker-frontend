@@ -33,6 +33,7 @@ export const emptySplitApi = createApi({
    }),
   endpoints: () => ({}),
   tagTypes: [
-    'User'
+    'User',
+    'Favorite'
   ],
 })
