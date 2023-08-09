@@ -62,7 +62,7 @@ export default function Login() {
         login(loginData).unwrap()
           .then((data: any) => {
             if (data) {
-                navigation.navigate('TokenVerification', { email: email })
+              navigation.navigate('TokenVerification', { email: email })
             }
           })
           .catch((error: any) => {
@@ -111,7 +111,7 @@ export default function Login() {
                 handleLogin()
               }}
                 text={`Login`} />
-            </View> 
+            </View>
             : <ActivityIndicator style={{ marginTop: 95 }} size={'large'} color={colors.parpal} />}
           <Text style={{ fontSize: 13, marginTop: 16, textAlign: 'center', color: '#fff', fontFamily: commonStyle.fontFamily.regular }}>Don’t have an account? <Text onPress={() => navigation.navigate('CustomerSignup')} style={{ fontSize: 13, textDecorationLine: 'underline', color: colors.primary, fontFamily: commonStyle.fontFamily.regular }}>Register</Text></Text>
 

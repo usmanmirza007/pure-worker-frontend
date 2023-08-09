@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {
   View,
   Text,
@@ -23,15 +23,72 @@ import {perHeight} from '../../utils/position/sizes';
 import ServiceCard2 from '../../components/cards/serviceCard2';
 import TextInputs from '../../components/TextInput2';
 import CloseToYouCard2 from '../../components/cards/closeToYou2';
+import {
+  useGetAllServiceProviderProfileQuery,
+  useGetFavoriteProductQuery,
+} from '../../store/slice/api';
 
 const CloseToYou = () => {
   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
 
-  const dummyData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [activeSection, setactiveSection] = useState('All');
   const [searchModal, setsearchModal] = useState(false);
   const [searchInput, setsearchInput] = useState('');
+
+  const {
+    data: getServiceProviderProfileData,
+    isLoading: isLoadingServiceProviderProfile,
+  } = useGetAllServiceProviderProfileQuery();
+  const getServiceProviderProfile = getServiceProviderProfileData ?? [];
+  const {data: getServiceProviderFavoriteData, isLoading: isLoadingFavorite} =
+    useGetFavoriteProductQuery();
+  const getServiceProviderFavorite = getServiceProviderFavoriteData ?? [];
+
+  const filterServiceProviderProfile = useMemo(() => {
+    var searchArray = [];
+    if (
+      Array.isArray(getServiceProviderProfile) &&
+      getServiceProviderProfile.length
+    ) {
+      searchArray = getServiceProviderProfile.filter(txt => {
+        const text = txt?.fullNameFirst
+          ? txt?.fullNameFirst.toUpperCase()
+          : ''.toUpperCase();
+        const textSearch = searchInput.toUpperCase();
+        return text.indexOf(textSearch) > -1;
+      });
+    }
+
+    if (searchArray.length) {
+      return searchArray;
+    } else {
+      return [];
+    }
+  }, [searchInput, getServiceProviderProfile]);
+
+  const filterServiceProviderFavorite = useMemo(() => {
+    var searchArray = [];
+    if (
+      Array.isArray(getServiceProviderFavorite) &&
+      getServiceProviderFavorite.length
+    ) {
+      searchArray = getServiceProviderFavorite.filter(txt => {
+        const text = txt?.fullNameFirst
+          ? txt?.fullNameFirst.toUpperCase()
+          : ''.toUpperCase();
+        const textSearch = searchInput.toUpperCase();
+        return text.indexOf(textSearch) > -1;
+      });
+    }
+
+    if (searchArray.length) {
+      return searchArray;
+    } else {
+      return [];
+    }
+  }, [searchInput, getServiceProviderProfile]);
+
   return (
     <View style={[{flex: 1, backgroundColor: '#EBEBEB'}]}>
       <ScrollView>
@@ -55,7 +112,7 @@ const CloseToYou = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={images.back}
-                style={{height: 20, width: 20}}
+                style={{ height: 25, width: 25 }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -74,7 +131,7 @@ const CloseToYou = () => {
               }}>
               <Image
                 source={images.search}
-                style={{height: 20, width: 20}}
+                style={{height: 25, width: 25}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -92,7 +149,7 @@ const CloseToYou = () => {
             ]}>
             <TouchableOpacity onPress={() => setsearchModal(false)}>
               <Image
-                source={images.cross}
+                source={images.search}
                 style={{height: 20, width: 20}}
                 resizeMode="contain"
               />
@@ -157,7 +214,7 @@ const CloseToYou = () => {
             </TouchableOpacity>
           </View>
 
-          {dummyData.length < 1 ? (
+          {getServiceProviderProfile.length < 1 ? (
             <View
               style={[
                 tw`bg-[#D9D9D9] flex flex-col rounded justify-items align-items mt-3 mx-2`,
@@ -179,7 +236,7 @@ const CloseToYou = () => {
                 <View style={[tw`items-center`, {flex: 1}]}>
                   <ScrollView horizontal>
                     <FlatList
-                      data={dummyData}
+                      data={filterServiceProviderProfile}
                       horizontal={false}
                       scrollEnabled={false}
                       renderItem={(item: any) => {
@@ -201,7 +258,7 @@ const CloseToYou = () => {
                   <ScrollView horizontal>
                     <FlatList
                       scrollEnabled={false}
-                      data={dummyData.slice(0, 3)}
+                      data={filterServiceProviderFavorite}
                       horizontal={false}
                       renderItem={(item: any) => {
                         return (

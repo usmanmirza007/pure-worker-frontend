@@ -5,10 +5,10 @@ import {
   ActivityIndicator,
   TextInput,
   Platform,
+  ScrollView, TouchableOpacity
 } from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigation} from '../../constants/navigation';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigation } from '../../constants/navigation'; 
 import Header from '../../components/Header';
 import images from '../../constants/images';
 import Button from '../../components/Button';
@@ -675,9 +675,11 @@ const PRofileStep2 = () => {
                             } else {
                               setPotfolioImageLoading(false);
                             }
-                          } catch (error) {
-                            console.log('error', error);
-                            setPotfolioImageLoading(false);
+                            setPotfolioImageUrl([...potfolioImageUrl, url])
+                            potfolioPicture.current = ''
+                            setPotfolioImageLoading(false)
+                          }else {
+                            setPotfolioImageLoading(false)
                           }
                         }}
                         style={[

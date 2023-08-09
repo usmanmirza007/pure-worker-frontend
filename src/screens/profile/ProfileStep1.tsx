@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 import {
   View,
@@ -16,11 +17,11 @@ import Button from '../../components/Button';
 import TextWrapper from '../../components/TextWrapper';
 import commonStyle from '../../constants/commonStyle';
 import CategoryList from '../../components/CategoryList';
-import {useGetCategoryQuery} from '../../store/slice/api';
+import { useGetCategoryQuery } from '../../store/slice/api';
 import colors from '../../constants/colors';
-import {useDispatch, useSelector} from 'react-redux';
-import {addCategory, removeCategory} from '../../store/reducer/mainSlice';
-import {generalStyles} from '../../constants/generalStyles';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCategory, removeCategory } from '../../store/reducer/mainSlice';
+import { generalStyles } from '../../constants/generalStyles';
 import ProfileStepWrapper from '../../components/ProfileStepWrapper';
 import TextInputs from '../../components/TextInputs';
 
@@ -29,17 +30,17 @@ const PRofileStep1 = () => {
   const [addService, setAddService] = useState('');
   const [isAddService, setIsAddService] = useState(false);
 
-  const {data: getCategoryData, isLoading, isError} = useGetCategoryQuery();
+  const { data: getCategoryData, isLoading, isError } = useGetCategoryQuery();
   const getCategory = getCategoryData ?? [];
 
   const category = useSelector((state: any) => state.user.category);
   const dispatch = useDispatch();
   return (
-    <View style={[{flex: 1, backgroundColor: colors.greyLight}]}>
+    <View style={[{ flex: 1, backgroundColor: colors.greyLight }]}>
       <ScrollView>
         <Header
-          style={{backgroundColor: colors.greyLight}}
-          imageStyle={{tintColor: colors.black}}
+          style={{ backgroundColor: colors.greyLight }}
+          imageStyle={{ tintColor: colors.black }}
           textStyle={{
             color: colors.black,
             fontFamily: commonStyle.fontFamily.semibold,
@@ -48,11 +49,11 @@ const PRofileStep1 = () => {
           image={images.back}
         />
         <ProfileStepWrapper active={'one'} />
-        <View style={{marginHorizontal: 20}}>
+        <View style={{ marginHorizontal: 20 }}>
           <TextWrapper
             children="Add Services"
             fontType={'semiBold'}
-            style={{fontSize: 20, marginTop: 30, color: colors.black}}
+            style={{ fontSize: 20, marginTop: 30, color: colors.black }}
           />
           <TextWrapper
             children="What services do you provide?"
@@ -66,7 +67,7 @@ const PRofileStep1 = () => {
           />
 
           <FlatList
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             data={getCategory}
             ListFooterComponent={() => {
               return (
@@ -84,7 +85,7 @@ const PRofileStep1 = () => {
               );
             }}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <CategoryList categoryName={item.name} catId={item?.id} />
             )}
             ListEmptyComponent={() => (
@@ -104,7 +105,7 @@ const PRofileStep1 = () => {
           {isAddService ? (
             <>
               <TextInputs
-                styleInput={{color: colors.white}}
+                styleInput={{ color: colors.white }}
                 style={{
                   marginTop: 0,
                   backgroundColor: colors.lightBlack,
@@ -129,8 +130,8 @@ const PRofileStep1 = () => {
                       setAddService('');
                     }
                   }}
-                  style={{width: 130, backgroundColor: colors.lightBlack}}
-                  textStyle={{color: colors.primary}}
+                  style={{ width: 130, backgroundColor: colors.lightBlack }}
+                  textStyle={{ color: colors.primary }}
                   text={'Done'}
                 />
               </View>
@@ -141,74 +142,74 @@ const PRofileStep1 = () => {
         <View
           style={[
             generalStyles.rowBetween,
-            {marginHorizontal: 20, marginBottom: 35},
+            { marginHorizontal: 20, marginBottom: 35 },
           ]}>
           <Button
             onClick={() => {
               setIsAddService(!isAddService);
             }}
-            style={{width: 130, backgroundColor: colors.lightBlack}}
-            textStyle={{color: colors.primary}}
+            style={{ width: 130, backgroundColor: colors.lightBlack }}
+            textStyle={{ color: colors.primary }}
             text={'Add another'}
           />
           <Button
             onClick={() => {
               navigation.navigate('ProfileStep2');
             }}
-            style={{width: 90, backgroundColor: colors.lightBlack}}
-            textStyle={{color: colors.primary}}
+            style={{ width: 90, backgroundColor: colors.lightBlack }}
+            textStyle={{ color: colors.primary }}
             text={'Next'}
           />
         </View>
 
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {category?.length
             ? category?.map((item: any, index: any) => {
-                return (
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 13,
+                    marginHorizontal: 20,
+                  }}>
                   <View
+                    key={index}
                     style={{
-                      flexDirection: 'row',
+                      paddingHorizontal: 10,
+                      justifyContent: 'center',
                       alignItems: 'center',
-                      marginBottom: 13,
-                      marginHorizontal: 20,
+                      backgroundColor: colors.lightBlack,
+                      height: 30,
+                      width: 'auto',
+                      borderRadius: 5,
                     }}>
-                    <View
-                      key={index}
+                    <TextWrapper
+                      fontType={'semiBold'}
                       style={{
-                        paddingHorizontal: 10,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: colors.lightBlack,
-                        height: 30,
-                        width: 'auto',
-                        borderRadius: 5,
+                        fontSize: 12,
+                        color: '#fff',
                       }}>
-                      <TextWrapper
-                        fontType={'semiBold'}
-                        style={{
-                          fontSize: 12,
-                          color: '#fff',
-                        }}>
-                        {item}
-                      </TextWrapper>
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        dispatch(removeCategory(item));
-                      }}>
-                      <Image
-                        source={images.cross}
-                        style={{
-                          width: 15,
-                          height: 15,
-                          marginLeft: 20,
-                          tintColor: '#000',
-                        }}
-                      />
-                    </TouchableOpacity>
+                      {item}
+                    </TextWrapper>
                   </View>
-                );
-              })
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(removeCategory(item));
+                    }}>
+                    <Image
+                      source={images.cross}
+                      style={{
+                        width: 15,
+                        height: 15,
+                        marginLeft: 20,
+                        tintColor: '#000',
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              );
+            })
             : null}
         </View>
       </ScrollView>

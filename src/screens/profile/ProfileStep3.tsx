@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView
 } from 'react-native';
-import { ScrollView, } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigation } from '../../constants/navigation';
 import Header from '../../components/Header';
@@ -39,7 +39,7 @@ const ProfileStep3 = () => {
   const [address2, setAddress2] = useState('');
   const route: Route = useRoute()
 
-  const [createService, {isLoading}] = useCreateServiceMutation();
+  const [createService, { isLoading }] = useCreateServiceMutation();
 
 
   const handleProfileSetup = () => {
@@ -163,15 +163,15 @@ const ProfileStep3 = () => {
               style={{ width: 130, backgroundColor: colors.lightBlack }}
               textStyle={{ color: colors.primary }}
               text={`Save`} />
-            
 
-               {!isLoading ?
-                <Button onClick={() => { handleProfileSetup() }}
-              style={{ width: 90, backgroundColor: colors.lightBlack }}
-              textStyle={{ color: colors.primary }}
 
-              text={`Next`} />
-              : <ActivityIndicator style={{  marginRight: 30  }} size={'large'} color={colors.parpal} />}
+            {!isLoading ?
+              <Button onClick={() => { handleProfileSetup() }}
+                style={{ width: 90, backgroundColor: colors.lightBlack }}
+                textStyle={{ color: colors.primary }}
+
+                text={`Next`} />
+              : <ActivityIndicator style={{ marginRight: 30 }} size={'large'} color={colors.parpal} />}
           </View>
         </View>
       </ScrollView>
