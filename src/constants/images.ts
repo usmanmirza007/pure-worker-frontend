@@ -5,6 +5,7 @@ const images = {
   cross: require('../assets/images/cross.png'),
   back: require('../assets/images/backArrow.png'),
   menu: require('../assets/images/menu.png'),
+  menu2: require('../assets/images/menu2.png'),
   vender: require('../assets/images/vender.png'),
   welcome: require('../assets/images/welcome.png'),
   pureWorkerLogo: require('../assets/images/pureWorkerLogo.png'),
@@ -36,5 +37,7 @@ const images = {
   saved: require('../assets/images/saved.png'),
   star2: require('../assets/images/star2.png'),
   location1: require('../assets/images/location1.png'),
+  pending: require('../assets/images/pending.png'),
+  orderlist: require('../assets/images/orderlist.png'),
 };
 export default images;

@@ -55,7 +55,7 @@ const CloseToYou = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={images.back}
-                style={{height: 25, width: 25}}
+                style={{height: 20, width: 20}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -74,7 +74,7 @@ const CloseToYou = () => {
               }}>
               <Image
                 source={images.search}
-                style={{height: 25, width: 25}}
+                style={{height: 20, width: 20}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -92,7 +92,7 @@ const CloseToYou = () => {
             ]}>
             <TouchableOpacity onPress={() => setsearchModal(false)}>
               <Image
-                source={images.search}
+                source={images.cross}
                 style={{height: 20, width: 20}}
                 resizeMode="contain"
               />

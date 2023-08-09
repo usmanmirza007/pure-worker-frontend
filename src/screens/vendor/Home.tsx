@@ -143,7 +143,7 @@ const Home = ({navigation}: any) => {
                 />
                 <Image
                   resizeMode="contain"
-                  source={images.search}
+                  source={images.orderlist}
                   style={{
                     width: 30,
                     height: 30,
@@ -190,7 +190,7 @@ const Home = ({navigation}: any) => {
                 />
                 <Image
                   resizeMode="contain"
-                  source={images.search}
+                  source={images.pending}
                   style={{
                     width: 30,
                     height: 30,
@@ -387,6 +387,9 @@ const Home = ({navigation}: any) => {
           </View>
 
           <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ProfileStep1');
+            }}
             style={[
               tw`bg-[#2D303C] mx-auto items-center justify-center`,
               {
