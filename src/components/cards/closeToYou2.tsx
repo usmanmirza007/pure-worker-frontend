@@ -1,13 +1,17 @@
+
 import { Image, View, TouchableOpacity } from 'react-native';
 import { SIZES, perHeight, perWidth } from '../../utils/position/sizes';
 import React, { useState } from 'react';
+
 import images from '../../constants/images';
 import tw from 'twrnc';
 import Textcomp from '../Textcomp';
 import colors from '../../constants/colors';
+
 import { Rating } from 'react-native-ratings';
 import { useMakeFavoriteProductMutation } from '../../store/slice/api';
 import Snackbar from 'react-native-snackbar';
+
 
 const CloseToYouCard2 = ({ item, index }: any) => {
   const [makeFavoriteProduct] = useMakeFavoriteProductMutation();

@@ -1,4 +1,6 @@
+
 import React, { useState, useMemo } from 'react';
+
 import {
   View,
   Text,
@@ -18,7 +20,9 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { perHeight } from '../../utils/position/sizes';
 import colors from '../../constants/colors';
 import TextInputs from '../../components/TextInput2';
+
 import { useGetAllServiceProviderPotfolioQuery, useGetFavoriteProductQuery } from '../../store/slice/api';
+
 
 const Services = () => {
   const navigation = useNavigation<StackNavigation>();
@@ -100,7 +104,9 @@ const Services = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={images.back}
+
                 style={{ height: 25, width: 25 }}
+
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -120,6 +126,7 @@ const Services = () => {
               <Image
                 source={images.search}
                 style={{ height: 25, width: 25 }}
+
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -135,17 +142,21 @@ const Services = () => {
                 marginHorizontal: 20,
               },
             ]}>
+
             <TouchableOpacity onPress={() => {
               setsearchModal(false)
               }}>
               <Image
                 source={images.cross}
                 style={{ height: 20, width: 20, tintColor: 'black' }}
+
                 resizeMode="contain"
               />
             </TouchableOpacity>
             <TextInputs
+
               style={{ marginTop: 10, width: '70%' }}
+
               labelText={'Search for service'}
               state={searchInput}
               setState={setsearchInput}
@@ -160,7 +171,9 @@ const Services = () => {
               }}>
               <Image
                 source={images.search}
+
                 style={{ height: 20, width: 20 }}
+
                 resizeMode="contain"
               />
             </TouchableOpacity>
