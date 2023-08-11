@@ -13,6 +13,9 @@ import DrawerMenu from './drawerMenu';
 import Services from '../screens/user/services';
 import _Services from '../screens/user/_services';
 import CloseToYou from '../screens/user/closeToYou';
+import ServiceProviderProfile from '../screens/user/serviceProviderProfile';
+import OrderDetails from '../screens/user/orderDetails';
+import OrderReview from '../screens/user/orderReview';
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +75,21 @@ export default function CustomerNavigation() {
       <Stack.Screen
         name="ProfileStep5"
         component={ProfileStep5}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="ServiceProviderProfile"
+        component={ServiceProviderProfile}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="OrderDetails"
+        component={OrderDetails}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="OrderReview"
+        component={OrderReview}
         options={{headerShown: false, animationEnabled: false}}
       />
     </Stack.Navigator>

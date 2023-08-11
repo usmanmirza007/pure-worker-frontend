@@ -5,10 +5,11 @@ import {
   ActivityIndicator,
   TextInput,
   Platform,
-  ScrollView, TouchableOpacity
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigation } from '../../constants/navigation'; 
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigation} from '../../constants/navigation';
 import Header from '../../components/Header';
 import images from '../../constants/images';
 import Button from '../../components/Button';
@@ -643,67 +644,70 @@ const PRofileStep2 = () => {
                 {!potfolioImageLoading ? (
                   <View>
                     {potfolioImageUrl.length < 3 && (
-                      <TouchableOpacity
-                        onPress={async () => {
-                          try {
-                            const response: any = await launchImageLibrary();
-                            setPotfolioImageLoading(true);
-                            if (response) {
-                              const filename = response?.uri.substring(
-                                response?.uri.lastIndexOf('/') + 1,
-                              );
-                              const uploadUri =
-                                Platform.OS === 'ios'
-                                  ? response?.uri.replace('file://', '')
-                                  : response.uri;
-                              const task = await storage()
-                                .ref(filename)
-                                .putFile(uploadUri);
-                              if (task.metadata) {
-                                potfolioPicture.current =
-                                  task.metadata.fullPath;
-                              }
-                              let url;
-                              if (potfolioPicture.current) {
-                                url = await storage()
-                                  .ref(potfolioPicture.current)
-                                  .getDownloadURL();
+                      <>
+                        <TouchableOpacity
+                          onPress={async () => {
+                            try {
+                              const response: any = await launchImageLibrary();
+                              setPotfolioImageLoading(true);
+                              if (response) {
+                                const filename = response?.uri.substring(
+                                  response?.uri.lastIndexOf('/') + 1,
+                                );
+                                const uploadUri =
+                                  Platform.OS === 'ios'
+                                    ? response?.uri.replace('file://', '')
+                                    : response.uri;
+                                const task = await storage()
+                                  .ref(filename)
+                                  .putFile(uploadUri);
+                                if (task.metadata) {
+                                  potfolioPicture.current =
+                                    task.metadata.fullPath;
+                                }
+                                let url;
+                                if (potfolioPicture.current) {
+                                  url = await storage()
+                                    .ref(potfolioPicture.current)
+                                    .getDownloadURL();
+                                }
+                                setPotfolioImageUrl([...potfolioImageUrl, url]);
+                                potfolioPicture.current = '';
+                                setPotfolioImageLoading(false);
+                              } else {
+                                setPotfolioImageLoading(false);
                               }
                               setPotfolioImageUrl([...potfolioImageUrl, url]);
                               potfolioPicture.current = '';
                               setPotfolioImageLoading(false);
-                            } else {
+                            } catch {
                               setPotfolioImageLoading(false);
                             }
-                            setPotfolioImageUrl([...potfolioImageUrl, url])
-                            potfolioPicture.current = ''
-                            setPotfolioImageLoading(false)
-                          }else {
-                            setPotfolioImageLoading(false)
-                          }
-                        }}
-                        style={[
-                          generalStyles.contentCenter,
-                          {
-                            height: 25,
-                            width: 120,
-                            borderRadius: 5,
-                            marginTop: 13,
-                            backgroundColor: colors.lightBlack,
-                          },
-                        ]}>
-                        <TextWrapper
-                          children="Upload Images"
-                          isRequired={false}
-                          fontType={'semiBold'}
-                          style={{
-                            textAlign: 'center',
-                            fontSize: 12,
-                            color: colors.white,
                           }}
-                        />
-                      </TouchableOpacity>
+                          style={[
+                            generalStyles.contentCenter,
+                            {
+                              height: 25,
+                              width: 120,
+                              borderRadius: 5,
+                              marginTop: 13,
+                              backgroundColor: colors.lightBlack,
+                            },
+                          ]}>
+                          <TextWrapper
+                            children="Upload Images"
+                            isRequired={false}
+                            fontType={'semiBold'}
+                            style={{
+                              textAlign: 'center',
+                              fontSize: 12,
+                              color: colors.white,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      </>
                     )}
+
                     <View style={[generalStyles.rowCenter, {marginRight: 20}]}>
                       {potfolioImageUrl.map((item: any, index: number) => {
                         return (

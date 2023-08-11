@@ -32,7 +32,7 @@ const CloseToYou = () => {
   const navigation = useNavigation<StackNavigation>();
   const dispatch = useDispatch();
 
-  const [activeSection, setactiveSection] = useState('All');
+  const [activeSection, setActiveSection] = useState('All');
   const [searchModal, setsearchModal] = useState(false);
   const [searchInput, setsearchInput] = useState('');
 
@@ -91,7 +91,7 @@ const CloseToYou = () => {
 
   return (
     <View style={[{flex: 1, backgroundColor: '#EBEBEB'}]}>
-      <ScrollView>
+      <>
         <View
           style={{
             marginTop:
@@ -112,7 +112,7 @@ const CloseToYou = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={images.back}
-                style={{ height: 25, width: 25 }}
+                style={{height: 25, width: 25}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -176,11 +176,13 @@ const CloseToYou = () => {
             </TouchableOpacity>
           </View>
         )}
+      </>
+      <ScrollView>
         <View style={tw`mt-3 mb-3`}>
           <View style={tw`flex flex-row`}>
             <TouchableOpacity
               onPress={() => {
-                setactiveSection('All');
+                setActiveSection('All');
               }}
               style={tw`w-1/2 border-b-2  items-center ${
                 activeSection === 'All'
@@ -197,7 +199,7 @@ const CloseToYou = () => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                setactiveSection('Saved');
+                setActiveSection('Saved');
               }}
               style={tw`w-1/2 border-b-2 items-center ${
                 activeSection === 'Saved'

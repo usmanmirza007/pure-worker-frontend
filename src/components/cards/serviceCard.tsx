@@ -1,15 +1,14 @@
-import { Image, View } from 'react-native';
-import { perHeight, perWidth } from '../../utils/position/sizes';
+import {Image, TouchableOpacity, View} from 'react-native';
+import {perHeight, perWidth} from '../../utils/position/sizes';
 import React from 'react';
 import tw from 'twrnc';
 import Textcomp from '../Textcomp';
 import colors from '../../constants/colors';
 
-const ServiceCard = ({ item, index }: any) => {
-
+const ServiceCard = ({item, index, navigation}: any) => {
   return (
-
-    <View
+    <TouchableOpacity
+      onPress={() => navigation.navigate('ServiceProviderProfile', item)}
       style={[
         tw` mt-4 border-[#FFC727]`,
         {
@@ -28,14 +27,14 @@ const ServiceCard = ({ item, index }: any) => {
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
         }}
-        source={{ uri: item?.potfolioImageFirst }}
+        source={{uri: item?.potfolioImageFirst}}
       />
       <View
         style={[
           tw`bg-[${colors.darkPurple}] flex-1`,
-          { borderBottomLeftRadius: 20, borderBottomRightRadius: 20 },
+          {borderBottomLeftRadius: 20, borderBottomRightRadius: 20},
         ]}>
-        <View style={[tw``, { marginLeft: 10, marginTop: perHeight(6) }]}>
+        <View style={[tw``, {marginLeft: 10, marginTop: perHeight(6)}]}>
           <Textcomp
             text={item?.description}
             size={12}
@@ -46,7 +45,7 @@ const ServiceCard = ({ item, index }: any) => {
           />
         </View>
       </View>
-    </View>
-  )
-}
+    </TouchableOpacity>
+  );
+};
 export default ServiceCard;

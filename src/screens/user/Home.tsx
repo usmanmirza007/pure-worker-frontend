@@ -86,7 +86,7 @@ const Home = () => {
               />
             </TouchableOpacity>
             <TextInputs
-              style={{ marginTop: 10, width: '70%' }}
+              style={{ marginTop: 0, width: '70%' }}
               labelText={'Search'}
               state={search}
               setState={setSearch}
@@ -211,7 +211,7 @@ const Home = () => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               renderItem={(item: any) => {
-                return <ServiceCard item={item.item} index={item.index} />;
+                return <ServiceCard navigation={navigation} item={item.item} index={item.index} />;
               }}
               keyExtractor={item => item.id}
             />
@@ -254,7 +254,7 @@ const Home = () => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               renderItem={(item: any) => {
-                return <ClosetoYou item={item.item} index={item.index} />;
+                return <ClosetoYou navigation={navigation} item={item.item} index={item.index} />;
               }}
               keyExtractor={item => item.id}
             />
