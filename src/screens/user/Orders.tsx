@@ -219,6 +219,7 @@ const Orders = () => {
                     renderItem={(item: any, index: any) => {
                       return (
                         <Orderscomponent
+                        navigation={navigation}
                           item={item.item}
                           index={item.index}
                           status={index % 3 === 0 ? 'Pending' : 'Inprogress'}
@@ -241,6 +242,7 @@ const Orders = () => {
                     renderItem={(item: any, index: any) => {
                       return (
                         <Orderscomponent
+                        navigation={navigation}
                           item={item.item}
                           index={item.index}
                           status={index % 3 === 0 ? 'Pending' : 'Completed'}

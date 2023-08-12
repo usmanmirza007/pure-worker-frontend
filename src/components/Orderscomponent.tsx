@@ -9,7 +9,7 @@ import {Rating, AirbnbRating} from 'react-native-ratings';
 import Modal from 'react-native-modal';
 import {WIDTH_WINDOW} from '../constants/generalStyles';
 
-const Orderscomponent2 = ({item, index, status}: any) => {
+const Orderscomponent2 = ({item, index, status, navigation}: any) => {
   const [saved, setsaved] = useState(false);
   const [InfoModal, setInfoModal] = useState(false);
 
@@ -243,6 +243,10 @@ const Orderscomponent2 = ({item, index, status}: any) => {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
+                onPress={() => {
+                  setInfoModal(false);
+                  navigation.navigate('ViewLocation');
+                }}
                 style={[
                   tw`flex mt-10 flex-row`,
                   {marginHorizontal: perWidth(30), marginTop: perHeight(25)},
@@ -340,15 +344,18 @@ const Orderscomponent2 = ({item, index, status}: any) => {
               </View>
 
               <TouchableOpacity
-                style={[{
-                  width: perWidth(316),
-                  height: perHeight(40),
-                  borderRadius: 13,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: colors.darkPurple,
-                  marginTop: 40,
-                },tw`mx-auto`]}>
+                style={[
+                  {
+                    width: perWidth(316),
+                    height: perHeight(40),
+                    borderRadius: 13,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: colors.darkPurple,
+                    marginTop: 40,
+                  },
+                  tw`mx-auto`,
+                ]}>
                 <Textcomp
                   text={'Okay'}
                   size={14}

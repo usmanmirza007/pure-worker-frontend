@@ -39,5 +39,21 @@ const images = {
   location1: require('../assets/images/location1.png'),
   pending: require('../assets/images/pending.png'),
   orderlist: require('../assets/images/orderlist.png'),
+
+  arrow_up: require('../assets/images/arrow_up.png'),
+  arrow_right: require('../assets/images/arrow_right2.png'),
+  eye: require('../assets/images/eye.png'),
+  send: require('../assets/images/send.png'),
+  dollar: require('../assets/images/dollar.png'),
+  unread: require('../assets/images/unread.png'),
+  download: require('../assets/images/download.png'),
+  simcard: require('../assets/images/simcard.png'),
+  add2: require('../assets/images/add2.png'),
+  visa: require('../assets/images/visa.png'),
+  mastercard: require('../assets/images/mastercard.png'),
+  wallet2: require('../assets/images/wallet2.png'),
+  fundingHistory: require('../assets/images/fundingHistory.png'),
+  transactionHistory: require('../assets/images/transactionHistory.png'),
+  refresh: require('../assets/images/refresh.png'),
 };
 export default images;

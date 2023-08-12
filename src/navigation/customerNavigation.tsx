@@ -16,6 +16,13 @@ import CloseToYou from '../screens/user/closeToYou';
 import ServiceProviderProfile from '../screens/user/serviceProviderProfile';
 import OrderDetails from '../screens/user/orderDetails';
 import OrderReview from '../screens/user/orderReview';
+import PaymentConfirmed from '../screens/user/paymentConfirmed';
+import PaymentMethod from '../screens/user/paymentMethod';
+import TransactionHistory from '../screens/user/transactionHistory';
+import FundingHistory from '../screens/user/fundingHistory';
+import PaymentMethod2 from '../screens/user/paymentMethod2';
+import BecomeAServiceProvider from '../screens/user/becomeAServiceProvider';
+import ViewLocation from '../screens/user/viewLocation';
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +97,41 @@ export default function CustomerNavigation() {
       <Stack.Screen
         name="OrderReview"
         component={OrderReview}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="PaymentConfirmed"
+        component={PaymentConfirmed}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="PaymentMethod"
+        component={PaymentMethod}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="PaymentMethod2"
+        component={PaymentMethod2}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="TransactionHistory"
+        component={TransactionHistory}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="FundingHistory"
+        component={FundingHistory}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="BecomeAServiceProvider"
+        component={BecomeAServiceProvider}
+        options={{headerShown: false, animationEnabled: false}}
+      />
+      <Stack.Screen
+        name="ViewLocation"
+        component={ViewLocation}
         options={{headerShown: false, animationEnabled: false}}
       />
     </Stack.Navigator>

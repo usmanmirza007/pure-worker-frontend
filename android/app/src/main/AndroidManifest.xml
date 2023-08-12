@@ -29,5 +29,6 @@
             <data android:scheme="pureworker"/>
         </intent-filter>
       </activity>
+      <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDp32iWaShk9E_wTNtJbAkNXqdishmZnE8"/>
     </application>
 </manifest>

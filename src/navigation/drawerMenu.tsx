@@ -15,6 +15,7 @@ import Support from '../screens/user/support';
 import Account from '../screens/user/account';
 import PrivacyPolicy from '../screens/user/privacy-policy';
 import DeactivateAccount from '../screens/user/deactivateAccount';
+import FAQ from '../screens/FAQ';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -115,7 +116,8 @@ const DrawerMenu = () => {
         />
         <Drawer.Screen
           name="Support"
-          component={Support}
+          // component={Support}
+          component={FAQ}
           options={{headerShown: false}}
         />
         <Drawer.Screen

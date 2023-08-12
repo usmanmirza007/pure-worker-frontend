@@ -224,7 +224,7 @@ const ServiceProviderProfile = () => {
                 ]}>
                 <View style={tw`ml-1`}>
                   <Image
-                    source={images.chat}
+                    source={images.location}
                     resizeMode="contain"
                     style={{width: 25, height: 25}}
                   />
@@ -257,7 +257,7 @@ const ServiceProviderProfile = () => {
                 ]}>
                 <View style={tw`ml-1`}>
                   <Image
-                    source={images.chat}
+                    source={images.dollar}
                     resizeMode="contain"
                     style={{width: 25, height: 25}}
                   />
@@ -290,7 +290,7 @@ const ServiceProviderProfile = () => {
                 ]}>
                 <View style={tw`ml-1`}>
                   <Image
-                    source={images.chat}
+                    source={images.send}
                     resizeMode="contain"
                     style={{width: 25, height: 25}}
                   />
@@ -323,7 +323,7 @@ const ServiceProviderProfile = () => {
                 ]}>
                 <View style={tw`ml-1`}>
                   <Image
-                    source={images.chat}
+                    source={images.eye}
                     resizeMode="contain"
                     style={{width: 25, height: 25}}
                   />

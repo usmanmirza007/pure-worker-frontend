@@ -160,7 +160,7 @@ const DrawerContent = ({navigation}) => {
 
         {userType.userType === 'CUSTOMER' && (
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {navigation.navigate('BecomeAServiceProvider')}}
             style={[
               tw`bg-[#2D303C] px-2 py-4 w-[90%] mx-auto `,
               {marginTop: perHeight(40), borderRadius: 5},
